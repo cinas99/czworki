@@ -19,7 +19,7 @@ i otwórz http://localhost:8000
 
 ## Publikacja na GitHub Pages z własną domeną
 1. Settings → Pages → Source: „Deploy from a branch”, branch `main`, folder `/ (root)`.
-2. W pliku `CNAME` wpisz domenę (np. `czworki.pl`).
+2. W Settings → Pages wpisz domenę w polu „Custom domain” (GitHub sam utworzy plik `CNAME`).
 3. U rejestratora domeny ustaw rekordy DNS:
    - `A` dla `@`: 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153
    - `CNAME` dla `www`: `TWOJ-LOGIN.github.io`
