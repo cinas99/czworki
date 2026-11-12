@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Czwórki – codzienna łamigłówka słowna</title>
+<meta name="description" content="Codzienna polska łamigłówka: ułóż 16 słów w 4 ukryte grupy. Nowa zagadka każdego dnia.">
+<meta property="og:title" content="Czwórki – codzienna łamigłówka słowna">
+<meta property="og:description" content="16 słów, 4 ukryte grupy, 4 błędy. Dasz radę?">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='1' y='1' width='14' height='14' rx='3' fill='%23f9df6d'/><rect x='17' y='1' width='14' height='14' rx='3' fill='%23a0c35a'/><rect x='1' y='17' width='14' height='14' rx='3' fill='%23b0c4ef'/><rect x='17' y='17' width='14' height='14' rx='3' fill='%23ba81c5'/></svg>">
+<link rel="stylesheet" href="style.css">
+<!-- AdSense: po akceptacji wklej tu skrypt z panelu AdSense (oraz baner zgody CMP) -->
+</head>
+<body>
+<header class="top">
+  <button class="icon" id="btn-help" aria-label="Jak grać">?</button>
+  <h1>Czwórki</h1>
+  <button class="icon" id="btn-stats" aria-label="Statystyki">▤</button>
+</header>
+
+<main class="wrap">
+  <p class="sub" id="subtitle">Ułóż 4 grupy po 4 słowa</p>
+  <div id="solved"></div>
+  <div class="grid" id="grid" aria-live="polite"></div>
+  <p class="lives">Pozostałe błędy: <span id="lives"></span></p>
+  <p class="msg" id="msg" role="status"></p>
+  <div class="actions" id="actions">
+    <button id="btn-shuffle">Przetasuj</button>
+    <button id="btn-clear">Odznacz</button>
+    <button id="btn-check" class="primary">Sprawdź</button>
+  </div>
+
+  <section class="end" id="end" hidden>
+    <h2 id="end-title"></h2>
+    <div id="end-grid" class="end-grid"></div>
+    <button class="primary" id="btn-share">Udostępnij wynik</button>
+    <p class="next">Następna zagadka za <b id="countdown"></b></p>
+    <!-- Miejsce reklamowe: pokazujemy dopiero po zakończeniu gry -->
+    <div class="ad-slot" id="ad-slot">Miejsce na reklamę</div>
+  </section>
+</main>
+
+<footer class="foot">
+  <a href="jak-grac.html">Jak grać</a> · <a href="polityka-prywatnosci.html">Prywatność</a>
+</footer>
+
+<dialog id="dlg-help">
+  <h2>Jak grać</h2>
+  <p>Znajdź 4 grupy po 4 słowa, które coś łączy.</p>
+  <ul>
+    <li>Zaznacz 4 słowa i kliknij „Sprawdź”.</li>
+    <li>Masz 4 błędy do wykorzystania.</li>
+    <li>Uważaj na pułapki: niektóre słowa pasują do kilku grup.</li>
+    <li>„Prawie!” znaczy, że 3 z 4 słów są z jednej grupy.</li>
+  </ul>
+  <p>Kolory oznaczają trudność: <span class="dot c0"></span> łatwa, <span class="dot c1"></span> średnia, <span class="dot c2"></span> trudna, <span class="dot c3"></span> podchwytliwa.</p>
+  <p>Nowa zagadka codziennie o północy.</p>
+  <form method="dialog"><button class="primary">Graj</button></form>
+</dialog>
+
+<dialog id="dlg-stats">
+  <h2>Statystyki</h2>
+  <div class="stats">
+    <div><b id="st-played">0</b><span>Rozegrane</span></div>
+    <div><b id="st-win">0</b><span>% wygranych</span></div>
+    <div><b id="st-streak">0</b><span>Seria</span></div>
+    <div><b id="st-max">0</b><span>Najdłuższa</span></div>
+  </div>
+  <form method="dialog"><button>Zamknij</button></form>
+</dialog>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="puzzles.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
