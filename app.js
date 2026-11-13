@@ -1,7 +1,7 @@
 (async () => {
   const SITE = location.host || "czworki.pl";
-  const EMOJI = ["🟨", "🟩", "🟦", "🟪"];
-  const LEVELS = { zolty: 0, zielony: 1, niebieski: 2, fioletowy: 3 };
+  const EMOJI = ["🟩", "🟨", "🟧", "🟥"];
+  const LEVELS = { zielony: 0, zolty: 1, pomaranczowy: 2, czerwony: 3 };
   const MAX_MISTAKES = 4;
   const $ = (id) => document.getElementById(id);
 

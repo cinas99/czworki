@@ -1,6 +1,6 @@
 :root{
   --bg:#ffffff;--fg:#121212;--muted:#6b6b6b;--tile:#efefe6;--tile-sel:#5a594e;--line:#d6d6cc;
-  --c0:#f9df6d;--c1:#a0c35a;--c2:#b0c4ef;--c3:#ba81c5;--danger:#c0392b;
+  --c0:#8fd16a;--c1:#f7d354;--c2:#f6a04d;--c3:#ee6b6b;--danger:#c0392b;
   --r:10px;
 }
 html[data-theme="dark"]{--bg:#121213;--fg:#f2f2f2;--muted:#9a9a9a;--tile:#2c2c2e;--tile-sel:#d8d8d0;--line:#3a3a3c;color-scheme:dark}

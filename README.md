@@ -31,7 +31,7 @@ Każda zagadka to 4 wiersze w `zagadki.csv` z tą samą datą:
 | kolumna | co wpisać |
 |---|---|
 | `data` | dzień publikacji, np. `2026-12-24` (pierwsza data w pliku = zagadka #1) |
-| `kolor` | `zolty` (łatwa), `zielony`, `niebieski`, `fioletowy` (podchwytliwa) |
+| `kolor` | `zielony` (łatwa), `zolty`, `pomaranczowy`, `czerwony` (podchwytliwa) |
 | `kategoria` | nazwa grupy pokazywana po odgadnięciu |
 | `slowo1`–`slowo4` | słowa (wielkość liter bez znaczenia) |
 | `zdjecie` | tytuł artykułu z polskiej Wikipedii (np. `Sroka zwyczajna`) albo pełny adres URL zdjęcia; puste = gra spróbuje znaleźć zdjęcie po słowach z grupy |
