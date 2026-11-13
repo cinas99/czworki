@@ -63,191 +63,83 @@ data,kolor,kategoria,slowo1,slowo2,slowo3,slowo4,zdjecie,wyjasnienie
 2026-11-27,zolty,Sprytny,CWANY,PRZEBIEGŁY,SZCZWANY,KUTY,Lis rudy|Lis,Synonimy cwaniactwa. „Kuty na cztery nogi” to ktoś bardzo sprytny.
 2026-11-27,pomaranczowy,Rude,LIS,WIEWIÓRKA,MARCHEWKA,RDZA,Jesień|Liście|Rudy (kolor),"Rzeczy rude lub rdzawe: lis, wiewiórka, marchewka i rdza."
 2026-11-27,czerwony,Czerwon(y/a) ___,KAPTUREK,KRZYŻ,DYWAN,KARTKA,Czerwień|Kolor czerwony,"Czerwony Kapturek, Czerwony Krzyż, czerwony dywan i czerwona kartka."
-2026-11-28,zielony,Ukryta rzeka,SANKI,BUGATTI,PODRAPANY,WARTOWNIK,Rzeka|Wisła,
-2026-11-28,zolty,Ukryta liczba,TRZYMAĆ,STODOŁA,ODWAGA,ZEROWANIE,Liczba|Cyfra,
-2026-11-28,pomaranczowy,Ukryte imię,EWANGELIA,ADAMASZEK,KOLAGEN,MIGAWKA,Imię|Identyfikator,
-2026-11-28,czerwony,Ukryta marka auta,SZUFLADA,MINISTER,AUDIOBOOK,POPELINA,Samochód osobowy|Samochód,
-2026-11-29,zielony,Złota…,RYBKA,RĄCZKA,JESIEŃ,KLATKA,Złoto|Sztabka złota,
-2026-11-29,zolty,Biała…,GORĄCZKA,DAMA,BROŃ,FLAGA,Biel|Śnieg,
-2026-11-29,pomaranczowy,Czarna…,OWCA,ROBOTA,DZIURA,POLEWKA,Czerń|Noc,
-2026-11-29,czerwony,Zielona…,GÓRA,NOC,KARTA,HERBATA,Zieleń|Liść,
-2026-11-30,zielony,"Mieć coś w kieszeni, nosie, brzuchu, głowie",WĘŻA,MUCHY,MOTYLE,OLEJ,Frazeologizm|Związek frazeologiczny|Motyle,
-2026-11-30,zolty,Wpuścić lub nabić kogoś w…,MALINY,KANAŁ,BUTELKĘ,POLE,Malina właściwa|Malina,
-2026-11-30,pomaranczowy,"Zdrowy, uparty, głodny, pracowity jak…",RYBA,OSIOŁ,WILK,PSZCZOŁA,Pszczoła miodna|Osioł domowy,
-2026-11-30,czerwony,Idzie jak po… / jak w… / jak z…,MAŚLE,SZNURKU,NUT,ZEGARKU,Masło|Zegarek,
-2026-12-01,zielony,Pan…,TADEUSZ,KLEKS,WOŁODYJOWSKI,SAMOCHODZIK,Pan Tadeusz|Adam Mickiewicz,
-2026-12-01,zolty,Kapitan…,NEMO,HAK,ŻBIK,KLOSS,Kapitan|Kapitan statku,
-2026-12-01,pomaranczowy,Doktor…,DOLITTLE,ŻYWAGO,HOUSE,JEKYLL,Lekarz|Stetoskop,
-2026-12-01,czerwony,Król…,LEW,MACIUŚ,ARTUR,JULIAN,Król|Korona (insygnium),
-2026-12-02,zielony,Grzyby,KURKA,RYDZ,MAŚLAK,KANIA,Grzyby,
-2026-12-02,zolty,Na wigilijnym stole,KARP,OPŁATEK,BARSZCZ,MAKOWIEC,Wigilia,
-2026-12-02,pomaranczowy,Gry karciane,WOJNA,MAKAO,TYSIĄC,PASJANS,Karty do gry,
-2026-12-02,czerwony,Polskie góry,TATRY,SUDETY,PIENINY,BIESZCZADY,Tatry,
-2026-12-03,zielony,Części samochodu,MASKA,ZDERZAK,KOŁO,BAGAŻNIK,Samochód osobowy,
-2026-12-03,zolty,Na balu karnawałowym,KOTYLION,KONFETTI,SERPENTYNA,PRZEBRANIE,Konfetti,
-2026-12-03,pomaranczowy,Figury geometryczne,ELIPSA,ROMB,TRAPEZ,DELTOID,Romb,
-2026-12-03,czerwony,Węże,KOBRA,PYTON,BOA,MAMBA,Kobra indyjska,
-2026-12-04,zielony,Owoce,GRANAT,WIŚNIA,PIGWA,AGREST,Granatowiec właściwy,
-2026-12-04,zolty,Dawna broń,SZABLA,KUSZA,HALABARDA,MUSZKIET,Szabla,
-2026-12-04,pomaranczowy,Odcienie,BORDO,KARMIN,ECRU,KHAKI,Karmin,
-2026-12-04,czerwony,Pierwiastki,KOBALT,ARGON,NEON,CHROM,Kobalt,
-2026-12-05,zielony,Instrumenty,TRĄBKA,ORGANY,HARFA,KOTŁY,Harfa,
-2026-12-05,zolty,Narządy,WĄTROBA,ŚLEDZIONA,NERKA,TRZUSTKA,Wątroba,
-2026-12-05,pomaranczowy,Naczynia kuchenne,GARNEK,RONDEL,PATELNIA,KOCIOŁEK,Garnek,
-2026-12-05,czerwony,Ukryty KOT,KOTWICA,KOTLET,SZKOT,ŁASKOTKI,Kot domowy,
-2026-12-06,zielony,Polskie góry,TATRY,BESKIDY,KARKONOSZE,GORCE,Tatry,
-2026-12-06,zolty,Pieczywo,BUŁKA,CHAŁKA,KAJZERKA,OBWARZANEK,Chałka,
-2026-12-06,pomaranczowy,Zabytki Krakowa,WAWEL,SUKIENNICE,KAZIMIERZ,BARBAKAN,Wawel,
-2026-12-06,czerwony,Ukryte STO,STODOŁA,CIASTO,PROSTOKĄT,MIASTO,Stodoła,
-2026-12-07,zielony,Ptaki,SIKORKA,DZIĘCIOŁ,SZPAK,CZAJKA,Sikora bogatka,"Pospolite polskie ptaki: sroka, wrona, sowa i czapla."
-2026-12-07,zolty,Gry karciane,MAKAO,POKER,BRYDŻ,OCZKO,Poker,
-2026-12-07,pomaranczowy,Dawne monety,DUKAT,TALAR,SZELĄG,DENAR,Dukat,
-2026-12-07,czerwony,Potocznie o pieniądzach,KASA,SIANO,FORSA,KAPUSTA,Banknot,
-2026-12-08,zielony,Warzywa,MARCHEW,SELER,PIETRUSZKA,KALAREPA,Marchew zwyczajna,
-2026-12-08,zolty,Zioła,KOPER,LUBCZYK,MAJERANEK,ESTRAGON,Majeranek ogrodowy,
-2026-12-08,pomaranczowy,Ryby słodkowodne,SANDACZ,LIN,KARAŚ,UKLEJA,Sandacz pospolity,
-2026-12-08,czerwony,Potocznie o człowieku,BURAK,CIENIAS,LESZCZ,ZIOMEK,Burak zwyczajny,
-2026-12-09,zielony,Meble,SZAFA,KOMODA,SOFA,WITRYNA,Komoda,
-2026-12-09,zolty,Podzespoły komputera,PROCESOR,DYSK,PAMIĘĆ,ZASILACZ,Procesor,
-2026-12-09,pomaranczowy,Dodatki do stroju,KRAWAT,SPINKI,POSZETKA,SZELKI,Krawat,
-2026-12-09,czerwony,Palindromy,KAJAK,ZAKAZ,ROTOR,SEDES,Kajak,
-2026-12-10,zielony,Zimą,SANKI,NARTY,ŁYŻWY,BAŁWAN,Bałwan,
-2026-12-10,zolty,Boże Narodzenie,CHOINKA,OPŁATEK,KOLĘDA,PASTERKA,Choinka,
-2026-12-10,pomaranczowy,Ciasta,SERNIK,MAKOWIEC,PIERNIK,KEKS,Sernik,
-2026-12-10,czerwony,Ukryte nuty,DOMINO,REMIS,FASOLA,SOLNICZKA,Nuta,
-2026-12-11,zielony,Rasy psów,DOG,MOPS,CHART,BOKSER,Mops,
-2026-12-11,zolty,Sporty walki,JUDO,KARATE,ZAPASY,SUMO,Judo,
-2026-12-11,pomaranczowy,Do sprzątania,MOP,MIOTŁA,SZUFELKA,ŚCIERKA,Miotła,
-2026-12-11,czerwony,W tenisie,SET,GEM,AS,LOB,Tenis,
-2026-12-12,zielony,Miasta,RADOM,GNIEZNO,TORUŃ,ELBLĄG,Toruń,
-2026-12-12,zolty,Imiona męskie,ADAM,ROMAN,KAROL,MAREK,,
-2026-12-12,pomaranczowy,Gatunki literackie,POWIEŚĆ,NOWELA,BALLADA,FRASZKA,Ballada,
-2026-12-12,czerwony,Miasta z ukrytym zwierzęciem,KOSZALIN,KRAKÓW,SOKÓŁKA,WOŁÓW,Kraków,
-2026-12-13,zielony,Kwiaty,MAK,KROKUS,NARCYZ,IRYS,Krokus,
-2026-12-13,zolty,Nasiona,SEZAM,LEN,SŁONECZNIK,CHIA,Sezam indyjski,
-2026-12-13,pomaranczowy,Bogowie greccy,ZEUS,HERMES,ATENA,POSEJDON,Zeus,
-2026-12-13,czerwony,Części oka,TĘCZÓWKA,ŹRENICA,SOCZEWKA,ROGÓWKA,Oko,
-2026-12-14,zielony,Ubrania,KOSZULA,MARYNARKA,KAMIZELKA,PŁASZCZ,Koszula,
-2026-12-14,zolty,Rodzaje wojsk,PIECHOTA,LOTNICTWO,ARTYLERIA,KAWALERIA,Kawaleria,
-2026-12-14,pomaranczowy,Stopnie wojskowe,KAPRAL,SIERŻANT,PORUCZNIK,KAPITAN,Kapral,
-2026-12-14,czerwony,Ukryty MAJ,MAJONEZ,MAJSTER,MAJĄTEK,MAJOR,Majonez,
-2026-12-15,zielony,Owady,MUCHA,KOMAR,BĄK,CHRZĄSZCZ,Mucha domowa,
-2026-12-15,zolty,Zabawki,LALKA,JOJO,PIŁKA,LATAWIEC,Latawiec,
-2026-12-15,pomaranczowy,Na ślub,WELON,OBRĄCZKA,BUKIET,TORT,Obrączka,
-2026-12-15,czerwony,Zdrobnienia o innym znaczeniu,MYSZKA,ŻABKA,KONIK,MUSZKA,Mysz komputerowa,
-2026-12-16,zielony,Zupy,ŻUREK,FLAKI,KRUPNIK,CHŁODNIK,Żurek,
-2026-12-16,zolty,Napoje,KOMPOT,KISIEL,KEFIR,MAŚLANKA,Kisiel,
-2026-12-16,pomaranczowy,Pogoda,UPAŁ,PRZYMROZEK,ODWILŻ,ZAWIEJA,Szron,
-2026-12-16,czerwony,Ukryta OSA,KOSA,ROSA,BOSAK,NOSACZ,Osa,
-2026-12-17,zielony,Owoce,JABŁKO,GRUSZKA,ŚLIWKA,WIŚNIA,,
-2026-12-17,zolty,Narzędzia,MŁOTEK,PIŁA,ŚRUBOKRĘT,KOMBINERKI,,
-2026-12-17,pomaranczowy,Postaci z „Pana Tadeusza”,ZOSIA,TELIMENA,GERWAZY,HRABIA,,
-2026-12-17,czerwony,Znaki zodiaku,BARAN,BYK,RAK,WAGA,,
-2026-12-18,zielony,Owoce egzotyczne,MANGO,ANANAS,LICZI,PAPAJA,,
-2026-12-18,zolty,Ptaki egzotyczne,KIWI,TUKAN,KOLIBER,PELIKAN,,
-2026-12-18,pomaranczowy,Kamienie szlachetne,RUBIN,SZAFIR,SZMARAGD,OPAL,,
-2026-12-18,czerwony,Kolory,BORDO,BEŻ,GRANAT,TURKUS,,
-2026-12-19,zielony,Części ciała,KOLANO,BARK,PIĘTA,RAMIĘ,,
-2026-12-19,zolty,Instrumenty,BĘBEN,SKRZYPCE,TRĄBKA,HARFA,,
-2026-12-19,pomaranczowy,Dawne miary,ŁOKIEĆ,SĄŻEŃ,MILA,MORGA,,
-2026-12-19,czerwony,Polskie słodycze,MICHAŁKI,KASZTANKI,KRÓWKI,PTASIE MLECZKO,,
-2026-12-20,zielony,Meble,SZAFA,KOMODA,REGAŁ,KREDENS,,
-2026-12-20,zolty,Pieczywo,BAGIETKA,KAJZERKA,ROGAL,CHAŁKA,,
-2026-12-20,pomaranczowy,Zawody rzemieślnicze,PIEKARZ,KOWAL,KRAWIEC,STOLARZ,,
-2026-12-20,czerwony,Wiatry,HALNY,BRYZA,MONSUN,PASAT,,
-2026-12-21,zielony,Kwiaty,RÓŻA,TULIPAN,BRATEK,FIOŁEK,,
-2026-12-21,zolty,Owady,MRÓWKA,PSZCZOŁA,OSA,KOMAR,,
-2026-12-21,pomaranczowy,Style pływackie,KRAUL,MOTYLEK,GRZBIETOWY,DELFIN,,
-2026-12-21,czerwony,Sieci sklepów,BIEDRONKA,ŻABKA,STOKROTKA,DINO,,
-2026-12-22,zielony,Planety,WENUS,SATURN,JOWISZ,MERKURY,,
-2026-12-22,zolty,Jednostki pływające,KAJAK,JACHT,TRATWA,PROM,,
-2026-12-22,pomaranczowy,Polskie miasta,GDAŃSK,KRAKÓW,ŁÓDŹ,POZNAŃ,,
-2026-12-22,czerwony,Batony,MARS,TWIX,LION,BOUNTY,,
-2026-12-23,zielony,Miesiące,MAJ,LIPIEC,LUTY,MARZEC,,
-2026-12-23,zolty,Drzewa,LIPA,DĄB,BRZOZA,KLON,,
-2026-12-23,pomaranczowy,Szczyty górskie,RYSY,GIEWONT,BABIA GÓRA,ŚNIEŻKA,,
-2026-12-23,czerwony,Postaci z baśni,KOPCIUSZEK,CALINECZKA,KAPTUREK,PINOKIO,,
-2026-12-24,zielony,Zupy,ŻUREK,ROSÓŁ,POMIDOROWA,OGÓRKOWA,,
-2026-12-24,zolty,Rasy psów,JAMNIK,PUDEL,OWCZAREK,BULDOG,,
-2026-12-24,pomaranczowy,Figury szachowe,WIEŻA,GONIEC,SKOCZEK,HETMAN,,
-2026-12-24,czerwony,Karty do gry,AS,DAMA,WALET,KRÓL,,
-2026-12-25,zielony,Zjawiska pogodowe,GRAD,SZRON,MGŁA,ROSA,,
-2026-12-25,zolty,Metale,ZŁOTO,SREBRO,MIEDŹ,ŻELAZO,,
-2026-12-25,pomaranczowy,Waluty,EURO,FUNT,JEN,RUBEL,,
-2026-12-25,czerwony,Maści koni,KARY,SIWY,GNIADY,KASZTAN,,
-2026-12-26,zielony,Ubrania,SWETER,KURTKA,SPODNIE,SZALIK,,
-2026-12-26,zolty,Matematyka,PIERWIASTEK,CAŁKA,UŁAMEK,POTĘGA,,
-2026-12-26,pomaranczowy,Części roweru,PEDAŁ,ŁAŃCUCH,SIODEŁKO,KIEROWNICA,,
-2026-12-26,czerwony,Biżuteria,PIERŚCIONEK,KOLCZYK,BRANSOLETKA,ŁAŃCUSZEK,,
-2026-12-27,zielony,W kuchni,PATELNIA,GARNEK,CHOCHLA,DURSZLAK,,
-2026-12-27,zolty,Instrumenty dęte,FLET,TUBA,KLARNET,PUZON,,
-2026-12-27,pomaranczowy,Sporty,TENIS,RUGBY,HOKEJ,KRYKIET,,
-2026-12-27,czerwony,Modele Volkswagena,PASSAT,GOLF,POLO,TIGUAN,,
-2026-12-28,zielony,W łazience,WANNA,UMYWALKA,PRYSZNIC,RĘCZNIK,,
-2026-12-28,zolty,Makarony,SPAGHETTI,PENNE,LASAGNE,ŚWIDERKI,,
-2026-12-28,pomaranczowy,Gryzonie,CHOMIK,SZCZUR,WIEWIÓRKA,BÓBR,,
-2026-12-28,czerwony,Sprzęt komputerowy,MYSZ,KLAWIATURA,MONITOR,DRUKARKA,,
-2026-12-29,zielony,Pory roku,WIOSNA,LATO,JESIEŃ,ZIMA,,
-2026-12-29,zolty,Ptaki,WRÓBEL,SIKORKA,SZPAK,GIL,,"Pospolite polskie ptaki: sroka, wrona, sowa i czapla."
-2026-12-29,pomaranczowy,Znaki interpunkcyjne,KROPKA,PRZECINEK,MYŚLNIK,ŚREDNIK,,
-2026-12-29,czerwony,Polskie potrawy,BIGOS,GOŁĄBKI,PIEROGI,PLACKI,,
-2026-12-30,zielony,Kości,CZASZKA,ŻEBRO,MOSTEK,KRĘGOSŁUP,,
-2026-12-30,zolty,Infrastruktura drogowa,WIADUKT,TUNEL,RONDO,ESTAKADA,,
-2026-12-30,pomaranczowy,Sałaty,RUKOLA,ROSZPONKA,LODOWA,RZYMSKA,,
-2026-12-30,czerwony,Nakrycia głowy,MELONIK,CYLINDER,KASZKIET,PANAMA,,
-2026-12-31,zielony,Przyprawy,PIEPRZ,CYNAMON,KMINEK,GAŁKA,,
-2026-12-31,zolty,Cytrusy,CYTRYNA,LIMONKA,POMARAŃCZA,GREJPFRUT,,
-2026-12-31,pomaranczowy,Stolice,LIMA,RZYM,OSLO,KAIR,,
-2026-12-31,czerwony,Państwa,CHILE,TURCJA,GRUZJA,NIGER,,
-2027-01-01,zielony,Emocje,RADOŚĆ,SMUTEK,ZŁOŚĆ,STRACH,,
-2027-01-01,zolty,Gatunki filmowe,WESTERN,HORROR,THRILLER,KOMEDIA,,
-2027-01-01,pomaranczowy,Kolory w kartach,KIER,KARO,PIK,TREFL,,
-2027-01-01,czerwony,Ryby,SZCZUPAK,OKOŃ,SUM,LESZCZ,,
-2027-01-02,zielony,Figury,KOŁO,KWADRAT,TRÓJKĄT,ROMB,,
-2027-01-02,zolty,Części drzewa,KORZEŃ,PIEŃ,GAŁĄŹ,KORA,,
-2027-01-02,pomaranczowy,Pozycje w piłce nożnej,BRAMKARZ,OBROŃCA,POMOCNIK,NAPASTNIK,,
-2027-01-02,czerwony,Elementy zamku,FOSA,BASZTA,BRAMA,DZIEDZINIEC,,
-2027-01-03,zielony,Zwierzęta leśne,DZIK,ŁOŚ,SARNA,LIS,,
-2027-01-03,zolty,Zioła,BAZYLIA,MIĘTA,TYMIANEK,LUBCZYK,,
-2027-01-03,pomaranczowy,Sporty zimowe,BIATHLON,NARCIARSTWO,ŁYŻWIARSTWO,SANECZKARSTWO,,
-2027-01-03,czerwony,Imiona polskich królów,BOLESŁAW,KAZIMIERZ,ZYGMUNT,WŁADYSŁAW,,
-2027-01-04,zielony,Części domu,DACH,KOMIN,STRYCH,PIWNICA,,
-2027-01-04,zolty,Ptaki drapieżne,ORZEŁ,SOKÓŁ,JASTRZĄB,MYSZOŁÓW,,
-2027-01-04,pomaranczowy,Narzędzia ogrodowe,GRABIE,ŁOPATA,SEKATOR,KONEWKA,,
-2027-01-04,czerwony,W szkole,TABLICA,KREDA,ŁAWKA,DZIENNIK,,
-2027-01-05,zielony,Napoje,KOMPOT,KEFIR,LEMONIADA,KAKAO,,
-2027-01-05,zolty,Kolory włosów,BLOND,RUDY,BRUNET,SZATYN,,
-2027-01-05,pomaranczowy,Choroby,GRYPA,ODRA,OSPA,ANGINA,,
-2027-01-05,czerwony,Rzeki,BUG,PILICA,SAN,NOTEĆ,,
-2027-01-06,zielony,Organy,SERCE,WĄTROBA,NERKA,PŁUCO,,
-2027-01-06,zolty,Instrumenty strunowe,GITARA,WIOLONCZELA,KONTRABAS,LUTNIA,,
-2027-01-06,pomaranczowy,Owady,ĆMA,TRZMIEL,ŚWIERSZCZ,WAŻKA,,
-2027-01-06,czerwony,Ciasta,SERNIK,SZARLOTKA,PIERNIK,BABKA,,
-2027-01-07,zielony,Miasta wojewódzkie,OPOLE,KIELCE,OLSZTYN,RZESZÓW,,
-2027-01-07,zolty,Płatności,GOTÓWKA,KARTA,PRZELEW,BLIK,,
-2027-01-07,pomaranczowy,Do pisania,DŁUGOPIS,OŁÓWEK,PIÓRO,FLAMASTER,,
-2027-01-07,czerwony,Gry planszowe,SZACHY,WARCABY,CHIŃCZYK,MONOPOL,,
-2027-01-08,zielony,Kosmos,KOMETA,METEORYT,GALAKTYKA,MGŁAWICA,,
-2027-01-08,zolty,Tkaniny,JEDWAB,LEN,WEŁNA,BAWEŁNA,,
-2027-01-08,pomaranczowy,Krawiectwo,IGŁA,NOŻYCZKI,NAPARSTEK,NICI,,
-2027-01-08,czerwony,Buty,KOZAKI,TRAMPKI,SZPILKI,KLAPKI,,
-2027-01-09,zielony,Dni tygodnia,ŚRODA,PIĄTEK,SOBOTA,NIEDZIELA,,
-2027-01-09,zolty,Mięso,SCHAB,BOCZEK,KARKÓWKA,POLĘDWICA,,
-2027-01-09,pomaranczowy,Pory dnia,ŚWIT,ZMIERZCH,RANEK,WIECZÓR,,
-2027-01-09,czerwony,Strony świata,WSCHÓD,ZACHÓD,PÓŁNOC,POŁUDNIE,,
-2027-01-10,zielony,Kosmetyki,SZMINKA,TUSZ,PUDER,KREM,,
-2027-01-10,zolty,W biurze,ZSZYWACZ,SPINACZ,SEGREGATOR,DZIURKACZ,,
-2027-01-10,pomaranczowy,Gady,JASZCZURKA,ŻÓŁW,WĄŻ,KROKODYL,,
-2027-01-10,czerwony,Perkusja,WERBEL,TALERZ,KOTŁY,KSYLOFON,,
-2027-01-11,zielony,Nabiał,SER,JOGURT,MASŁO,ŚMIETANA,,
-2027-01-11,zolty,Na choince,BOMBKA,ŁAŃCUCH,GWIAZDA,LAMPKI,,
-2027-01-11,pomaranczowy,Części statku,RUFA,DZIÓB,MASZT,KOTWICA,,
-2027-01-11,czerwony,Gry podwórkowe,KLASY,BEREK,CHOWANY,GUMY,,
-2027-01-12,zielony,Zwierzęta gospodarskie,KROWA,OWCA,KOZA,ŚWINIA,,
-2027-01-12,zolty,Zabawki,LALKA,KLOCKI,BĄCZEK,JOJO,,
-2027-01-12,pomaranczowy,Kawa,ESPRESSO,LATTE,AMERICANO,MOCHA,,
-2027-01-12,czerwony,Twarz,BREW,RZĘSA,POLICZEK,PODBRÓDEK,,
-2027-01-13,zielony,Opady,ŚNIEG,DESZCZ,GRAD,MŻAWKA,,
-2027-01-13,zolty,Jeziora,ŚNIARDWY,MAMRY,HAŃCZA,GOPŁO,,
-2027-01-13,pomaranczowy,Nad Bałtykiem,SOPOT,ŁEBA,USTKA,JASTARNIA,,
-2027-01-13,czerwony,Gazy,TLEN,AZOT,WODÓR,HEL,,
+2026-11-28,zielony,Ukryta rzeka,SANKI,BUGATTI,PODRAPANY,WARTOWNIK,Rzeka|Wisła,"SAN w SANKI, BUG w BUGATTI, ODRA w PODRAPANY i WARTA w WARTOWNIK."
+2026-11-28,zolty,Ukryta liczba,TRZYMAĆ,STODOŁA,ODWAGA,ZEROWANIE,Liczba|Cyfra,"TRZY w TRZYMAĆ, STO w STODOŁA, DWA w ODWAGA i ZERO w ZEROWANIE."
+2026-11-28,pomaranczowy,Ukryte imię,EWANGELIA,ADAMASZEK,KOLAGEN,MIGAWKA,Imię|Identyfikator,"EWA w EWANGELIA, ADAM w ADAMASZEK, OLA w KOLAGEN i IGA w MIGAWKA."
+2026-11-28,czerwony,Ukryta marka auta,SZUFLADA,MINISTER,AUDIOBOOK,POPELINA,Samochód osobowy|Samochód,"LADA w SZUFLADA, MINI w MINISTER, AUDI w AUDIOBOOK i OPEL w POPELINA. Bugatti to pułapka."
+2026-11-29,zielony,Złota…,RYBKA,RĄCZKA,JESIEŃ,KLATKA,Złoto|Sztabka złota,"Złota rybka, złota rączka, złota polska jesień i złota klatka."
+2026-11-29,zolty,Biała…,GORĄCZKA,DAMA,BROŃ,FLAGA,Biel|Śnieg,"Biała gorączka, biała dama, biała broń i biała flaga."
+2026-11-29,pomaranczowy,Czarna…,OWCA,ROBOTA,DZIURA,POLEWKA,Czerń|Noc,"Czarna owca, czarna robota, czarna dziura i czarna polewka."
+2026-11-29,czerwony,Zielona…,GÓRA,NOC,KARTA,HERBATA,Zieleń|Liść,"Zielona Góra, zielona noc, zielona karta i zielona herbata. Herbata bywa też czarna i biała."
+2026-11-30,zielony,"Mieć coś w kieszeni, nosie, brzuchu, głowie",WĘŻA,MUCHY,MOTYLE,OLEJ,Frazeologizm|Związek frazeologiczny|Motyle,"Mieć węża w kieszeni, muchy w nosie, motyle w brzuchu i olej w głowie."
+2026-11-30,zolty,Wpuścić lub nabić kogoś w…,MALINY,KANAŁ,BUTELKĘ,POLE,Malina właściwa|Malina,"Wpuścić w maliny, wpuścić w kanał, nabić w butelkę i wyprowadzić w pole."
+2026-11-30,pomaranczowy,"Zdrowy, uparty, głodny, pracowity jak…",RYBA,OSIOŁ,WILK,PSZCZOŁA,Pszczoła miodna|Osioł domowy,"Zdrowy jak ryba, uparty jak osioł, głodny jak wilk i pracowity jak pszczoła."
+2026-11-30,czerwony,Idzie jak po… / jak w… / jak z…,MAŚLE,SZNURKU,NUT,ZEGARKU,Masło|Zegarek,"Idzie jak po maśle, jak po sznurku, jak z nut i jak w zegarku."
+2026-12-01,zielony,Pan…,TADEUSZ,KLEKS,WOŁODYJOWSKI,SAMOCHODZIK,Pan Tadeusz|Adam Mickiewicz,"Pan Tadeusz, Pan Kleks, Pan Wołodyjowski i Pan Samochodzik."
+2026-12-01,zolty,Kapitan…,NEMO,HAK,ŻBIK,KLOSS,Kapitan|Kapitan statku,"Kapitan Nemo, Kapitan Hak, kapitan Żbik i kapitan Kloss."
+2026-12-01,pomaranczowy,Doktor…,DOLITTLE,ŻYWAGO,HOUSE,JEKYLL,Lekarz|Stetoskop,"Doktor Dolittle, Doktor Żywago, doktor House i doktor Jekyll."
+2026-12-01,czerwony,Król…,LEW,MACIUŚ,ARTUR,JULIAN,Król|Korona (insygnium),"Król Lew, Król Maciuś Pierwszy, Król Artur i król Julian."
+2026-12-02,zielony,Zdenerwować,ZIRYTOWAĆ,ROZDRAŻNIĆ,WKURZYĆ,ROZJUSZYĆ,Gniew|Złość,Różne stopnie wyprowadzania kogoś z równowagi.
+2026-12-02,zolty,Zaskoczyć,ZDZIWIĆ,ZDUMIEĆ,ZSZOKOWAĆ,OSZOŁOMIĆ,Zdziwienie|Zaskoczenie,Synonimy wywołania zdziwienia. Zszokować łatwo pomylić ze zdenerwować.
+2026-12-02,pomaranczowy,Mają żądło,OSA,PSZCZOŁA,SKORPION,PŁASZCZKA,Osa|Pszczoła miodna,Zwierzęta z żądłem. Płaszczka ma kolec jadowy na ogonie.
+2026-12-02,czerwony,Bomba ___,KALORYCZNA,ZEGAROWA,WITAMINOWA,DYMNA,Pączek|Czekolada,"Bomba kaloryczna, zegarowa, witaminowa i dymna."
+2026-12-03,zielony,Ukryć,SCHOWAĆ,ZATAIĆ,ZAKAMUFLOWAĆ,PRZEMILCZEĆ,Sejf|Skrytka,Sposoby ukrywania rzeczy lub informacji.
+2026-12-03,zolty,Zgubić,STRACIĆ,ZAPODZIAĆ,POSIAĆ,ZAWIERUSZYĆ,Klucz (narzędzie)|Klucze,"„Posiać” to potocznie zgubić, choć kojarzy się z siewem."
+2026-12-03,pomaranczowy,Mistrzowie kamuflażu,KAMELEON,PATYCZAK,KAMBAŁA,OŚMIORNICA,Kameleon|Patyczaki,"Zwierzęta, które zmieniają kolor albo udają otoczenie."
+2026-12-03,czerwony,Siać ___,ZAMĘT,PANIKĘ,POSTRACH,FERMENT,Siew|Siewnik,"Siać zamęt, panikę, postrach i ferment."
+2026-12-04,zielony,Bardzo dużo,MNÓSTWO,OGROM,BEZLIK,MASA,Mrowisko|Mrówki,Słowa oznaczające wielką ilość.
+2026-12-04,zolty,Zgromadzenie ludzi,TŁUM,CIŻBA,ZBIEGOWISKO,ŚCISK,Tłum|Koncert,Określenia ludzi zebranych w jednym miejscu.
+2026-12-04,pomaranczowy,Grupy zwierząt,STADO,ŁAWICA,RÓJ,WATAHA,Ławica|Stado,"Stado krów, ławica ryb, rój pszczół i wataha wilków."
+2026-12-04,czerwony,Kupa ___,ŚMIECHU,FORSY,ZŁOMU,CZASU,Złom|Złomowisko,"Kupa śmiechu, kupa forsy, kupa złomu i kupa czasu."
+2026-12-05,zielony,Zachwycający,OBŁĘDNY,ODLOTOWY,CZADOWY,BOSKI,Fajerwerki|Sztuczne ognie,Potoczne określenia czegoś świetnego. Obłędny pasuje też do szaleństwa.
+2026-12-05,zolty,Szalony,STUKNIĘTY,ZWARIOWANY,PORĄBANY,POMYLONY,Szaleństwo|Obłęd,Potoczne określenia kogoś niezrównoważonego.
+2026-12-05,pomaranczowy,Latają,SAMOLOT,LATAWIEC,DRON,BALON,Balon (statek powietrzny)|Latawiec,"Rzeczy, które unoszą się w powietrzu. Odlotowy to pułapka."
+2026-12-05,czerwony,Siódm(e/y/a) ___,NIEBO,POTY,CUD,WODA,Niebo,"Siódme niebo, siódme poty, siódmy cud świata i siódma woda po kisielu."
+2026-12-06,zielony,Nauczyciel,BELFER,PEDAGOG,WYCHOWAWCA,PROFESOR,Nauczyciel|Szkoła,"Określenia osoby, która uczy."
+2026-12-06,zolty,Szef,KIEROWNIK,DYREKTOR,PREZES,BOSS,Biuro|Garnitur,Osoby na kierowniczych stanowiskach. Dyrektor kojarzy się też ze szkołą.
+2026-12-06,pomaranczowy,W piórniku,OŁÓWEK,GUMKA,LINIJKA,TEMPERÓWKA,Piórnik|Ołówek,Przybory szkolne z piórnika.
+2026-12-06,czerwony,Godzina ___,ZERO,POLICYJNA,SZCZYTU,WYCHOWAWCZA,Zegar|Zegar ścienny,"Godzina zero, policyjna, szczytu i wychowawcza."
+2026-12-07,zielony,Pić,SĄCZYĆ,ŁYKAĆ,CHLEPTAĆ,POPIJAĆ,Herbata|Filiżanka,Sposoby picia. Chleptać kojarzy się też z kotem.
+2026-12-07,zolty,Jeść po trochu,SKUBAĆ,DZIOBAĆ,PODJADAĆ,GRYMASIĆ,Wróbel|Wróbel zwyczajny,Jedzenie bez apetytu albo małymi kęsami.
+2026-12-07,pomaranczowy,Robi kot,MRUCZEĆ,MIAUCZEĆ,SYCZEĆ,PRYCHAĆ,Kot domowy|Kot,"Odgłosy, które wydaje kot."
+2026-12-07,czerwony,Słomian(y/a) ___,WDOWIEC,ZAPAŁ,KAPELUSZ,DACH,Słoma|Strzecha,"Słomiany wdowiec, słomiany zapał, słomiany kapelusz i słomiany dach."
+2026-12-08,zielony,Bogaty,ZAMOŻNY,NADZIANY,MAJĘTNY,DZIANY,Pieniądz|Banknot,Określenia bogatej osoby. Nadziany pasuje też do pierogów.
+2026-12-08,zolty,Pełny,NAPCHANY,WYPCHANY,NABITY,ZAPCHANY,Walizka|Bagaż,Synonimy zapełnienia czegoś do granic.
+2026-12-08,pomaranczowy,Z nadzieniem,PĄCZEK,PIERÓG,KROKIET,NALEŚNIK,Krokiety|Pierogi,"Potrawy, które się nadziewa."
+2026-12-08,czerwony,Świnka ___,MORSKA,SKARBONKA,WIETNAMSKA,PEPPA,Świnka morska|Skarbonka,"Świnka morska, świnka-skarbonka, świnka wietnamska i świnka Peppa."
+2026-12-09,zielony,Zimno,ZIĄB,CHŁÓD,MRÓZ,ZIMNICA,Mróz|Szron,Słowa oznaczające zimno.
+2026-12-09,zolty,Na zimowy spacer,CZAPKA,SZALIK,RĘKAWICZKI,NAUSZNIKI,Czapka|Szalik,"Rzeczy, które chronią przed mrozem."
+2026-12-09,pomaranczowy,Mają płatki,RÓŻA,OWSIANKA,UCHO,ŚNIEG,Płatki owsiane|Róża,"Płatki róży, płatki owsiane, płatek ucha i płatki śniegu."
+2026-12-09,czerwony,___ lodowa,GÓRA,EPOKA,TAFLA,SAŁATA,Góra lodowa,"Góra lodowa, epoka lodowcowa, tafla lodowa i sałata lodowa."
+2026-12-10,zielony,Zrozumieć,KAPOWAĆ,ŁAPAĆ,CZAIĆ,KUMAĆ,Żarówka,Potoczne określenia rozumienia.
+2026-12-10,zolty,Złapać,CHWYCIĆ,POCHWYCIĆ,ZŁOWIĆ,CAPNĄĆ,Wędkarstwo|Wędka,Synonimy łapania. Łapać to pułapka: tu znaczy rozumieć.
+2026-12-10,pomaranczowy,Pracują z siecią,RYBAK,PAJĄK,SIATKARZ,HAKER,Pajęczyna|Sieć rybacka,"Rybak ma sieć, pająk pajęczynę, siatkarz siatkę, a haker włamuje się do sieci."
+2026-12-10,czerwony,Żyw(a/y) ___,GOTÓWKA,LEGENDA,REKLAMA,TRUP,Gotówka|Banknot,"Żywa gotówka, żywa legenda, żywa reklama i żywy trup."
+2026-12-11,zielony,Nudny,MDŁY,NIJAKI,MONOTONNY,DRĘTWY,Nuda|Ziewanie,Określenia czegoś bez wyrazu.
+2026-12-11,zolty,Zdrętwiały,ZESZTYWNIAŁY,SKOSTNIAŁY,ŚCIERPNIĘTY,ZGRABIAŁY,Mróz|Dłoń,Stan ciała po zimnie albo długim bezruchu.
+2026-12-11,pomaranczowy,Ćwiczenia,PRZYSIAD,POMPKA,BRZUSZEK,PODCIĄGANIE,Siłownia|Pompka,Podstawowe ćwiczenia na siłowni i w domu.
+2026-12-11,czerwony,Martw(y/a/e) ___,NATURA,PUNKT,SEZON,CIĄG,Martwa natura|Morze Martwe,"Martwa natura, martwy punkt, martwy sezon i martwy ciąg."
+2026-12-12,zielony,Kłótnia,SPRZECZKA,AWANTURA,SCYSJA,UTARCZKA,Kłótnia|Konflikt,Różne natężenia kłótni.
+2026-12-12,zolty,Niezłe zamieszanie,CYRK,HECA,JAZDA,AKCJA,Karnawał|Konfetti,"„Ale cyrk!”, „ale heca!”, „niezła jazda” i „ale akcja”."
+2026-12-12,pomaranczowy,W cyrku,KLAUN,AKROBATA,ŻONGLER,TRESER,Cyrk|Namiot cyrkowy,Artyści cyrkowi. Cyrk z drugiej grupy to pułapka.
+2026-12-12,czerwony,___ domowa,WOJNA,PRACA,APTECZKA,KUCHNIA,Dom|Kuchnia,"Wojna domowa, praca domowa, apteczka domowa i kuchnia domowa."
+2026-12-13,zielony,Szybko,MIGIEM,ŻWAWO,CHYŻO,DUCHEM,Błyskawica|Piorun,"Przysłówki oznaczające pośpiech. „Duchem” to szybko, nie straszno."
+2026-12-13,zolty,Wkrótce,ZARAZ,NIEBAWEM,RYCHŁO,WNET,Zegar|Klepsydra,Słowa oznaczające niedaleką przyszłość.
+2026-12-13,pomaranczowy,Zjawy,UPIÓR,ZJAWA,WIDMO,POLTERGEIST,Duch|Zamek,Nadprzyrodzone istoty z opowieści o duchach.
+2026-12-13,czerwony,Szybk(i/a) ___,RANDKA,KASA,PIŁKA,KOLEJ,Pociąg dużych prędkości|Kolej dużych prędkości,"Szybka randka, szybka kasa, szybka piłka i szybka kolej."
+2026-12-14,zielony,Oszust,NACIĄGACZ,KANCIARZ,HOCHSZTAPLER,CWANIAK,Karty do gry|Oszustwo,"Określenia kogoś, kto oszukuje."
+2026-12-14,zolty,Złodziej,KIESZONKOWIEC,WŁAMYWACZ,RABUŚ,SZABROWNIK,Włamanie|Złodziej,Różne rodzaje złodziei.
+2026-12-14,pomaranczowy,Noszą maskę,NURKOWIEC,SZERMIERZ,CHIRURG,SPAWACZ,Maska|Szermierka,"Zawody i sporty, w których nosi się maskę."
+2026-12-14,czerwony,Kieszonkow(y/e) ___,NÓŻ,ZEGAREK,WYDANIE,SŁOWNIK,Zegarek kieszonkowy|Kieszeń,"Nóż, zegarek, wydanie i słownik kieszonkowy. Kieszonkowiec to pułapka."
+2026-12-15,zielony,Smutny,PRZYGNĘBIONY,MARKOTNY,OSOWIAŁY,STRAPIONY,Smutek|Łzy,Określenia smutnego nastroju.
+2026-12-15,zolty,Samotny,OPUSZCZONY,OSAMOTNIONY,ODIZOLOWANY,PORZUCONY,Samotność|Ławka,Określenia kogoś zostawionego samemu sobie.
+2026-12-15,pomaranczowy,O deszczu,SIĄPI,LEJE,MŻY,KROPI,Deszcz|Parasol,"Jak mówimy, że pada."
+2026-12-15,czerwony,Szar(y/a/e) ___,STREFA,KOMÓRKI,MYSZKA,EMINENCJA,Mysz domowa|Mysz,"Szara strefa, szare komórki, szara myszka i szara eminencja."
+2026-12-16,zielony,Ciężko pracować,HARÓWAĆ,TYRAĆ,ORAĆ,ZASUWAĆ,Praca|Robotnik,Potoczne określenia ciężkiej pracy. Orać pasuje też do pola.
+2026-12-16,zolty,Prace w polu,SIAĆ,KOSIĆ,ŻĄĆ,BRONOWAĆ,Kombajn zbożowy|Pole uprawne,Czynności rolnicze.
+2026-12-16,pomaranczowy,Narzędzia rolnicze,KOSA,SIERP,GRABIE,WIDŁY,Kosa|Sierp,Tradycyjne narzędzia do pracy w polu.
+2026-12-16,czerwony,Poln(a/y/e) ___,MYSZ,DROGA,KWIATY,KONIK,Konik polny|Pasikonik,"Mysz polna, polna droga, polne kwiaty i konik polny."
+2026-12-17,zielony,Ozdabiać,DEKOROWAĆ,ZDOBIĆ,UPIĘKSZAĆ,PRZYSTRAJAĆ,Choinka|Dekoracja,Synonimy ozdabiania.
+2026-12-17,zolty,Na choinkę,BOMBKA,ŁAŃCUCH,LAMPKI,ANIOŁEK,Bombka choinkowa|Choinka,Ozdoby choinkowe.
+2026-12-17,pomaranczowy,Stroi się,GITARA,SKRZYPCE,PIANINO,RADIO,Gitara|Skrzypce,"Instrumenty i radio się stroi. Stroić to też ozdabiać, co mogło zmylić."
+2026-12-17,czerwony,Łańcuch ___,POKARMOWY,GÓRSKI,SZCZĘŚCIA,DOSTAW,Łańcuch|Łańcuch górski,"Łańcuch pokarmowy, górski, szczęścia i dostaw. Łańcuch na choinkę to pułapka."
