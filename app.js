@@ -207,20 +207,23 @@
     const titles = ["Perfekcyjnie!", "Świetnie!", "Dobra robota!", "Uff, udało się!"];
     $("end-title").textContent = state.won ? titles[Math.min(state.mistakes, 3)] : "Tym razem się nie udało";
     $("end-grid").innerHTML = state.history.map((r) => "<div>" + r.map((l) => `<i class="c${groups[l].level}"></i>`).join("") + "</div>").join("");
-    $("btn-wa").href = "https://wa.me/?text=" + encodeURIComponent(shareText());
+    updateWa();
     tick();
   }
 
+  const gameUrl = () => `https://${SITE}${location.pathname.replace(/index\.html$/, "")}`;
   function shareText() {
+    if (!$("with-score").checked) return `Zagraj w Czwórki – codzienną łamigłówkę słowną: 16 słów, 4 ukryte grupy. ${gameUrl()}`;
     const rows = state.history.map((r) => r.map((l) => EMOJI[groups[l].level]).join("")).join("\n");
-    return `Czwórki #${puzzleNo}\n${rows}\nhttps://${SITE}${location.pathname}`;
+    return `Czwórki #${puzzleNo}\n${rows}\nZagraj: ${gameUrl()}`;
   }
+  function updateWa() { $("btn-wa").href = "https://wa.me/?text=" + encodeURIComponent(shareText()); }
   async function share() {
     const text = shareText();
     if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) {
       try { await navigator.share({ text }); return; } catch {}
     }
-    try { await navigator.clipboard.writeText(text); toast("Skopiowano wynik"); }
+    try { await navigator.clipboard.writeText(text); toast("Skopiowano link"); }
     catch { prompt("Skopiuj wynik:", text); }
   }
 
@@ -247,6 +250,7 @@
   $("btn-clear").onclick = () => { selected = []; $("msg").textContent = ""; renderGrid(); };
   $("btn-shuffle").onclick = () => { state.order = shuffle(state.order); save(); renderGrid(); };
   $("btn-share").onclick = share;
+  $("with-score").onchange = updateWa;
   $("btn-help").onclick = () => $("dlg-help").showModal();
   $("btn-stats").onclick = showStats;
   if (!store.get("cz-seen", false)) { $("dlg-help").showModal(); store.set("cz-seen", true); }
