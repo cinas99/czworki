@@ -1,6 +1,6 @@
 :root{
   --bg:#ffffff;--fg:#121212;--muted:#6b6b6b;--tile:#efefe6;--tile-sel:#5a594e;--line:#d6d6cc;
-  --c0:#8fd16a;--c1:#f7d354;--c2:#f6a04d;--c3:#ee6b6b;--danger:#c0392b;
+  --c0:#c3e6ad;--c1:#f6e49c;--c2:#f7c99a;--c3:#f2aeae;--danger:#c0392b;
   --r:10px;
 }
 html[data-theme="dark"]{--bg:#121213;--fg:#f2f2f2;--muted:#9a9a9a;--tile:#2c2c2e;--tile-sel:#d8d8d0;--line:#3a3a3c;color-scheme:dark}
@@ -73,3 +73,7 @@ dialog ul{padding-left:18px;line-height:1.6}
 .end button.ghost{border:none;background:none;color:var(--muted);text-decoration:underline;font-weight:500;padding:12px 8px 0;font-size:14px}
 .end .sh{border:none;border-radius:0;padding:0;font-weight:400;color:var(--muted);width:52px}
 .share-grid{gap:14px 8px;max-width:380px}
+.lvl{position:absolute;left:8px;top:6px;z-index:4;font-size:10px;font-weight:700;letter-spacing:.6px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,.75);color:#333}
+.row.has-img .lvl{left:20px;background:var(--gc);color:#222}
+.row{padding-top:22px}
+.row.has-img{padding:32px 22px 20px}
