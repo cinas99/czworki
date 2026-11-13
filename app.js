@@ -55,6 +55,12 @@
     get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
   };
+  // Reset do testów: ?reset (dzisiejsza gra) albo ?reset=all (też statystyki)
+  const rq = new URLSearchParams(location.search);
+  if (rq.has("reset")) {
+    try { localStorage.removeItem("cz-day"); if (rq.get("reset") === "all") localStorage.removeItem("cz-stats"); } catch {}
+    history.replaceState(null, "", location.pathname);
+  }
   let state = store.get("cz-day", null);
   if (!state || state.date !== today) {
     state = { date: today, solved: [], mistakes: 0, history: [], tried: [], done: false, won: false, order: null };
