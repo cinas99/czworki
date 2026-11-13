@@ -134,7 +134,7 @@
       const g = groups[gi];
       const el = document.createElement("div");
       el.className = `row c${g.level}`;
-      el.innerHTML = `<span class="lvl">${["ŁATWE", "ŚREDNIE", "TRUDNE", "PODCHWYTLIWE"][g.level]}</span><div class="row-txt"><b>${g.name}</b><span>${g.words.join(", ")}</span></div>`;
+      el.innerHTML = `<div class="row-txt"><b>${g.name}</b><span>${g.words.join(", ")}</span></div>`;
       box.appendChild(el);
       decorate(el, g);
     });

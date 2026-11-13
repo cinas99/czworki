@@ -62,8 +62,8 @@ dialog ul{padding-left:18px;line-height:1.6}
 .page a{color:inherit}
 .lvl{position:absolute;left:8px;top:6px;z-index:4;font-size:10px;font-weight:700;letter-spacing:.6px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,.75);color:#333}
 .row.has-img .lvl{left:20px;background:var(--gc);color:#222}
-.row{padding-top:22px}
-.row.has-img{padding:32px 22px 20px}
+
+.row.has-img{padding:24px 22px 22px}
 
 /* ---- Ekran końcowy ---- */
 .end{margin-top:18px;animation:pop .35s}
