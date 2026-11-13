@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel – Czwórki</title>
+<script>try{if(localStorage.getItem("cz-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=16">
+<style>
+.page{max-width:760px}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 16px}
+.summary div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.summary b{display:block;font-size:22px}
+.summary span{font-size:12px;color:var(--muted)}
+.warn{color:#b23b3b}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.bar button{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:7px 14px;font-size:13px;cursor:pointer}
+.bar button.on{background:var(--fg);color:var(--bg)}
+.day{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;margin:0 0 14px}
+.day.today{border:2px solid var(--fg)}
+.day-h{display:flex;justify-content:space-between;align-items:center;margin:0 0 10px;gap:8px}
+.day-h h2{font-size:16px;margin:0}
+.day-h small{color:var(--muted);font-size:13px}
+.day-h a{font-size:13px;color:var(--fg);white-space:nowrap}
+.gs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (max-width:520px){.gs{grid-template-columns:1fr}}
+.gc{position:relative;border-radius:10px;overflow:hidden;min-height:118px;background:#333;color:#fff;border-left:8px solid var(--gc);border-right:8px solid var(--gc)}
+.gc .ph{position:absolute;inset:0;background-size:cover;background-position:center}
+.gc .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 20%,rgba(0,0,0,.7))}
+.gc .tx{position:relative;padding:10px;display:flex;flex-direction:column;justify-content:flex-end;min-height:118px;text-shadow:0 1px 3px #000}
+.gc b{text-transform:uppercase;font-size:13px}
+.gc .w{font-size:12px}
+.gc .ex{font-size:11px;opacity:.9;margin-top:3px;line-height:1.35}
+.gc .src{position:absolute;top:6px;right:8px;font-size:10px;background:rgba(0,0,0,.55);padding:2px 6px;border-radius:999px}
+.gc .src.bad{background:#b23b3b}
+.gc.noimg{background:var(--gc);color:#222}
+.gc.noimg .tx{text-shadow:none}
+.lock{padding:40px 0;text-align:center}
+</style>
+</head>
+<body>
+<main class="page">
+<p><a href="./">← Gra</a> · <a href="https://github.com/cinas99/czworki/blob/main/zagadki.csv" target="_blank" rel="noopener">Edytuj bazę na GitHubie</a></p>
+<h1>Panel zagadek</h1>
+<div id="app">Wczytywanie…</div>
+</main>
+<script src="images.js?v=16"></script>
+<script>
+(async () => {
+  const app = document.getElementById("app");
+  const q = new URLSearchParams(location.search);
+  try { if (q.has("admin")) localStorage.setItem("cz-admin", "1"); } catch {}
+  let admin = false; try { admin = localStorage.getItem("cz-admin") === "1"; } catch {}
+  if (!admin) { app.innerHTML = '<p class="lock">Panel jest dostępny w trybie admina. Otwórz <b>panel.html?admin</b>.</p>'; return; }
+
+  const LV = { zielony: 0, zolty: 1, pomaranczowy: 2, czerwony: 3 };
+  const today = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Warsaw" }).format(new Date());
+  const esc = (s) => (s || "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  function parseCSV(t) {
+    const rows = []; let row = [], cur = "", qq = false;
+    for (let i = 0; i < t.length; i++) {
+      const c = t[i];
+      if (qq) { if (c === '"') { if (t[i + 1] === '"') { cur += '"'; i++; } else qq = false; } else cur += c; }
+      else if (c === '"') qq = true;
+      else if (c === ",") { row.push(cur); cur = ""; }
+      else if (c === "\n" || c === "\r") { if (c === "\r" && t[i + 1] === "\n") i++; row.push(cur); rows.push(row); row = []; cur = ""; }
+      else cur += c;
+    }
+    if (cur || row.length) { row.push(cur); rows.push(row); }
+    const h = rows.shift().map((x) => x.trim().toLowerCase());
+    return rows.filter((r) => r.some((x) => x.trim())).map((r) => Object.fromEntries(h.map((k, i) => [k, (r[i] || "").trim()])));
+  }
+  const rows = parseCSV(await (await fetch("zagadki.csv?t=" + Date.now(), { cache: "no-store" })).text());
+  const by = new Map();
+  rows.forEach((r) => { if (!by.has(r.data)) by.set(r.data, []); by.get(r.data).push(r); });
+  const all = [...by.keys()].sort();
+  const future = all.filter((d) => d >= today);
+  const fmt = (d) => new Date(d + "T12:00:00Z").toLocaleDateString("pl-PL", { weekday: "short", day: "numeric", month: "long" });
+
+  // Kontrola jakości: słowa w kilku grupach, brak 4 grup, brak wyjaśnień
+  function problems(d) {
+    const g = by.get(d), out = [];
+    if (g.length !== 4) out.push(`${g.length} grup zamiast 4`);
+    const ws = g.flatMap((x) => [x.slowo1, x.slowo2, x.slowo3, x.slowo4].map((w) => w.toUpperCase()));
+    const dup = ws.filter((w, i) => ws.indexOf(w) !== i);
+    if (dup.length) out.push("powtórzone słowa: " + [...new Set(dup)].join(", "));
+    if (g.some((x) => !x.wyjasnienie)) out.push("brak wyjaśnienia");
+    if (g.some((x) => !x.zdjecie)) out.push("brak hasła zdjęcia");
+    return out;
+  }
+  const lastDay = all[all.length - 1];
+  app.innerHTML = `
+    <div class="summary">
+      <div><b>${future.length}</b><span>dni w zapasie</span></div>
+      <div><b>${lastDay ? new Date(lastDay + "T12:00:00Z").toLocaleDateString("pl-PL", { day: "numeric", month: "short" }) : "–"}</b><span>ostatnia zagadka</span></div>
+      <div><b class="${future.filter((d) => problems(d).length).length ? "warn" : ""}">${future.filter((d) => problems(d).length).length}</b><span>dni z uwagami</span></div>
+    </div>
+    <div class="bar"><button data-f="future" class="on">Od dziś</button><button data-f="past">Archiwum</button><button data-f="warn">Tylko z uwagami</button></div>
+    <div id="days"></div>`;
+
+  function render(filter) {
+    let list = filter === "past" ? all.filter((d) => d < today).reverse() : future;
+    if (filter === "warn") list = future.filter((d) => problems(d).length);
+    const box = document.getElementById("days");
+    box.innerHTML = list.map((d) => {
+      const pr = problems(d);
+      const g = by.get(d).slice().sort((a, b) => (LV[a.kolor] ?? 0) - (LV[b.kolor] ?? 0));
+      return `<section class="day${d === today ? " today" : ""}">
+        <div class="day-h"><div><h2>#${all.indexOf(d) + 1} · ${fmt(d)}${d === today ? " · dziś" : ""}</h2>${pr.length ? `<small class="warn">⚠ ${esc(pr.join("; "))}</small>` : ""}</div>
+        <a href="./?admin&dzien=${d}">Zagraj ten dzień →</a></div>
+        <div class="gs">${g.map((x) => `<div class="gc c${LV[x.kolor] ?? 0}" data-img="${esc(x.zdjecie)}">
+          <div class="ph"></div><span class="src">szukam zdjęcia…</span>
+          <div class="tx"><b>${esc(x.kategoria)}</b><span class="w">${esc([x.slowo1, x.slowo2, x.slowo3, x.slowo4].join(", "))}</span>${x.wyjasnienie ? `<span class="ex">${esc(x.wyjasnienie)}</span>` : ""}</div></div>`).join("")}</div>
+      </section>`;
+    }).join("") || "<p>Brak dni do pokazania.</p>";
+    box.querySelectorAll(".gc").forEach(async (el) => {
+      const im = await window.czImage(el.dataset.img);
+      const tag = el.querySelector(".src");
+      if (!im) { el.classList.add("noimg"); tag.textContent = el.dataset.img ? "brak zdjęcia: " + el.dataset.img : "brak hasła"; tag.classList.add("bad"); return; }
+      el.querySelector(".ph").style.backgroundImage = `url("${im.src}")`;
+      tag.textContent = im.title;
+    });
+  }
+  document.querySelectorAll(".bar button").forEach((b) => b.onclick = () => {
+    document.querySelectorAll(".bar button").forEach((x) => x.classList.toggle("on", x === b)); render(b.dataset.f);
+  });
+  render("future");
+})();
+</script>
+</body>
+</html>

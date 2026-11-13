@@ -48,3 +48,6 @@ Po akceptacji wklej skrypt AdSense w `<head>` w `index.html`, a kod jednostki re
 - `?admin=off`: wyłącza go
 - `?reset`: czyści dzisiejszą grę; `?reset=all` czyści też statystyki
 - `?dzien=2026-11-20` (w trybie admina): podgląd zagadki z dowolnego dnia, nie liczy się do statystyk
+
+## Panel
+`panel.html?admin`: podgląd zagadek na każdy dzień ze zdjęciami, wyjaśnieniami i ostrzeżeniami (powtórzone słowa, brak wyjaśnienia, brak zdjęcia). Kolumna `zdjecie` przyjmuje kilka haseł z Wikipedii oddzielonych `|`; gra bierze pierwsze, które ma zdjęcie.

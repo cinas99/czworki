@@ -90,28 +90,8 @@
   const save = () => store.set("cz-day", state);
   const remaining = () => state.order.filter((w) => !state.solved.includes(groupOf(w)));
 
-  // ---- Zdjęcia grup: kolumna "zdjecie" (adres URL albo tytuł artykułu w polskiej Wikipedii) ----
-  const imgCache = {};
-  const titleCase = (w) => w.charAt(0) + w.slice(1).toLowerCase();
-  async function wikiImage(title) {
-    try {
-      const r = await fetch("https://pl.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(title.replace(/ /g, "_")));
-      if (!r.ok) return null;
-      const j = await r.json();
-      if (j.type === "disambiguation" || !j.thumbnail) return null;
-      return { src: j.thumbnail.source, link: j.content_urls?.desktop?.page };
-    } catch { return null; }
-  }
-  async function groupImage(g) {
-    if (g.name in imgCache) return imgCache[g.name];
-    let found = null;
-    if (/^https?:\/\//.test(g.img)) found = { src: g.img, link: null };
-    const tries = [g.img, ...g.words.map(titleCase)].filter((t) => t && !/^https?:/.test(t));
-    for (const t of tries) { if (found) break; found = await wikiImage(t); }
-    return (imgCache[g.name] = found);
-  }
   async function decorate(rowEl, g) {
-    const im = await groupImage(g);
+    const im = await window.czImage(g.img);
     if (!im) return;
     const pic = new Image();
     pic.onload = () => {
