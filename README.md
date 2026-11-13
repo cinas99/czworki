@@ -6,7 +6,7 @@ Czysty HTML/CSS/JS, bez backendu i bez budowania. Działa na GitHub Pages.
 
 ## Pliki
 - `index.html`, `style.css`, `app.js`: gra
-- `puzzles.js`: zagadki i data startu (`START_DATE`); zagadka #1 = ten dzień
+- `zagadki.csv`: **baza zagadek** (otwórz na GitHubie, żeby zobaczyć ją jako tabelę; edytuj ołówkiem)
 - `jak-grac.html`, `polityka-prywatnosci.html`: podstrony wymagane przez AdSense (uzupełnij pola w [nawiasach])
 - `ads.txt`: wpisz swój identyfikator wydawcy po akceptacji AdSense
 - `CNAME`: Twoja domena
@@ -26,7 +26,17 @@ i otwórz http://localhost:8000
 4. Po kilku minutach–godzinach zaznacz w Settings → Pages „Enforce HTTPS”.
 
 ## Dodawanie zagadek
-Dopisz kolejne pozycje do tablicy `PUZZLES` w `puzzles.js`. Kolejność grup = trudność (żółta, zielona, niebieska, fioletowa). Każde słowo musi należeć do dokładnie jednej grupy. Gdy zagadki się skończą, gra zaczyna je powtarzać od początku, więc trzymaj zapas.
+Każda zagadka to 4 wiersze w `zagadki.csv` z tą samą datą:
+
+| kolumna | co wpisać |
+|---|---|
+| `data` | dzień publikacji, np. `2026-12-24` (pierwsza data w pliku = zagadka #1) |
+| `kolor` | `zolty` (łatwa), `zielony`, `niebieski`, `fioletowy` (podchwytliwa) |
+| `kategoria` | nazwa grupy pokazywana po odgadnięciu |
+| `slowo1`–`slowo4` | słowa (wielkość liter bez znaczenia) |
+| `zdjecie` | tytuł artykułu z polskiej Wikipedii (np. `Sroka zwyczajna`) albo pełny adres URL zdjęcia; puste = gra spróbuje znaleźć zdjęcie po słowach z grupy |
+
+Zasady: każde słowo w danym dniu musi należeć do dokładnie jednej grupy; nie używaj przecinków w polach. Jeśli na dany dzień nie ma zagadki, gra powtarza starsze, więc trzymaj zapas.
 
 ## Reklamy (AdSense)
 Po akceptacji wklej skrypt AdSense w `<head>` w `index.html`, a kod jednostki reklamowej w `#ad-slot` (pokazuje się dopiero po zakończeniu gry). W UE wymagany jest baner zgody z certyfikowanej platformy CMP (np. „Prywatność i wiadomości” w panelu AdSense).

@@ -1,18 +1,53 @@
-(() => {
+(async () => {
   const SITE = location.host || "czworki.pl";
   const EMOJI = ["🟨", "🟩", "🟦", "🟪"];
+  const LEVELS = { zolty: 0, zielony: 1, niebieski: 2, fioletowy: 3 };
   const MAX_MISTAKES = 4;
   const $ = (id) => document.getElementById(id);
 
   // ---- Data dnia w strefie Europe/Warsaw ----
   const todayStr = () => new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Warsaw" }).format(new Date());
   const dayDiff = (a, b) => Math.round((Date.parse(b + "T00:00:00Z") - Date.parse(a + "T00:00:00Z")) / 864e5);
-
   const today = todayStr();
-  const dayIndex = Math.max(0, dayDiff(START_DATE, today));
+
+  // ---- Baza zagadek (zagadki.csv) ----
+  function parseCSV(text) {
+    const rows = []; let row = [], cur = "", q = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (q) { if (c === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += c; }
+      else if (c === '"') q = true;
+      else if (c === ",") { row.push(cur); cur = ""; }
+      else if (c === "\n" || c === "\r") { if (c === "\r" && text[i + 1] === "\n") i++; row.push(cur); rows.push(row); row = []; cur = ""; }
+      else cur += c;
+    }
+    if (cur || row.length) { row.push(cur); rows.push(row); }
+    const head = rows.shift().map((h) => h.trim().toLowerCase());
+    return rows.filter((r) => r.some((x) => x.trim())).map((r) => Object.fromEntries(head.map((h, i) => [h, (r[i] || "").trim()])));
+  }
+  let rows;
+  try {
+    const res = await fetch("zagadki.csv?d=" + today, { cache: "no-cache" });
+    rows = parseCSV(await res.text());
+  } catch (e) {
+    $("msg").textContent = "Nie udało się wczytać zagadki. Odśwież stronę.";
+    return;
+  }
+  const byDate = new Map();
+  rows.forEach((r) => { if (!byDate.has(r.data)) byDate.set(r.data, []); byDate.get(r.data).push(r); });
+  const dates = [...byDate.keys()].sort();
+  const startDate = dates[0];
+  const dayIndex = Math.max(0, dayDiff(startDate, today));
   const puzzleNo = dayIndex + 1;
-  const raw = PUZZLES[dayIndex % PUZZLES.length];
-  const groups = raw.map(([name, words], i) => ({ name, words, level: i }));
+  const dayRows = byDate.get(today) || byDate.get(dates[dayIndex % dates.length]);
+  const groups = dayRows
+    .map((r) => ({
+      name: r.kategoria,
+      words: [r.slowo1, r.slowo2, r.slowo3, r.slowo4].map((w) => w.toUpperCase()),
+      level: LEVELS[r.kolor] ?? 0,
+      img: r.zdjecie,
+    }))
+    .sort((a, b) => a.level - b.level);
   const groupOf = (w) => groups.findIndex((g) => g.words.includes(w));
 
   // ---- Pamięć lokalna ----
@@ -27,7 +62,9 @@
   let stats = store.get("cz-stats", { played: 0, wins: 0, streak: 0, max: 0, lastWin: null });
 
   const allWords = groups.flatMap((g) => g.words);
-  if (!state.order || state.order.length !== allWords.length) state.order = shuffle([...allWords]);
+  if (!state.order || state.order.length !== allWords.length || !state.order.every((w) => allWords.includes(w))) {
+    state.order = shuffle([...allWords]);
+  }
   let selected = [];
 
   function shuffle(a) {
@@ -37,12 +74,58 @@
   const save = () => store.set("cz-day", state);
   const remaining = () => state.order.filter((w) => !state.solved.includes(groupOf(w)));
 
+  // ---- Zdjęcia grup: kolumna "zdjecie" (adres URL albo tytuł artykułu w polskiej Wikipedii) ----
+  const imgCache = {};
+  const titleCase = (w) => w.charAt(0) + w.slice(1).toLowerCase();
+  async function wikiImage(title) {
+    try {
+      const r = await fetch("https://pl.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(title.replace(/ /g, "_")));
+      if (!r.ok) return null;
+      const j = await r.json();
+      if (j.type === "disambiguation" || !j.thumbnail) return null;
+      return { src: j.thumbnail.source, link: j.content_urls?.desktop?.page };
+    } catch { return null; }
+  }
+  async function groupImage(g) {
+    if (g.name in imgCache) return imgCache[g.name];
+    let found = null;
+    if (/^https?:\/\//.test(g.img)) found = { src: g.img, link: null };
+    const tries = [g.img, ...g.words.map(titleCase)].filter((t) => t && !/^https?:/.test(t));
+    for (const t of tries) { if (found) break; found = await wikiImage(t); }
+    return (imgCache[g.name] = found);
+  }
+  async function decorate(rowEl, g) {
+    const im = await groupImage(g);
+    if (!im) return;
+    const pic = new Image();
+    pic.onload = () => {
+      const bg = document.createElement("div");
+      bg.className = "row-bg";
+      bg.style.backgroundImage = `url("${im.src}")`;
+      rowEl.prepend(bg);
+      rowEl.classList.add("has-img");
+      requestAnimationFrame(() => bg.classList.add("on"));
+      if (im.link) {
+        const a = document.createElement("a");
+        a.className = "credit"; a.href = im.link; a.target = "_blank"; a.rel = "noopener"; a.textContent = "fot. Wikipedia";
+        rowEl.appendChild(a);
+      }
+    };
+    pic.src = im.src;
+  }
+
   // ---- Rysowanie ----
   function renderSolved() {
-    $("solved").innerHTML = state.solved.map((gi) => {
+    const box = $("solved");
+    state.solved.forEach((gi, i) => {
+      if (box.children[i]) return;
       const g = groups[gi];
-      return `<div class="row c${g.level}"><b>${g.name}</b><span>${g.words.join(", ")}</span></div>`;
-    }).join("");
+      const el = document.createElement("div");
+      el.className = `row c${g.level}`;
+      el.innerHTML = `<div class="row-txt"><b>${g.name}</b><span>${g.words.join(", ")}</span></div>`;
+      box.appendChild(el);
+      decorate(el, g);
+    });
   }
   function renderGrid() {
     const grid = $("grid");
@@ -56,9 +139,7 @@
       grid.appendChild(b);
     });
   }
-  function renderLives() {
-    $("lives").innerHTML = "<i></i>".repeat(MAX_MISTAKES - state.mistakes);
-  }
+  function renderLives() { $("lives").innerHTML = "<i></i>".repeat(MAX_MISTAKES - state.mistakes); }
   function render() { renderSolved(); renderGrid(); renderLives(); if (state.done) showEnd(); }
 
   function toggle(w) {
@@ -126,12 +207,13 @@
     const titles = ["Perfekcyjnie!", "Świetnie!", "Dobra robota!", "Uff, udało się!"];
     $("end-title").textContent = state.won ? titles[Math.min(state.mistakes, 3)] : "Tym razem się nie udało";
     $("end-grid").innerHTML = state.history.map((r) => "<div>" + r.map((l) => `<i class="c${groups[l].level}"></i>`).join("") + "</div>").join("");
+    $("btn-wa").href = "https://wa.me/?text=" + encodeURIComponent(shareText());
     tick();
   }
 
   function shareText() {
     const rows = state.history.map((r) => r.map((l) => EMOJI[groups[l].level]).join("")).join("\n");
-    return `Czwórki #${puzzleNo}\n${rows}\n${SITE}`;
+    return `Czwórki #${puzzleNo}\n${rows}\nhttps://${SITE}${location.pathname}`;
   }
   async function share() {
     const text = shareText();
@@ -143,9 +225,8 @@
   }
 
   function tick() {
-    const now = new Date();
-    const parts = Object.fromEntries(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Warsaw", hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" }).formatToParts(now).map((p) => [p.type, p.value]));
-    let s = 86400 - (+parts.hour * 3600 + +parts.minute * 60 + +parts.second);
+    const parts = Object.fromEntries(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Warsaw", hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" }).formatToParts(new Date()).map((p) => [p.type, p.value]));
+    const s = 86400 - (+parts.hour * 3600 + +parts.minute * 60 + +parts.second);
     const pad = (n) => String(n).padStart(2, "0");
     $("countdown").textContent = `${pad(Math.floor(s / 3600))}:${pad(Math.floor((s % 3600) / 60))}:${pad(s % 60)}`;
     if (s <= 1) setTimeout(() => location.reload(), 1500);
@@ -170,4 +251,20 @@
   $("btn-stats").onclick = showStats;
   if (!store.get("cz-seen", false)) { $("dlg-help").showModal(); store.set("cz-seen", true); }
   render();
+})();
+
+// ---- Motyw: jasny domyślnie, przełącznik na ciemny ----
+(() => {
+  const btn = document.getElementById("btn-theme");
+  const apply = (t) => {
+    document.documentElement.dataset.theme = t;
+    btn.textContent = t === "dark" ? "☀" : "☾";
+    btn.setAttribute("aria-label", t === "dark" ? "Włącz jasny motyw" : "Włącz ciemny motyw");
+  };
+  apply(document.documentElement.dataset.theme || "light");
+  btn.onclick = () => {
+    const t = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    apply(t);
+    try { localStorage.setItem("cz-theme", t); } catch {}
+  };
 })();

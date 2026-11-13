@@ -10,14 +10,18 @@
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='1' y='1' width='14' height='14' rx='3' fill='%23f9df6d'/><rect x='17' y='1' width='14' height='14' rx='3' fill='%23a0c35a'/><rect x='1' y='17' width='14' height='14' rx='3' fill='%23b0c4ef'/><rect x='17' y='17' width='14' height='14' rx='3' fill='%23ba81c5'/></svg>">
+<script>try{if(localStorage.getItem("cz-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
 <link rel="stylesheet" href="style.css">
 <!-- AdSense: po akceptacji wklej tu skrypt z panelu AdSense (oraz baner zgody CMP) -->
 </head>
 <body>
 <header class="top">
-  <button class="icon" id="btn-help" aria-label="Jak grać">?</button>
+  <div class="top-l"><button class="icon" id="btn-help" aria-label="Jak grać">?</button></div>
   <h1>Czwórki</h1>
-  <button class="icon" id="btn-stats" aria-label="Statystyki">▤</button>
+  <div class="top-r">
+    <button class="icon" id="btn-theme" aria-label="Włącz ciemny motyw">☾</button>
+    <button class="icon" id="btn-stats" aria-label="Statystyki">▤</button>
+  </div>
 </header>
 
 <main class="wrap">
@@ -35,7 +39,12 @@
   <section class="end" id="end" hidden>
     <h2 id="end-title"></h2>
     <div id="end-grid" class="end-grid"></div>
-    <button class="primary" id="btn-share">Udostępnij wynik</button>
+    <div class="share-row">
+      <button class="primary" id="btn-share">Udostępnij wynik</button>
+      <a class="wa" id="btn-wa" href="#" target="_blank" rel="noopener" aria-label="Udostępnij na WhatsApp" title="Udostępnij na WhatsApp">
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="#fff" d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3zm0 1.8a7.2 7.2 0 1 1-3.7 13.4l-.3-.2-2.7.7.7-2.6-.2-.3A7.2 7.2 0 0 1 12 4.8zm-3 3.4c-.2 0-.5 0-.7.3-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.8 4.4 3.8 2.1.8 2.6.7 3 .6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3-1.7-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.4.2-.4v-.4l-.8-1.9c-.2-.5-.4-.5-.6-.5H9z"/></svg>
+      </a>
+    </div>
     <p class="next">Następna zagadka za <b id="countdown"></b></p>
     <!-- Miejsce reklamowe: pokazujemy dopiero po zakończeniu gry -->
     <div class="ad-slot" id="ad-slot">Miejsce na reklamę</div>
@@ -73,7 +82,6 @@
 
 <div class="toast" id="toast" hidden></div>
 
-<script src="puzzles.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
