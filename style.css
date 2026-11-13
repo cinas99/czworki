@@ -45,9 +45,13 @@ button.primary{background:var(--fg);color:var(--bg)}
 .end h2{margin:0 0 10px}
 .opt{display:flex;align-items:center;justify-content:center;gap:6px;font-size:14px;color:var(--muted);margin:10px 0 0;cursor:pointer}
 .opt input{width:17px;height:17px;accent-color:var(--fg)}
-.share-row{display:flex;gap:10px;justify-content:center;align-items:center}
-.wa{width:48px;height:48px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;flex:none}
-.wa:active{transform:scale(.95)}
+.share-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 10px;margin:16px auto 0;max-width:360px}
+.sh{display:flex;flex-direction:column;align-items:center;gap:5px;width:58px;font-size:11px;color:var(--muted);text-decoration:none;background:none;border:none;padding:0;cursor:pointer}
+.sh span{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.sh:active span{transform:scale(.94)}
+.sh.wa span{background:#25d366}.sh.ms span{background:#0a7cff}.sh.fb span{background:#1877f2}.sh.sms span{background:#34c759}.sh.x span{background:#111}.sh.cp span{background:#8a8a85}
+html[data-theme="dark"] .sh.x span{background:#444}
+body:not(.is-mobile) .mobile-only{display:none}
 .end-grid{margin:0 auto 14px;line-height:0}
 .end-grid div{margin:2px 0}
 .end-grid i{display:inline-block;width:22px;height:22px;border-radius:5px;margin:0 2px}
@@ -66,3 +70,6 @@ dialog ul{padding-left:18px;line-height:1.6}
 .toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:8px;font-weight:600;z-index:10}
 .page{max-width:680px;margin:0 auto;padding:20px 16px 40px;line-height:1.65}
 .page a{color:inherit}
+.end button.ghost{border:none;background:none;color:var(--muted);text-decoration:underline;font-weight:500;padding:12px 8px 0;font-size:14px}
+.end .sh{border:none;border-radius:0;padding:0;font-weight:400;color:var(--muted);width:52px}
+.share-grid{gap:14px 8px;max-width:380px}

@@ -191,6 +191,7 @@
 
   function finish(won) {
     state.done = true; state.won = won; selected = [];
+    if (state.replay) { save(); return; }
     stats.played++;
     if (won) {
       stats.wins++;
@@ -223,7 +224,14 @@
     const rows = state.history.map((r) => r.map((l) => EMOJI[groups[l].level]).join("")).join("\n");
     return `Czwórki #${puzzleNo}\n${rows}\nZagraj: ${gameUrl()}`;
   }
-  function updateWa() { $("btn-wa").href = "https://wa.me/?text=" + encodeURIComponent(shareText()); }
+  function updateWa() {
+    const t = encodeURIComponent(shareText()), u = encodeURIComponent(gameUrl());
+    $("sh-wa").href = "https://wa.me/?text=" + t;
+    $("sh-ms").href = "fb-messenger://share/?link=" + u;
+    $("sh-fb").href = "https://www.facebook.com/sharer/sharer.php?u=" + u;
+    $("sh-sms").href = (/iPhone|iPad/i.test(navigator.userAgent) ? "sms:&body=" : "sms:?body=") + t;
+    $("sh-x").href = "https://x.com/intent/post?text=" + t;
+  }
   async function share() {
     const text = shareText();
     const linkOnly = !$("with-score").checked;
@@ -258,6 +266,14 @@
   $("btn-shuffle").onclick = () => { state.order = shuffle(state.order); save(); renderGrid(); };
   $("btn-share").onclick = share;
   $("with-score").onchange = updateWa;
+  $("btn-reset").onclick = () => {
+    store.set("cz-day", { date: today, solved: [], mistakes: 0, history: [], tried: [], done: false, won: false, order: null, replay: true });
+    location.reload();
+  };
+  $("sh-copy").onclick = async () => {
+    try { await navigator.clipboard.writeText(shareText()); toast("Skopiowano"); } catch { prompt("Skopiuj:", shareText()); }
+  };
+  if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) document.body.classList.add("is-mobile");
   $("btn-help").onclick = () => $("dlg-help").showModal();
   $("btn-stats").onclick = showStats;
   if (!store.get("cz-seen", false)) { $("dlg-help").showModal(); store.set("cz-seen", true); }
