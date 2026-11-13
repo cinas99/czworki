@@ -1,12 +1,13 @@
 # Czwórki
 
-Codzienna polska łamigłówka słowna w stylu Connections: 16 słów, 4 ukryte grupy, 4 błędy.
+Codzienna polska łamigłówka słowna: 16 słów, 4 ukryte grupy, 4 błędy.
 
 Czysty HTML/CSS/JS, bez backendu i bez budowania. Działa na GitHub Pages.
 
 ## Pliki
 - `index.html`, `style.css`, `app.js`: gra
 - `zagadki.csv`: **baza zagadek** (otwórz na GitHubie, żeby zobaczyć ją jako tabelę; edytuj ołówkiem)
+- `archiwum.html`: poprzednie zagadki z odpowiedziami i wyjaśnieniami
 - `jak-grac.html`, `polityka-prywatnosci.html`: podstrony wymagane przez AdSense (uzupełnij pola w [nawiasach])
 - `ads.txt`: wpisz swój identyfikator wydawcy po akceptacji AdSense
 - `CNAME`: Twoja domena
@@ -35,6 +36,7 @@ Każda zagadka to 4 wiersze w `zagadki.csv` z tą samą datą:
 | `kategoria` | nazwa grupy pokazywana po odgadnięciu |
 | `slowo1`–`slowo4` | słowa (wielkość liter bez znaczenia) |
 | `zdjecie` | tytuł artykułu z polskiej Wikipedii (np. `Sroka zwyczajna`) albo pełny adres URL zdjęcia; puste = gra spróbuje znaleźć zdjęcie po słowach z grupy |
+| `wyjasnienie` | 1–2 zdania, dlaczego te słowa są w grupie; pokazywane w archiwum (archiwum.html) od następnego dnia |
 
 Zasady: każde słowo w danym dniu musi należeć do dokładnie jednej grupy; nie używaj przecinków w polach. Jeśli na dany dzień nie ma zagadki, gra powtarza starsze, więc trzymaj zapas.
 

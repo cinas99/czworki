@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Archiwum zagadek z odpowiedziami i wyjaśnieniami – Czwórki</title>
+<meta name="description" content="Wszystkie poprzednie zagadki Czwórek z rozwiązaniami. Sprawdź, jakie grupy kryły się w słowach i dlaczego.">
+<script>try{if(localStorage.getItem("cz-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=15">
+<style>
+.day{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 0 16px}
+.day h2{font-size:17px;margin:0 0 10px;display:flex;justify-content:space-between;align-items:baseline}
+.day h2 small{font-weight:400;color:var(--muted);font-size:13px}
+.g{border-left:6px solid var(--gc);padding:4px 0 4px 10px;margin:0 0 10px}
+.g b{display:block;text-transform:uppercase;font-size:14px}
+.g .w{font-size:13px;letter-spacing:.3px;color:var(--fg)}
+.g p{margin:3px 0 0;font-size:14px;color:var(--muted);line-height:1.5}
+.lead{color:var(--muted)}
+</style>
+</head>
+<body>
+<main class="page">
+<p><a href="./">← Wróć do gry</a></p>
+<h1>Archiwum zagadek</h1>
+<p class="lead">Poprzednie zagadki Czwórek z odpowiedziami i wyjaśnieniem każdej grupy. Dzisiejszej zagadki tu nie ma, żeby nie psuć zabawy. Pojawi się jutro.</p>
+<div id="list">Wczytywanie…</div>
+</main>
+<footer class="foot"><a href="./">Graj</a> · <a href="jak-grac.html">Jak grać</a> · <a href="polityka-prywatnosci.html">Prywatność</a></footer>
+<script>
+(async () => {
+  const LV = { zielony: 0, zolty: 1, pomaranczowy: 2, czerwony: 3 };
+  const today = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Warsaw" }).format(new Date());
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  function parseCSV(t) {
+    const rows = []; let row = [], cur = "", q = false;
+    for (let i = 0; i < t.length; i++) {
+      const c = t[i];
+      if (q) { if (c === '"') { if (t[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += c; }
+      else if (c === '"') q = true;
+      else if (c === ",") { row.push(cur); cur = ""; }
+      else if (c === "\n" || c === "\r") { if (c === "\r" && t[i + 1] === "\n") i++; row.push(cur); rows.push(row); row = []; cur = ""; }
+      else cur += c;
+    }
+    if (cur || row.length) { row.push(cur); rows.push(row); }
+    const h = rows.shift().map((x) => x.trim().toLowerCase());
+    return rows.filter((r) => r.some((x) => x.trim())).map((r) => Object.fromEntries(h.map((k, i) => [k, (r[i] || "").trim()])));
+  }
+  const rows = parseCSV(await (await fetch("zagadki.csv?d=" + today, { cache: "no-cache" })).text());
+  const by = new Map();
+  rows.forEach((r) => { if (!by.has(r.data)) by.set(r.data, []); by.get(r.data).push(r); });
+  const all = [...by.keys()].sort();
+  const past = all.filter((d) => d < today).reverse();
+  const fmt = (d) => new Date(d + "T12:00:00Z").toLocaleDateString("pl-PL", { day: "numeric", month: "long", year: "numeric" });
+  const list = document.getElementById("list");
+  if (!past.length) { list.textContent = "Archiwum jest jeszcze puste. Wróć jutro."; return; }
+  list.innerHTML = past.map((d) => {
+    const groups = by.get(d).sort((a, b) => (LV[a.kolor] ?? 0) - (LV[b.kolor] ?? 0));
+    return `<section class="day"><h2>Zagadka #${all.indexOf(d) + 1} <small>${fmt(d)}</small></h2>` +
+      groups.map((g) => `<div class="g c${LV[g.kolor] ?? 0}" style="background:none"><b>${esc(g.kategoria)}</b>` +
+        `<span class="w">${esc([g.slowo1, g.slowo2, g.slowo3, g.slowo4].join(", "))}</span>` +
+        (g.wyjasnienie ? `<p>${esc(g.wyjasnienie)}</p>` : "") + `</div>`).join("") + `</section>`;
+  }).join("");
+})();
+</script>
+</body>
+</html>
