@@ -97,3 +97,5 @@ dialog ul{padding-left:18px;line-height:1.6}
 .grid.closing .tile{transition:opacity .25s,transform .25s;opacity:0;transform:scale(.85)}
 body.is-mobile .desktop-only{display:none}
 body:not(.is-mobile) .share-grid{grid-template-columns:repeat(2,1fr);max-width:140px}
+.arch-link{display:block;margin:12px auto 0;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--fg);text-decoration:none;font-size:14px;font-weight:600;text-align:center;max-width:380px}
+.arch-link:hover{border-color:var(--fg)}
