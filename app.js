@@ -219,15 +219,16 @@
 
   const gameUrl = () => `https://${SITE}${location.pathname.replace(/index\.html$/, "")}`;
   function shareText() {
-    if (!$("with-score").checked) return `Zagraj w Czwórki – codzienną łamigłówkę słowną: 16 słów, 4 ukryte grupy. ${gameUrl()}`;
+    if (!$("with-score").checked) return gameUrl();
     const rows = state.history.map((r) => r.map((l) => EMOJI[groups[l].level]).join("")).join("\n");
     return `Czwórki #${puzzleNo}\n${rows}\nZagraj: ${gameUrl()}`;
   }
   function updateWa() { $("btn-wa").href = "https://wa.me/?text=" + encodeURIComponent(shareText()); }
   async function share() {
     const text = shareText();
+    const linkOnly = !$("with-score").checked;
     if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) {
-      try { await navigator.share({ text }); return; } catch {}
+      try { await navigator.share(linkOnly ? { title: "Czwórki", url: text } : { text }); return; } catch {}
     }
     try { await navigator.clipboard.writeText(text); toast("Skopiowano link"); }
     catch { prompt("Skopiuj wynik:", text); }
