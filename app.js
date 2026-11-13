@@ -155,6 +155,7 @@
   function render() { renderSolved(); renderGrid(); renderLives(); if (state.done) showEnd(); }
 
   function toggle(w) {
+    if (busy) return;
     $("msg").textContent = "";
     if (selected.includes(w)) selected = selected.filter((x) => x !== w);
     else if (selected.length < 4) selected.push(w);
@@ -168,7 +169,7 @@
 
   // ---- Logika ----
   function check() {
-    if (state.done) return;
+    if (state.done || busy) return;
     if (selected.length !== 4) { $("msg").textContent = "Zaznacz 4 słowa"; return; }
     const key = [...selected].sort().join("|");
     if (state.tried.includes(key)) { toast("Ta czwórka już była"); return; }
@@ -180,6 +181,7 @@
       state.solved.push(gi);
       selected = [];
       if (state.solved.length === 4) finish(true);
+      else if (state.solved.length === 3) setTimeout(autoLast, 650);
     } else {
       state.mistakes++;
       const best = Math.max(...[0, 1, 2, 3].map((i) => selected.filter((w) => groupOf(w) === i).length));
@@ -193,6 +195,28 @@
     save();
     setTimeout(render, state.done ? 0 : 380);
     renderLives();
+  }
+
+  // Ostatnia grupa jest oczywista: zaznaczamy ją sami z animacją
+  let busy = false;
+  function autoLast() {
+    if (state.done || busy) return;
+    const rest = remaining();
+    if (rest.length !== 4) return;
+    busy = true; selected = []; renderGrid();
+    rest.forEach((w, i) => setTimeout(() => {
+      selected.push(w); renderGrid();
+      const t = [...document.querySelectorAll(".tile")].find((x) => x.textContent === w);
+      if (t) t.classList.add("auto");
+    }, 220 * (i + 1)));
+    setTimeout(() => $("grid").classList.add("closing"), 220 * 5 + 250);
+    setTimeout(() => {
+      $("grid").classList.remove("closing");
+      state.history.push(rest.map(groupOf));
+      state.solved.push(groupOf(rest[0]));
+      selected = []; busy = false;
+      finish(true); save(); render();
+    }, 220 * 5 + 550);
   }
 
   function finish(won) {
@@ -215,10 +239,13 @@
 
   function showEnd() {
     $("actions").hidden = true;
+    $("lives").parentElement.hidden = true;
     $("msg").textContent = "";
     $("end").hidden = false;
     const titles = ["Perfekcyjnie!", "Świetnie!", "Dobra robota!", "Uff, udało się!"];
     $("end-title").textContent = state.won ? titles[Math.min(state.mistakes, 3)] : "Tym razem się nie udało";
+    $("e-mist").textContent = state.mistakes;
+    $("e-streak").textContent = stats.streak;
     $("end-grid").innerHTML = state.history.map((r) => "<div>" + r.map((l) => `<i class="c${groups[l].level}"></i>`).join("") + "</div>").join("");
     updateWa();
     tick();
@@ -285,6 +312,7 @@
   $("btn-stats").onclick = showStats;
   if (!store.get("cz-seen", false)) { $("dlg-help").showModal(); store.set("cz-seen", true); }
   render();
+  if (!state.done && state.solved.length === 3) setTimeout(autoLast, 500);
 })();
 
 // ---- Motyw: jasny domyślnie, przełącznik na ciemny ----
