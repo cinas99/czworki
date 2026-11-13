@@ -8,7 +8,9 @@
   // ---- Data dnia w strefie Europe/Warsaw ----
   const todayStr = () => new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Warsaw" }).format(new Date());
   const dayDiff = (a, b) => Math.round((Date.parse(b + "T00:00:00Z") - Date.parse(a + "T00:00:00Z")) / 864e5);
-  const today = todayStr();
+  const qs = new URLSearchParams(location.search);
+  const adminNow = (() => { try { return localStorage.getItem("cz-admin") === "1" || qs.has("admin"); } catch { return false; } })();
+  const today = adminNow && /^\d{4}-\d{2}-\d{2}$/.test(qs.get("dzien") || "") ? qs.get("dzien") : todayStr();
 
   // ---- Baza zagadek (zagadki.csv) ----
   function parseCSV(text) {
@@ -60,7 +62,7 @@
   // Tryb admina: ?admin włącza (zapamiętuje w przeglądarce), ?admin=off wyłącza
   if (rq.has("admin")) {
     try { rq.get("admin") === "off" ? localStorage.removeItem("cz-admin") : localStorage.setItem("cz-admin", "1"); } catch {}
-    history.replaceState(null, "", location.pathname);
+    history.replaceState(null, "", location.pathname + (rq.get("dzien") ? "?dzien=" + rq.get("dzien") : ""));
   }
   const isAdmin = (() => { try { return localStorage.getItem("cz-admin") === "1"; } catch { return false; } })();
   if (rq.has("reset")) {
@@ -74,9 +76,11 @@
   let stats = store.get("cz-stats", { played: 0, wins: 0, streak: 0, max: 0, lastWin: null });
 
   const allWords = groups.flatMap((g) => g.words);
-  if (!state.order || state.order.length !== allWords.length || !state.order.every((w) => allWords.includes(w))) {
-    state.order = shuffle([...allWords]);
+  if (state.order && (state.order.length !== allWords.length || !state.order.every((w) => allWords.includes(w)))) {
+    state = { date: today, solved: [], mistakes: 0, history: [], tried: [], done: false, won: false, order: null };
   }
+  if (!state.order) state.order = shuffle([...allWords]);
+  if (today !== todayStr()) state.replay = true; // podgląd innego dnia nie liczy się do statystyk
   let selected = [];
 
   function shuffle(a) {

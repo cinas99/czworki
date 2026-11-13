@@ -45,3 +45,4 @@ Po akceptacji wklej skrypt AdSense w `<head>` w `index.html`, a kod jednostki re
 - `?admin`: włącza w tej przeglądarce przycisk „Zagraj od nowa” po zakończeniu gry (zapamiętywane)
 - `?admin=off`: wyłącza go
 - `?reset`: czyści dzisiejszą grę; `?reset=all` czyści też statystyki
+- `?dzien=2026-11-20` (w trybie admina): podgląd zagadki z dowolnego dnia, nie liczy się do statystyk
