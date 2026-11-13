@@ -57,6 +57,12 @@
   };
   // Reset do testów: ?reset (dzisiejsza gra) albo ?reset=all (też statystyki)
   const rq = new URLSearchParams(location.search);
+  // Tryb admina: ?admin włącza (zapamiętuje w przeglądarce), ?admin=off wyłącza
+  if (rq.has("admin")) {
+    try { rq.get("admin") === "off" ? localStorage.removeItem("cz-admin") : localStorage.setItem("cz-admin", "1"); } catch {}
+    history.replaceState(null, "", location.pathname);
+  }
+  const isAdmin = (() => { try { return localStorage.getItem("cz-admin") === "1"; } catch { return false; } })();
   if (rq.has("reset")) {
     try { localStorage.removeItem("cz-day"); if (rq.get("reset") === "all") localStorage.removeItem("cz-stats"); } catch {}
     history.replaceState(null, "", location.pathname);
@@ -266,6 +272,7 @@
   $("btn-shuffle").onclick = () => { state.order = shuffle(state.order); save(); renderGrid(); };
   $("btn-share").onclick = share;
   $("with-score").onchange = updateWa;
+  $("btn-reset").hidden = !isAdmin;
   $("btn-reset").onclick = () => {
     store.set("cz-day", { date: today, solved: [], mistakes: 0, history: [], tried: [], done: false, won: false, order: null, replay: true });
     location.reload();

@@ -40,3 +40,8 @@ Zasady: każde słowo w danym dniu musi należeć do dokładnie jednej grupy; ni
 
 ## Reklamy (AdSense)
 Po akceptacji wklej skrypt AdSense w `<head>` w `index.html`, a kod jednostki reklamowej w `#ad-slot` (pokazuje się dopiero po zakończeniu gry). W UE wymagany jest baner zgody z certyfikowanej platformy CMP (np. „Prywatność i wiadomości” w panelu AdSense).
+
+## Tryb admina (testowanie)
+- `?admin`: włącza w tej przeglądarce przycisk „Zagraj od nowa” po zakończeniu gry (zapamiętywane)
+- `?admin=off`: wyłącza go
+- `?reset`: czyści dzisiejszą grę; `?reset=all` czyści też statystyki
