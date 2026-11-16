@@ -49,6 +49,7 @@
       level: LEVELS[r.kolor] ?? 0,
       img: r.zdjecie,
       credit: r.zdjecie_podpis || "",
+      focus: r.zdjecie_kadr || "",
     }))
     .sort((a, b) => a.level - b.level);
   const groupOf = (w) => groups.findIndex((g) => g.words.includes(w));
@@ -99,6 +100,7 @@
       const bg = document.createElement("div");
       bg.className = "row-bg";
       bg.style.backgroundImage = `url("${im.src}")`;
+      bg.style.backgroundPosition = g.focus || "50% 40%";
       rowEl.prepend(bg);
       rowEl.classList.add("has-img");
       requestAnimationFrame(() => bg.classList.add("on"));

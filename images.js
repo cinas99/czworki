@@ -37,7 +37,7 @@ window.czImage = (() => {
       return {
         items: (j.photos || []).map((p) => ({
           kind: "Pexels", label: p.alt || p.photographer, thumb: p.src.medium,
-          value: p.src.landscape || p.src.large, credit: `fot. ${p.photographer} / Pexels`,
+          value: p.src.original ? p.src.original.split("?")[0] + "?auto=compress&cs=tinysrgb&w=1600" : p.src.large2x || p.src.large, credit: `fot. ${p.photographer} / Pexels`,
         })),
       };
     } catch { return { items: [], error: "Pexels nie odpowiada" }; }

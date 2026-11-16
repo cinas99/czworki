@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Panel – Czwórki</title>
 <script>try{if(localStorage.getItem("cz-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
-<link rel="stylesheet" href="style.css?v=19">
+<link rel="stylesheet" href="style.css?v=20">
 <style>
 .page{max-width:760px}
 .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 14px;font-size:14px}
@@ -49,7 +49,10 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
 .ed .w4{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .ed .row2{display:flex;gap:6px}
 .ed .row2 input{flex:1}
-.prev{height:120px;border-radius:10px;background:#444 center/cover;margin-top:8px;position:relative}
+.prev{border-radius:10px;background:#444 50% 40%/cover no-repeat;margin-top:8px;position:relative;cursor:crosshair;overflow:hidden}
+.prev.pm{aspect-ratio:2.6/1}.prev.pd{aspect-ratio:6.5/1}
+.prev i{position:absolute;width:14px;height:14px;margin:-7px 0 0 -7px;border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 1px #000;pointer-events:none}
+.prevs small{display:block;font-size:11px;color:var(--muted);margin:6px 0 -4px}
 .prev span{position:absolute;left:8px;bottom:6px;font-size:11px;color:#fff;background:rgba(0,0,0,.55);padding:2px 6px;border-radius:999px}
 .res{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
 .res button{border:2px solid transparent;padding:0;border-radius:8px;overflow:hidden;cursor:pointer;background:#222;text-align:left}
@@ -80,7 +83,11 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
   <label>Wyjaśnienie (do archiwum)</label><textarea id="ed-ex" rows="2"></textarea>
   <label>Zdjęcie: adres URL albo hasła z Wikipedii oddzielone |</label>
   <div class="row2"><input id="ed-img"><button class="btn sm" id="ed-retry" type="button">↻ Sprawdź</button></div>
-  <div class="prev" id="ed-prev"><span id="ed-prev-t">brak zdjęcia</span></div>
+  <div class="prevs">
+    <small>Kliknij na zdjęciu, gdzie ma być środek kadru · <span id="ed-focus-t">kadr: domyślny</span> <a href="#" id="ed-focus-reset">resetuj</a></small>
+    <small>Telefon</small><div class="prev pm" id="ed-prev"><i></i><span id="ed-prev-t">brak zdjęcia</span></div>
+    <small>Komputer</small><div class="prev pd" id="ed-prev2"><i></i></div>
+  </div>
   <label>Podpis zdjęcia (autor)</label><input id="ed-credit" placeholder="np. fot. Jan Kowalski / Pexels">
   <label>Szukaj zdjęcia</label>
   <div class="row2"><input id="ed-q" placeholder="np. rzeka, samochód, kłódka"><button class="btn sm dark" id="ed-search" type="button">Szukaj</button></div>
@@ -98,7 +105,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
 
 <div class="toast" id="toast" hidden></div>
 
-<script src="images.js?v=19"></script>
+<script src="images.js?v=20"></script>
 <script>
 (async () => {
   const REPO = "cinas99/czworki", BRANCH = "main";
@@ -158,8 +165,8 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
   async function reload() {
     const a = await load("zagadki.csv"), b = await load("zapas.csv");
     Z = parseCSV(a.text); zSha = a.sha; R = parseCSV(b.text); rSha = b.sha;
-    ["wyjasnienie", "zdjecie_podpis"].forEach((c) => { if (!Z.head.includes(c)) Z.head.push(c); });
-    if (!R.head.includes("zdjecie_podpis")) R.head.push("zdjecie_podpis");
+    ["wyjasnienie", "zdjecie_podpis", "zdjecie_kadr"].forEach((c) => { if (!Z.head.includes(c)) Z.head.push(c); });
+    ["zdjecie_podpis", "zdjecie_kadr"].forEach((c) => { if (!R.head.includes(c)) R.head.push(c); });
   }
   await reload();
 
@@ -257,22 +264,37 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     if (!im) { el.classList.add("noimg"); el.querySelector(".ph").style.backgroundImage = ""; tag.textContent = row.zdjecie ? "brak zdjęcia: " + row.zdjecie : "brak hasła zdjęcia"; tag.classList.add("bad"); return; }
     el.classList.remove("noimg");
     el.querySelector(".ph").style.backgroundImage = `url("${im.src}")`;
+    el.querySelector(".ph").style.backgroundPosition = row.zdjecie_kadr || "50% 40%";
     const srcName = window.czImage.source(row.zdjecie);
     tag.textContent = srcName === "Wikipedia" ? "Wikipedia: " + im.title : row.zdjecie_podpis || srcName;
   }
 
   // ---- Edycja ----
   let editing = null;
+  let focus = "";
+  function showFocus() {
+    const f = focus || "50% 40%", [x, y] = f.split(" ");
+    ["ed-prev", "ed-prev2"].forEach((id) => { const el = $(id); el.style.backgroundPosition = f; const i = el.querySelector("i"); i.style.left = x; i.style.top = y; i.style.display = el.style.backgroundImage ? "" : "none"; });
+    $("ed-focus-t").textContent = focus ? "kadr: " + focus : "kadr: domyślny";
+  }
   async function preview(fresh) {
     const im = await window.czImage($("ed-img").value, fresh);
-    $("ed-prev").style.backgroundImage = im ? `url("${im.src}")` : "";
-    $("ed-prev-t").textContent = im ? (/^https?:/.test(im.title) ? "własny adres" : im.title) : "brak zdjęcia dla tych haseł";
+    ["ed-prev", "ed-prev2"].forEach((id) => ($(id).style.backgroundImage = im ? `url("${im.src}")` : ""));
+    $("ed-prev-t").textContent = im ? (window.czImage.source($("ed-img").value) === "Wikipedia" ? "Wikipedia: " + im.title : $("ed-credit").value || window.czImage.source($("ed-img").value)) : "brak zdjęcia dla tych haseł";
+    showFocus();
   }
+  // Kliknięcie w podgląd ustawia punkt, który ma być widoczny (background-position w %)
+  ["ed-prev", "ed-prev2"].forEach((id) => ($(id).onclick = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = Math.round(((e.clientX - r.left) / r.width) * 100), y = Math.round(((e.clientY - r.top) / r.height) * 100);
+    focus = `${Math.min(100, Math.max(0, x))}% ${Math.min(100, Math.max(0, y))}%`; showFocus();
+  }));
+  $("ed-focus-reset").onclick = (e) => { e.preventDefault(); focus = ""; showFocus(); };
   function openEdit(row, photoFirst) {
     editing = row;
     $("ed-title").textContent = `Edytuj grupę · ${fmt(row.data)}`;
     $("ed-kat").value = row.kategoria; words(row).forEach((w, i) => ($("ed-w" + (i + 1)).value = w));
-    $("ed-ex").value = row.wyjasnienie || ""; $("ed-img").value = row.zdjecie || ""; $("ed-credit").value = row.zdjecie_podpis || "";
+    $("ed-ex").value = row.wyjasnienie || ""; $("ed-img").value = row.zdjecie || ""; $("ed-credit").value = row.zdjecie_podpis || ""; focus = row.zdjecie_kadr || "";
     $("ed-q").value = row.kategoria.replace(/[_.…()/]/g, " ").replace(/\s+/g, " ").trim();
     $("ed-res").innerHTML = ""; $("ed-err").textContent = "";
     preview();
@@ -292,7 +314,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     items.forEach((r) => {
       const b = document.createElement("button"); b.type = "button";
       b.innerHTML = `<img src="${esc(r.thumb)}" alt="" loading="lazy"><small>${esc(r.kind)} · ${esc(r.label)}</small>`;
-      b.onclick = () => { $("ed-img").value = r.value; $("ed-credit").value = r.credit || ""; preview(); };
+      b.onclick = () => { $("ed-img").value = r.value; $("ed-credit").value = r.credit || ""; focus = ""; preview(); };
       $("ed-res").appendChild(b);
     });
   }
@@ -312,7 +334,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     if (clash.length) return ($("ed-err").textContent = "Te słowa są już w innej grupie tego dnia: " + clash.join(", "));
     if (!token) return ($("ed-err").textContent = "Połącz panel z GitHubem (u góry), żeby zapisać.");
     const backup = { ...editing };
-    Object.assign(editing, { kategoria: kat, slowo1: ws[0], slowo2: ws[1], slowo3: ws[2], slowo4: ws[3], wyjasnienie: $("ed-ex").value.trim(), zdjecie: $("ed-img").value.trim(), zdjecie_podpis: $("ed-credit").value.trim() });
+    Object.assign(editing, { kategoria: kat, slowo1: ws[0], slowo2: ws[1], slowo3: ws[2], slowo4: ws[3], wyjasnienie: $("ed-ex").value.trim(), zdjecie: $("ed-img").value.trim(), zdjecie_podpis: $("ed-credit").value.trim(), zdjecie_kadr: focus });
     $("ed-save").disabled = true;
     try { zSha = await save("zagadki.csv", toCSV(Z.head, Z.rows), zSha, `Panel: zmiana grupy „${kat}” (${editing.data})`); $("dlg-edit").close(); render(); toast("Zapisano. Na stronie za ok. minutę."); }
     catch (e) { Object.assign(editing, backup); $("ed-err").textContent = e.message; }
@@ -333,7 +355,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
       prog.textContent = `Szukam ${i + 1}/${todo.length}: ${r.kategoria} („${q}”)…`;
       const res = await window.czImage.pexels(q.trim(), pexKey, 1);
       if (res.error && /limit|klucz/.test(res.error)) { prog.textContent = "Przerwano: " + res.error; break; }
-      if (res.items[0]) { r.zdjecie = res.items[0].value; r.zdjecie_podpis = res.items[0].credit; ok++; } else miss.push(r.kategoria);
+      if (res.items[0]) { r.zdjecie = res.items[0].value; r.zdjecie_podpis = res.items[0].credit; r.zdjecie_kadr = ""; ok++; } else miss.push(r.kategoria);
     }
     if (!ok) { prog.textContent = "Nie znaleziono żadnych zdjęć."; return; }
     prog.textContent = `Zapisuję ${ok} zdjęć…`;
@@ -354,9 +376,9 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
       const b = document.createElement("button"); b.className = "btn sm dark"; b.textContent = "Użyj"; b.disabled = !!clash.length;
       b.onclick = async () => {
         if (!token) return toast("Połącz panel z GitHubem, żeby zapisać");
-        const old = { kategoria: row.kategoria, slowo1: row.slowo1, slowo2: row.slowo2, slowo3: row.slowo3, slowo4: row.slowo4, zdjecie: row.zdjecie, wyjasnienie: row.wyjasnienie, zdjecie_podpis: row.zdjecie_podpis || "" };
+        const old = { kategoria: row.kategoria, slowo1: row.slowo1, slowo2: row.slowo2, slowo3: row.slowo3, slowo4: row.slowo4, zdjecie: row.zdjecie, wyjasnienie: row.wyjasnienie, zdjecie_podpis: row.zdjecie_podpis || "", zdjecie_kadr: row.zdjecie_kadr || "" };
         const zBackup = { ...row }, rBackup = R.rows.slice();
-        Object.assign(row, { kategoria: g.kategoria, slowo1: g.slowo1, slowo2: g.slowo2, slowo3: g.slowo3, slowo4: g.slowo4, zdjecie: g.zdjecie, wyjasnienie: g.wyjasnienie, zdjecie_podpis: g.zdjecie_podpis || "" });
+        Object.assign(row, { kategoria: g.kategoria, slowo1: g.slowo1, slowo2: g.slowo2, slowo3: g.slowo3, slowo4: g.slowo4, zdjecie: g.zdjecie, wyjasnienie: g.wyjasnienie, zdjecie_podpis: g.zdjecie_podpis || "", zdjecie_kadr: g.zdjecie_kadr || "" });
         R.rows.splice(R.rows.indexOf(g), 1); R.rows.push(old);
         b.disabled = true;
         try {
