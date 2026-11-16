@@ -36,6 +36,7 @@ Każda zagadka to 4 wiersze w `zagadki.csv` z tą samą datą:
 | `kategoria` | nazwa grupy pokazywana po odgadnięciu |
 | `slowo1`–`slowo4` | słowa (wielkość liter bez znaczenia) |
 | `zdjecie` | tytuł artykułu z polskiej Wikipedii (np. `Sroka zwyczajna`) albo pełny adres URL zdjęcia; puste = gra spróbuje znaleźć zdjęcie po słowach z grupy |
+| `zdjecie_podpis` | podpis autora zdjęcia, np. `fot. Jan Kowalski / Pexels` (panel wpisuje go sam) |
 | `wyjasnienie` | 1–2 zdania, dlaczego te słowa są w grupie; pokazywane w archiwum (archiwum.html) od następnego dnia |
 
 Zasady: każde słowo w danym dniu musi należeć do dokładnie jednej grupy; nie używaj przecinków w polach. Jeśli na dany dzień nie ma zagadki, gra powtarza starsze, więc trzymaj zapas.
@@ -53,3 +54,6 @@ Po akceptacji wklej skrypt AdSense w `<head>` w `index.html`, a kod jednostki re
 W panelu można edytować każdą grupę, wymienić ją na grupę z rezerwy (`zapas.csv`) i wyszukać zdjęcie (Wikipedia + Wikimedia Commons). Zapis wymaga tokenu GitHub (fine-grained, tylko repo czworki, Contents: Read and write), który zostaje w przeglądarce.
 
 `panel.html?admin`: podgląd zagadek na każdy dzień ze zdjęciami, wyjaśnieniami i ostrzeżeniami (powtórzone słowa, brak wyjaśnienia, brak zdjęcia). Kolumna `zdjecie` przyjmuje kilka haseł z Wikipedii oddzielonych `|`; gra bierze pierwsze, które ma zdjęcie.
+
+## Zdjęcia z Pexels
+W panelu wklej darmowy klucz API z https://www.pexels.com/api/ (zapamiętywany w przeglądarce). Wyszukiwarka pokazuje wtedy zdjęcia z Pexels (główne źródło), Openverse i Wikipedii. Przycisk „Dobierz zdjęcia z Pexels” podmienia hurtowo zdjęcia z Wikipedii dla wszystkich dni od dziś.

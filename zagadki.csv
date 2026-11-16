@@ -1,145 +1,145 @@
-data,kolor,kategoria,slowo1,slowo2,slowo3,slowo4,zdjecie,wyjasnienie
-2026-11-12,zielony,Polskie rzeki,WISŁA,ODRA,WARTA,NAREW,Wisła,"Cztery z najważniejszych polskich rzek. Warta to też nazwa ubezpieczyciela, a Narew bywa mylona z miastem."
-2026-11-12,zolty,Ptaki,SROKA,WRONA,SOWA,CZAPLA,Sroka zwyczajna,"Pospolite polskie ptaki: sroka, wrona, sowa i czapla."
-2026-11-12,pomaranczowy,Auta z PRL-u,MALUCH,SYRENKA,WARSZAWA,NYSA,Fiat 126p,"Samochody z czasów PRL-u. Maluch to Fiat 126p, a Warszawa i Syrenka to także nazwy miasta i mitycznej postaci."
-2026-11-12,czerwony,Tańce narodowe,POLONEZ,MAZUR,OBEREK,KRAKOWIAK,Polonez (taniec),"Pięć polskich tańców narodowych to polonez, mazur, oberek, krakowiak i kujawiak. Polonez był też samochodem."
-2026-11-13,zielony,Ma zamek,DRZWI,KURTKA,PLAŻA,KARABIN,Kłódka|Zamek (mechanizm)|Klucz (narzędzie),"Drzwi mają zamek, kurtka zamek błyskawiczny, na plaży buduje się zamek z piasku, a karabin ma zamek, czyli mechanizm ładujący."
-2026-11-13,zolty,Ma koronę,ZĄB,DRZEWO,KRÓLOWA,KIELCE,Korona (insygnium)|Korona|Korona Królestwa Polskiego,"Ząb ma koronę, drzewo ma koronę, królowa nosi koronę, a w Kielcach gra klub piłkarski Korona Kielce."
-2026-11-13,pomaranczowy,Ma język,BUT,DZWON,PŁOMIEŃ,PROGRAMISTA,Język (anatomia)|Dzwon,"But ma język pod sznurówkami, dzwon ma język (serce), płomień ma języki ognia, a programista pisze w językach programowania."
-2026-11-13,czerwony,Ma ucho,IGŁA,DZBAN,KUBEK,ŚCIANA,Ucho|Małżowina uszna,"Igła ma ucho na nitkę, dzban i kubek mają ucha do trzymania, a „ściany mają uszy”."
-2026-11-14,zielony,Kłamać,ŚCIEMNIAĆ,ZMYŚLAĆ,KITOWAĆ,KRĘCIĆ,Kłamstwo|Pinokio,"Potoczne określenia kłamania. Pułapka: „bujać” też znaczy kłamać, ale tu pasuje do kołysania."
-2026-11-14,zolty,Poruszać w przód i w tył,BUJAĆ,HUŚTAĆ,KIWAĆ,KOŁYSAĆ,Huśtawka|Kołyska|Bujany fotel,"Bujać, huśtać, kiwać i kołysać to ruchy wahadłowe. „Kiwać” znaczy też oszukiwać, co mogło zmylić."
-2026-11-14,pomaranczowy,"Coś, co się kręci",KARUZELA,BĄK,WIATRAK,PRALKA,Karuzela|Wiatrak,"Karuzela, bąk, wiatrak i bęben pralki obracają się wokół osi."
-2026-11-14,czerwony,Kocie ___,ŁBY,OCZY,MUZYKA,RUCHY,Kot domowy|Kot,"Kocie łby (bruk), kocie oczy (odblaski), kocia muzyka (fałszowanie) i kocie ruchy."
-2026-11-15,zielony,Nieporządek,CHAOS,ROZGARDIASZ,NIEŁAD,MĘTLIK,Bałagan|Chaos|Nieporządek,Słowa oznaczające bałagan i zamieszanie.
-2026-11-15,zolty,Hałas,GWAR,ZGIEŁK,SZUM,WRZAWA,Hałas|Tłum,"Gwar, zgiełk, szum i wrzawa to różne odcienie hałasu."
-2026-11-15,pomaranczowy,Mają klawisze,PIANINO,LAPTOP,AKORDEON,PILOT,Klawiatura komputerowa|Klawiatura (muzyka)|Fortepian,"Pianino, laptop, akordeon i pilot do telewizora mają klawisze."
-2026-11-15,czerwony,Cich(e/a/y) ___,DNI,WODA,NOC,WIELBICIEL,Cisza|Noc,"Ciche dni (obrażanie się), cicha woda (o kimś niepozornym), cicha noc (kolęda) i cichy wielbiciel."
-2026-11-16,zielony,Uciekać,ZWIEWAĆ,PRYSKAĆ,CZMYCHAĆ,ZMYKAĆ,Ucieczka|Bieg (sport),Potoczne synonimy uciekania. „Zwiewać” kojarzy się też z wiatrem.
-2026-11-16,zolty,Ruch powietrza,PODMUCH,POWIEW,ZEFIREK,WICHER,Wiatr|Wichura,Od delikatnego zefirka po wicher.
-2026-11-16,pomaranczowy,W kosmetyczce,PUDER,TUSZ,SZMINKA,PĘSETA,Kosmetyczka|Kosmetyk|Makijaż,"Rzeczy, które zwykle nosi się w kosmetyczce."
-2026-11-16,czerwony,Zimn(y/a/e) ___,DRAŃ,WOJNA,OGNIE,PRYSZNIC,Lód|Szron|Zimne ognie,"Zimny drań, zimna wojna, zimne ognie i zimny prysznic (także w przenośni)."
-2026-11-17,zielony,Głupek,MATOŁ,GAMOŃ,CYMBAŁ,BAŁWAN,Głupota|Osioł domowy,Potoczne określenia głupiej osoby. Pułapka: cymbał to też instrument.
-2026-11-17,zolty,Instrumenty perkusyjne,BĘBEN,TAMBURYN,KASTANIETY,TRÓJKĄT,Instrumenty perkusyjne|Perkusja|Bęben,"Instrumenty, na których gra się przez uderzanie lub potrząsanie."
-2026-11-17,pomaranczowy,Z ciasta,PIEROGI,USZKA,KOPYTKA,PIZZA,Ciasto|Pierogi,Dania lepione lub wałkowane z ciasta.
-2026-11-17,czerwony,Złot(y/a) ___,ŚRODEK,STRZAŁ,INTERES,PODZIAŁ,Złoto|Sztabka złota,"Złoty środek, złoty strzał, złoty interes i złoty podział (proporcja w sztuce)."
-2026-11-18,zielony,Jeść łapczywie,WCINAĆ,PAŁASZOWAĆ,WSUWAĆ,SZAMAĆ,Obżarstwo|Jedzenie|Posiłek,"Potoczne określenia szybkiego, łapczywego jedzenia."
-2026-11-18,zolty,Spać,KIMAĆ,LULAĆ,DRZEMAĆ,CHRAPAĆ,Sen|Drzemka,"Kimać i lulać to potoczne określenia spania, drzemać i chrapać też kojarzą się ze snem."
-2026-11-18,pomaranczowy,W sypialni,KOŁDRA,PODUSZKA,PIERZYNA,MATERAC,Sypialnia|Łóżko,"Rzeczy, które znajdziesz w łóżku."
-2026-11-18,czerwony,Słodk(i/ie/a) ___,LENISTWO,IDIOTKA,TAJEMNICA,ŻYCIE,Cukier|Słodycze|Cukierek,"Słodkie lenistwo, słodka idiotka, słodka tajemnica i słodkie życie (dolce vita)."
-2026-11-19,zielony,Bić,TŁUC,LAĆ,GRZMOCIĆ,ŁOMOTAĆ,Boks|Rękawice bokserskie,"Potoczne określenia bicia. Pułapka: „prać” też znaczy bić, ale tu należy do porządków."
-2026-11-19,zolty,Domowe porządki,ODKURZAĆ,ZAMIATAĆ,PRASOWAĆ,PRAĆ,Sprzątanie|Odkurzacz,"Czynności domowe: odkurzanie, zamiatanie, prasowanie i pranie."
-2026-11-19,pomaranczowy,Nalewa się,HERBATA,BENZYNA,ZUPA,KOMPOT,Dzbanek|Herbata,"Herbatę, benzynę, zupę i kompot się nalewa. „Lać” to pułapka."
-2026-11-19,czerwony,Czyst(e/a/y) ___,SUMIENIE,KONTO,ZYSK,KARTA,Mydło|Czystość,"Czyste sumienie, czyste konto, czysty zysk i czysta karta."
-2026-11-20,zielony,Śmiać się,CHICHOTAĆ,RECHOTAĆ,PARSKAĆ,RŻEĆ,Śmiech|Uśmiech,Rodzaje śmiechu. Rżeć i rechotać kojarzą się też ze zwierzętami.
-2026-11-20,zolty,Odgłosy zwierząt,MUCZEĆ,BECZEĆ,GDAKAĆ,KUMKAĆ,Bydło domowe|Krowa|Zwierzęta gospodarskie,"Krowa muczy, owca beczy, kura gdacze, a żaba kumka."
-2026-11-20,pomaranczowy,Mają puentę,DOWCIP,ANEGDOTA,FRASZKA,LIMERYK,Dowcip|Kabaret,"Krótkie formy, które kończą się zaskakującą puentą."
-2026-11-20,czerwony,Końsk(i/a/ie) ___,OGON,DAWKA,ZDROWIE,ZALOTY,Koń domowy|Koń,"Koński ogon (fryzura), końska dawka, końskie zdrowie i końskie zaloty."
-2026-11-21,zielony,Ukraść,PODWĘDZIĆ,ZWINĄĆ,BUCHNĄĆ,ŚWISNĄĆ,Kradzież|Złodziej,Potoczne określenia kradzieży. „Świsnąć” i „buchnąć” mają też inne znaczenia.
-2026-11-21,zolty,Uderzyć,WALNĄĆ,PRZYŁOŻYĆ,ZDZIELIĆ,TRZASNĄĆ,Pięść|Boks,Synonimy mocnego uderzenia.
-2026-11-21,pomaranczowy,Zwija się,DYWAN,NAMIOT,ŻAGLE,MATA,Dywan|Namiot,"Dywan, namiot, żagle i matę do jogi się zwija."
-2026-11-21,czerwony,Gorąc(y/a/e) ___,KARTOFEL,LINIA,TEMAT,KRZESŁO,Ogień|Płomień,"Gorący kartofel (kłopotliwa sprawa), gorąca linia, gorący temat i gorące krzesło (w polityce i sporcie)."
-2026-11-22,zielony,Bardzo zmęczony,WYKOŃCZONY,PADNIĘTY,SKONANY,ZAJECHANY,Zmęczenie|Ziewanie,Potoczne określenia skrajnego zmęczenia.
-2026-11-22,zolty,Wściekły,WKURZONY,ZŁY,ROZJUSZONY,NABUZOWANY,Gniew|Złość,Synonimy złości.
-2026-11-22,pomaranczowy,Można naładować,TELEFON,BATERIA,PISTOLET,AKUMULATOR,Akumulator elektryczny|Bateria (elektrotechnika)|Ładowarka,"Telefon, baterię i akumulator ładuje się prądem, a pistolet nabojami."
-2026-11-22,czerwony,___ dnia,TEMAT,ZUPA,DANIE,PORA,Kalendarz|Zegar,"Temat dnia, zupa dnia, danie dnia i pora dnia."
-2026-11-23,zielony,Bzdury,BREDNIE,BZDETY,DYRDYMAŁY,FARMAZONY,Nonsens|Absurd,Słowa oznaczające głupstwa i nonsens.
-2026-11-23,zolty,Niepotwierdzone wieści,SŁUCHY,POGŁOSKI,PLOTKI,WIEŚCI,Plotka|Szept,"Informacje z drugiej ręki, często nieprawdziwe."
-2026-11-23,pomaranczowy,W gazecie,NEKROLOG,HOROSKOP,KRZYŻÓWKA,FELIETON,Gazeta|Prasa,Stałe działy w gazecie.
-2026-11-23,czerwony,Babsk(i/ie) ___,GADANIE,LATO,WIECZÓR,SPRAWY,Babie lato|Pajęczyna,"Babskie gadanie, babie lato, babski wieczór i babskie sprawy."
-2026-11-24,zielony,Odrobina,KRZTA,CIUT,KAPKA,SZCZYPTA,Szczypta|Sól kuchenna,Bardzo mała ilość czegoś. Pułapka: szczypta pasuje też do miar w przepisach.
-2026-11-24,zolty,Miary w przepisach,ŁYŻKA,SZKLANKA,GARŚĆ,ŁYŻECZKA,Łyżka|Przepis kulinarny,Kuchenne miary objętości.
-2026-11-24,pomaranczowy,Mają oczka,ZIEMNIAK,RAJSTOPY,PIERŚCIONEK,ROSÓŁ,Ziemniak|Rajstopy,"Ziemniak ma oczka (kiełki), rajstopom „lecą oczka”, pierścionek ma oczko (kamień), a na rosole pływają oczka tłuszczu."
-2026-11-24,czerwony,Ostatni(a) ___,DESKA,KROPLA,WIECZERZA,PROSTA,Meta (sport)|Linia mety|Bieg (sport),"Ostatnia deska ratunku, ostatnia kropla, Ostatnia Wieczerza i ostatnia prosta."
-2026-11-25,zielony,Przy kości,PULCHNY,KORPULENTNY,OTYŁY,PUSZYSTY,Pączek|Brzuch,Delikatniejsze i mniej delikatne określenia tęgiej osoby. Puszysty to pułapka z grupy miękkich.
-2026-11-25,zolty,Miły w dotyku,AKSAMITNY,JEDWABISTY,MIĘCIUTKI,PLUSZOWY,Aksamit|Plusz|Jedwab,"Przymiotniki opisujące miękkie, przyjemne materiały."
-2026-11-25,pomaranczowy,Na tłusty czwartek,PĄCZEK,FAWOREK,OPONKA,RÓŻA,Tłusty czwartek|Pączek|Faworki,"Pączek, faworek, oponka i róża karnawałowa. Oponka to też żartobliwie brzuch."
-2026-11-25,czerwony,Grub(a/e) ___,RYBA,KRESKA,SPRAWA,PIENIĄDZE,Ryby|Wieloryb,"Gruba ryba, gruba kreska, gruba sprawa i grube pieniądze."
-2026-11-26,zielony,Iść powoli,CZŁAPAĆ,DREPTAĆ,TRUPTAĆ,WLEC,Spacer|Chód,Sposoby wolnego chodzenia.
-2026-11-26,zolty,Pędzić,GNAĆ,ZASUWAĆ,MKNĄĆ,SUNĄĆ,Gepard|Sprint (lekkoatletyka),Synonimy szybkiego poruszania się.
-2026-11-26,pomaranczowy,Powolne zwierzęta,ŻÓŁW,ŚLIMAK,LENIWIEC,KOALA,Leniwce|Leniwiec|Żółwie,Zwierzęta słynące z powolności.
-2026-11-26,czerwony,Zawrotn(e/a) ___,TEMPO,KARIERA,SUMA,PRĘDKOŚĆ,Prędkość|Kolejka górska,"Zawrotne tempo, zawrotna kariera, zawrotna suma i zawrotna prędkość."
-2026-11-27,zielony,"Przystojny, ładny",UROCZY,ŚLICZNY,PRZYSTOJNY,POWABNY,Uroda|Piękno,Komplementy dotyczące wyglądu.
-2026-11-27,zolty,Sprytny,CWANY,PRZEBIEGŁY,SZCZWANY,KUTY,Lis rudy|Lis,Synonimy cwaniactwa. „Kuty na cztery nogi” to ktoś bardzo sprytny.
-2026-11-27,pomaranczowy,Rude,LIS,WIEWIÓRKA,MARCHEWKA,RDZA,Jesień|Liście|Rudy (kolor),"Rzeczy rude lub rdzawe: lis, wiewiórka, marchewka i rdza."
-2026-11-27,czerwony,Czerwon(y/a) ___,KAPTUREK,KRZYŻ,DYWAN,KARTKA,Czerwień|Kolor czerwony,"Czerwony Kapturek, Czerwony Krzyż, czerwony dywan i czerwona kartka."
-2026-11-28,zielony,Ukryta rzeka,SANKI,BUGATTI,PODRAPANY,WARTOWNIK,Rzeka|Wisła,"SAN w SANKI, BUG w BUGATTI, ODRA w PODRAPANY i WARTA w WARTOWNIK."
-2026-11-28,zolty,Ukryta liczba,TRZYMAĆ,STODOŁA,ODWAGA,ZEROWANIE,Liczba|Cyfra,"TRZY w TRZYMAĆ, STO w STODOŁA, DWA w ODWAGA i ZERO w ZEROWANIE."
-2026-11-28,pomaranczowy,Ukryte imię,EWANGELIA,ADAMASZEK,KOLAGEN,MIGAWKA,Imię|Identyfikator,"EWA w EWANGELIA, ADAM w ADAMASZEK, OLA w KOLAGEN i IGA w MIGAWKA."
-2026-11-28,czerwony,Ukryta marka auta,SZUFLADA,MINISTER,AUDIOBOOK,POPELINA,Samochód osobowy|Samochód,"LADA w SZUFLADA, MINI w MINISTER, AUDI w AUDIOBOOK i OPEL w POPELINA. Bugatti to pułapka."
-2026-11-29,zielony,Złota…,RYBKA,RĄCZKA,JESIEŃ,KLATKA,Złoto|Sztabka złota,"Złota rybka, złota rączka, złota polska jesień i złota klatka."
-2026-11-29,zolty,Biała…,GORĄCZKA,DAMA,BROŃ,FLAGA,Biel|Śnieg,"Biała gorączka, biała dama, biała broń i biała flaga."
-2026-11-29,pomaranczowy,Czarna…,OWCA,ROBOTA,DZIURA,POLEWKA,Czerń|Noc,"Czarna owca, czarna robota, czarna dziura i czarna polewka."
-2026-11-29,czerwony,Zielona…,GÓRA,NOC,KARTA,HERBATA,Zieleń|Liść,"Zielona Góra, zielona noc, zielona karta i zielona herbata. Herbata bywa też czarna i biała."
-2026-11-30,zielony,"Mieć coś w kieszeni, nosie, brzuchu, głowie",WĘŻA,MUCHY,MOTYLE,OLEJ,Frazeologizm|Związek frazeologiczny|Motyle,"Mieć węża w kieszeni, muchy w nosie, motyle w brzuchu i olej w głowie."
-2026-11-30,zolty,Wpuścić lub nabić kogoś w…,MALINY,KANAŁ,BUTELKĘ,POLE,Malina właściwa|Malina,"Wpuścić w maliny, wpuścić w kanał, nabić w butelkę i wyprowadzić w pole."
-2026-11-30,pomaranczowy,"Zdrowy, uparty, głodny, pracowity jak…",RYBA,OSIOŁ,WILK,PSZCZOŁA,Pszczoła miodna|Osioł domowy,"Zdrowy jak ryba, uparty jak osioł, głodny jak wilk i pracowity jak pszczoła."
-2026-11-30,czerwony,Idzie jak po… / jak w… / jak z…,MAŚLE,SZNURKU,NUT,ZEGARKU,Masło|Zegarek,"Idzie jak po maśle, jak po sznurku, jak z nut i jak w zegarku."
-2026-12-01,zielony,Pan…,TADEUSZ,KLEKS,WOŁODYJOWSKI,SAMOCHODZIK,Pan Tadeusz|Adam Mickiewicz,"Pan Tadeusz, Pan Kleks, Pan Wołodyjowski i Pan Samochodzik."
-2026-12-01,zolty,Kapitan…,NEMO,HAK,ŻBIK,KLOSS,Kapitan|Kapitan statku,"Kapitan Nemo, Kapitan Hak, kapitan Żbik i kapitan Kloss."
-2026-12-01,pomaranczowy,Doktor…,DOLITTLE,ŻYWAGO,HOUSE,JEKYLL,Lekarz|Stetoskop,"Doktor Dolittle, Doktor Żywago, doktor House i doktor Jekyll."
-2026-12-01,czerwony,Król…,LEW,MACIUŚ,ARTUR,JULIAN,Król|Korona (insygnium),"Król Lew, Król Maciuś Pierwszy, Król Artur i król Julian."
-2026-12-02,zielony,Zdenerwować,ZIRYTOWAĆ,ROZDRAŻNIĆ,WKURZYĆ,ROZJUSZYĆ,Gniew|Złość,Różne stopnie wyprowadzania kogoś z równowagi.
-2026-12-02,zolty,Zaskoczyć,ZDZIWIĆ,ZDUMIEĆ,ZSZOKOWAĆ,OSZOŁOMIĆ,Zdziwienie|Zaskoczenie,Synonimy wywołania zdziwienia. Zszokować łatwo pomylić ze zdenerwować.
-2026-12-02,pomaranczowy,Mają żądło,OSA,PSZCZOŁA,SKORPION,PŁASZCZKA,Osa|Pszczoła miodna,Zwierzęta z żądłem. Płaszczka ma kolec jadowy na ogonie.
-2026-12-02,czerwony,Bomba ___,KALORYCZNA,ZEGAROWA,WITAMINOWA,DYMNA,Pączek|Czekolada,"Bomba kaloryczna, zegarowa, witaminowa i dymna."
-2026-12-03,zielony,Ukryć,SCHOWAĆ,ZATAIĆ,ZAKAMUFLOWAĆ,PRZEMILCZEĆ,Sejf|Skrytka,Sposoby ukrywania rzeczy lub informacji.
-2026-12-03,zolty,Zgubić,STRACIĆ,ZAPODZIAĆ,POSIAĆ,ZAWIERUSZYĆ,Klucz (narzędzie)|Klucze,"„Posiać” to potocznie zgubić, choć kojarzy się z siewem."
-2026-12-03,pomaranczowy,Mistrzowie kamuflażu,KAMELEON,PATYCZAK,KAMBAŁA,OŚMIORNICA,Kameleon|Patyczaki,"Zwierzęta, które zmieniają kolor albo udają otoczenie."
-2026-12-03,czerwony,Siać ___,ZAMĘT,PANIKĘ,POSTRACH,FERMENT,Siew|Siewnik,"Siać zamęt, panikę, postrach i ferment."
-2026-12-04,zielony,Bardzo dużo,MNÓSTWO,OGROM,BEZLIK,MASA,Mrowisko|Mrówki,Słowa oznaczające wielką ilość.
-2026-12-04,zolty,Zgromadzenie ludzi,TŁUM,CIŻBA,ZBIEGOWISKO,ŚCISK,Tłum|Koncert,Określenia ludzi zebranych w jednym miejscu.
-2026-12-04,pomaranczowy,Grupy zwierząt,STADO,ŁAWICA,RÓJ,WATAHA,Ławica|Stado,"Stado krów, ławica ryb, rój pszczół i wataha wilków."
-2026-12-04,czerwony,Kupa ___,ŚMIECHU,FORSY,ZŁOMU,CZASU,Złom|Złomowisko,"Kupa śmiechu, kupa forsy, kupa złomu i kupa czasu."
-2026-12-05,zielony,Zachwycający,OBŁĘDNY,ODLOTOWY,CZADOWY,BOSKI,Fajerwerki|Sztuczne ognie,Potoczne określenia czegoś świetnego. Obłędny pasuje też do szaleństwa.
-2026-12-05,zolty,Szalony,STUKNIĘTY,ZWARIOWANY,PORĄBANY,POMYLONY,Szaleństwo|Obłęd,Potoczne określenia kogoś niezrównoważonego.
-2026-12-05,pomaranczowy,Latają,SAMOLOT,LATAWIEC,DRON,BALON,Balon (statek powietrzny)|Latawiec,"Rzeczy, które unoszą się w powietrzu. Odlotowy to pułapka."
-2026-12-05,czerwony,Siódm(e/y/a) ___,NIEBO,POTY,CUD,WODA,Niebo,"Siódme niebo, siódme poty, siódmy cud świata i siódma woda po kisielu."
-2026-12-06,zielony,Nauczyciel,BELFER,PEDAGOG,WYCHOWAWCA,PROFESOR,Nauczyciel|Szkoła,"Określenia osoby, która uczy."
-2026-12-06,zolty,Szef,KIEROWNIK,DYREKTOR,PREZES,BOSS,Biuro|Garnitur,Osoby na kierowniczych stanowiskach. Dyrektor kojarzy się też ze szkołą.
-2026-12-06,pomaranczowy,W piórniku,OŁÓWEK,GUMKA,LINIJKA,TEMPERÓWKA,Piórnik|Ołówek,Przybory szkolne z piórnika.
-2026-12-06,czerwony,Godzina ___,ZERO,POLICYJNA,SZCZYTU,WYCHOWAWCZA,Zegar|Zegar ścienny,"Godzina zero, policyjna, szczytu i wychowawcza."
-2026-12-07,zielony,Pić,SĄCZYĆ,ŁYKAĆ,CHLEPTAĆ,POPIJAĆ,Herbata|Filiżanka,Sposoby picia. Chleptać kojarzy się też z kotem.
-2026-12-07,zolty,Jeść po trochu,SKUBAĆ,DZIOBAĆ,PODJADAĆ,GRYMASIĆ,Wróbel|Wróbel zwyczajny,Jedzenie bez apetytu albo małymi kęsami.
-2026-12-07,pomaranczowy,Robi kot,MRUCZEĆ,MIAUCZEĆ,SYCZEĆ,PRYCHAĆ,Kot domowy|Kot,"Odgłosy, które wydaje kot."
-2026-12-07,czerwony,Słomian(y/a) ___,WDOWIEC,ZAPAŁ,KAPELUSZ,DACH,Słoma|Strzecha,"Słomiany wdowiec, słomiany zapał, słomiany kapelusz i słomiany dach."
-2026-12-08,zielony,Bogaty,ZAMOŻNY,NADZIANY,MAJĘTNY,DZIANY,Pieniądz|Banknot,Określenia bogatej osoby. Nadziany pasuje też do pierogów.
-2026-12-08,zolty,Pełny,NAPCHANY,WYPCHANY,NABITY,ZAPCHANY,Walizka|Bagaż,Synonimy zapełnienia czegoś do granic.
-2026-12-08,pomaranczowy,Z nadzieniem,PĄCZEK,PIERÓG,KROKIET,NALEŚNIK,Krokiety|Pierogi,"Potrawy, które się nadziewa."
-2026-12-08,czerwony,Świnka ___,MORSKA,SKARBONKA,WIETNAMSKA,PEPPA,Świnka morska|Skarbonka,"Świnka morska, świnka-skarbonka, świnka wietnamska i świnka Peppa."
-2026-12-09,zielony,Zimno,ZIĄB,CHŁÓD,MRÓZ,ZIMNICA,Mróz|Szron,Słowa oznaczające zimno.
-2026-12-09,zolty,Na zimowy spacer,CZAPKA,SZALIK,RĘKAWICZKI,NAUSZNIKI,Czapka|Szalik,"Rzeczy, które chronią przed mrozem."
-2026-12-09,pomaranczowy,Mają płatki,RÓŻA,OWSIANKA,UCHO,ŚNIEG,Płatki owsiane|Róża,"Płatki róży, płatki owsiane, płatek ucha i płatki śniegu."
-2026-12-09,czerwony,___ lodowa,GÓRA,EPOKA,TAFLA,SAŁATA,Góra lodowa,"Góra lodowa, epoka lodowcowa, tafla lodowa i sałata lodowa."
-2026-12-10,zielony,Zrozumieć,KAPOWAĆ,ŁAPAĆ,CZAIĆ,KUMAĆ,Żarówka,Potoczne określenia rozumienia.
-2026-12-10,zolty,Złapać,CHWYCIĆ,POCHWYCIĆ,ZŁOWIĆ,CAPNĄĆ,Wędkarstwo|Wędka,Synonimy łapania. Łapać to pułapka: tu znaczy rozumieć.
-2026-12-10,pomaranczowy,Pracują z siecią,RYBAK,PAJĄK,SIATKARZ,HAKER,Pajęczyna|Sieć rybacka,"Rybak ma sieć, pająk pajęczynę, siatkarz siatkę, a haker włamuje się do sieci."
-2026-12-10,czerwony,Żyw(a/y) ___,GOTÓWKA,LEGENDA,REKLAMA,TRUP,Gotówka|Banknot,"Żywa gotówka, żywa legenda, żywa reklama i żywy trup."
-2026-12-11,zielony,Nudny,MDŁY,NIJAKI,MONOTONNY,DRĘTWY,Nuda|Ziewanie,Określenia czegoś bez wyrazu.
-2026-12-11,zolty,Zdrętwiały,ZESZTYWNIAŁY,SKOSTNIAŁY,ŚCIERPNIĘTY,ZGRABIAŁY,Mróz|Dłoń,Stan ciała po zimnie albo długim bezruchu.
-2026-12-11,pomaranczowy,Ćwiczenia,PRZYSIAD,POMPKA,BRZUSZEK,PODCIĄGANIE,Siłownia|Pompka,Podstawowe ćwiczenia na siłowni i w domu.
-2026-12-11,czerwony,Martw(y/a/e) ___,NATURA,PUNKT,SEZON,CIĄG,Martwa natura|Morze Martwe,"Martwa natura, martwy punkt, martwy sezon i martwy ciąg."
-2026-12-12,zielony,Kłótnia,SPRZECZKA,AWANTURA,SCYSJA,UTARCZKA,Kłótnia|Konflikt,Różne natężenia kłótni.
-2026-12-12,zolty,Niezłe zamieszanie,CYRK,HECA,JAZDA,AKCJA,Karnawał|Konfetti,"„Ale cyrk!”, „ale heca!”, „niezła jazda” i „ale akcja”."
-2026-12-12,pomaranczowy,W cyrku,KLAUN,AKROBATA,ŻONGLER,TRESER,Cyrk|Namiot cyrkowy,Artyści cyrkowi. Cyrk z drugiej grupy to pułapka.
-2026-12-12,czerwony,___ domowa,WOJNA,PRACA,APTECZKA,KUCHNIA,Dom|Kuchnia,"Wojna domowa, praca domowa, apteczka domowa i kuchnia domowa."
-2026-12-13,zielony,Szybko,MIGIEM,ŻWAWO,CHYŻO,DUCHEM,Błyskawica|Piorun,"Przysłówki oznaczające pośpiech. „Duchem” to szybko, nie straszno."
-2026-12-13,zolty,Wkrótce,ZARAZ,NIEBAWEM,RYCHŁO,WNET,Zegar|Klepsydra,Słowa oznaczające niedaleką przyszłość.
-2026-12-13,pomaranczowy,Zjawy,UPIÓR,ZJAWA,WIDMO,POLTERGEIST,Duch|Zamek,Nadprzyrodzone istoty z opowieści o duchach.
-2026-12-13,czerwony,Szybk(i/a) ___,RANDKA,KASA,PIŁKA,KOLEJ,Pociąg dużych prędkości|Kolej dużych prędkości,"Szybka randka, szybka kasa, szybka piłka i szybka kolej."
-2026-12-14,zielony,Oszust,NACIĄGACZ,KANCIARZ,HOCHSZTAPLER,CWANIAK,Karty do gry|Oszustwo,"Określenia kogoś, kto oszukuje."
-2026-12-14,zolty,Złodziej,KIESZONKOWIEC,WŁAMYWACZ,RABUŚ,SZABROWNIK,Włamanie|Złodziej,Różne rodzaje złodziei.
-2026-12-14,pomaranczowy,Noszą maskę,NURKOWIEC,SZERMIERZ,CHIRURG,SPAWACZ,Maska|Szermierka,"Zawody i sporty, w których nosi się maskę."
-2026-12-14,czerwony,Kieszonkow(y/e) ___,NÓŻ,ZEGAREK,WYDANIE,SŁOWNIK,Zegarek kieszonkowy|Kieszeń,"Nóż, zegarek, wydanie i słownik kieszonkowy. Kieszonkowiec to pułapka."
-2026-12-15,zielony,Smutny,PRZYGNĘBIONY,MARKOTNY,OSOWIAŁY,STRAPIONY,Smutek|Łzy,Określenia smutnego nastroju.
-2026-12-15,zolty,Samotny,OPUSZCZONY,OSAMOTNIONY,ODIZOLOWANY,PORZUCONY,Samotność|Ławka,Określenia kogoś zostawionego samemu sobie.
-2026-12-15,pomaranczowy,O deszczu,SIĄPI,LEJE,MŻY,KROPI,Deszcz|Parasol,"Jak mówimy, że pada."
-2026-12-15,czerwony,Szar(y/a/e) ___,STREFA,KOMÓRKI,MYSZKA,EMINENCJA,Mysz domowa|Mysz,"Szara strefa, szare komórki, szara myszka i szara eminencja."
-2026-12-16,zielony,Ciężko pracować,HARÓWAĆ,TYRAĆ,ORAĆ,ZASUWAĆ,Praca|Robotnik,Potoczne określenia ciężkiej pracy. Orać pasuje też do pola.
-2026-12-16,zolty,Prace w polu,SIAĆ,KOSIĆ,ŻĄĆ,BRONOWAĆ,Kombajn zbożowy|Pole uprawne,Czynności rolnicze.
-2026-12-16,pomaranczowy,Narzędzia rolnicze,KOSA,SIERP,GRABIE,WIDŁY,Kosa|Sierp,Tradycyjne narzędzia do pracy w polu.
-2026-12-16,czerwony,Poln(a/y/e) ___,MYSZ,DROGA,KWIATY,KONIK,Konik polny|Pasikonik,"Mysz polna, polna droga, polne kwiaty i konik polny."
-2026-12-17,zielony,Ozdabiać,DEKOROWAĆ,ZDOBIĆ,UPIĘKSZAĆ,PRZYSTRAJAĆ,Choinka|Dekoracja,Synonimy ozdabiania.
-2026-12-17,zolty,Na choinkę,BOMBKA,ŁAŃCUCH,LAMPKI,ANIOŁEK,Bombka choinkowa|Choinka,Ozdoby choinkowe.
-2026-12-17,pomaranczowy,Stroi się,GITARA,SKRZYPCE,PIANINO,RADIO,Gitara|Skrzypce,"Instrumenty i radio się stroi. Stroić to też ozdabiać, co mogło zmylić."
-2026-12-17,czerwony,Łańcuch ___,POKARMOWY,GÓRSKI,SZCZĘŚCIA,DOSTAW,Łańcuch|Łańcuch górski,"Łańcuch pokarmowy, górski, szczęścia i dostaw. Łańcuch na choinkę to pułapka."
+data,kolor,kategoria,slowo1,slowo2,slowo3,slowo4,zdjecie,wyjasnienie,zdjecie_podpis
+2026-11-12,zielony,Polskie rzeki,WISŁA,ODRA,WARTA,NAREW,Wisła,"Cztery z najważniejszych polskich rzek. Warta to też nazwa ubezpieczyciela, a Narew bywa mylona z miastem.",
+2026-11-12,zolty,Ptaki,SROKA,WRONA,SOWA,CZAPLA,Sroka zwyczajna,"Pospolite polskie ptaki: sroka, wrona, sowa i czapla.",
+2026-11-12,pomaranczowy,Auta z PRL-u,MALUCH,SYRENKA,WARSZAWA,NYSA,Fiat 126p,"Samochody z czasów PRL-u. Maluch to Fiat 126p, a Warszawa i Syrenka to także nazwy miasta i mitycznej postaci.",
+2026-11-12,czerwony,Tańce narodowe,POLONEZ,MAZUR,OBEREK,KRAKOWIAK,Polonez (taniec),"Pięć polskich tańców narodowych to polonez, mazur, oberek, krakowiak i kujawiak. Polonez był też samochodem.",
+2026-11-13,zielony,Ma zamek,DRZWI,KURTKA,PLAŻA,KARABIN,Kłódka|Zamek (mechanizm)|Klucz (narzędzie),"Drzwi mają zamek, kurtka zamek błyskawiczny, na plaży buduje się zamek z piasku, a karabin ma zamek, czyli mechanizm ładujący.",
+2026-11-13,zolty,Ma koronę,ZĄB,DRZEWO,KRÓLOWA,KIELCE,Korona (insygnium)|Korona|Korona Królestwa Polskiego,"Ząb ma koronę, drzewo ma koronę, królowa nosi koronę, a w Kielcach gra klub piłkarski Korona Kielce.",
+2026-11-13,pomaranczowy,Ma język,BUT,DZWON,PŁOMIEŃ,PROGRAMISTA,Język (anatomia)|Dzwon,"But ma język pod sznurówkami, dzwon ma język (serce), płomień ma języki ognia, a programista pisze w językach programowania.",
+2026-11-13,czerwony,Ma ucho,IGŁA,DZBAN,KUBEK,ŚCIANA,Ucho|Małżowina uszna,"Igła ma ucho na nitkę, dzban i kubek mają ucha do trzymania, a „ściany mają uszy”.",
+2026-11-14,zielony,Kłamać,ŚCIEMNIAĆ,ZMYŚLAĆ,KITOWAĆ,KRĘCIĆ,Kłamstwo|Pinokio,"Potoczne określenia kłamania. Pułapka: „bujać” też znaczy kłamać, ale tu pasuje do kołysania.",
+2026-11-14,zolty,Poruszać w przód i w tył,BUJAĆ,HUŚTAĆ,KIWAĆ,KOŁYSAĆ,Huśtawka|Kołyska|Bujany fotel,"Bujać, huśtać, kiwać i kołysać to ruchy wahadłowe. „Kiwać” znaczy też oszukiwać, co mogło zmylić.",
+2026-11-14,pomaranczowy,"Coś, co się kręci",KARUZELA,BĄK,WIATRAK,PRALKA,Karuzela|Wiatrak,"Karuzela, bąk, wiatrak i bęben pralki obracają się wokół osi.",
+2026-11-14,czerwony,Kocie ___,ŁBY,OCZY,MUZYKA,RUCHY,Kot domowy|Kot,"Kocie łby (bruk), kocie oczy (odblaski), kocia muzyka (fałszowanie) i kocie ruchy.",
+2026-11-15,zielony,Nieporządek,CHAOS,ROZGARDIASZ,NIEŁAD,MĘTLIK,Bałagan|Chaos|Nieporządek,Słowa oznaczające bałagan i zamieszanie.,
+2026-11-15,zolty,Hałas,GWAR,ZGIEŁK,SZUM,WRZAWA,Hałas|Tłum,"Gwar, zgiełk, szum i wrzawa to różne odcienie hałasu.",
+2026-11-15,pomaranczowy,Mają klawisze,PIANINO,LAPTOP,AKORDEON,PILOT,Klawiatura komputerowa|Klawiatura (muzyka)|Fortepian,"Pianino, laptop, akordeon i pilot do telewizora mają klawisze.",
+2026-11-15,czerwony,Cich(e/a/y) ___,DNI,WODA,NOC,WIELBICIEL,Cisza|Noc,"Ciche dni (obrażanie się), cicha woda (o kimś niepozornym), cicha noc (kolęda) i cichy wielbiciel.",
+2026-11-16,zielony,Uciekać,ZWIEWAĆ,PRYSKAĆ,CZMYCHAĆ,ZMYKAĆ,Ucieczka|Bieg (sport),Potoczne synonimy uciekania. „Zwiewać” kojarzy się też z wiatrem.,
+2026-11-16,zolty,Ruch powietrza,PODMUCH,POWIEW,ZEFIREK,WICHER,Wiatr|Wichura,Od delikatnego zefirka po wicher.,
+2026-11-16,pomaranczowy,W kosmetyczce,PUDER,TUSZ,SZMINKA,PĘSETA,Kosmetyczka|Kosmetyk|Makijaż,"Rzeczy, które zwykle nosi się w kosmetyczce.",
+2026-11-16,czerwony,Zimn(y/a/e) ___,DRAŃ,WOJNA,OGNIE,PRYSZNIC,Lód|Szron|Zimne ognie,"Zimny drań, zimna wojna, zimne ognie i zimny prysznic (także w przenośni).",
+2026-11-17,zielony,Głupek,MATOŁ,GAMOŃ,CYMBAŁ,BAŁWAN,Głupota|Osioł domowy,Potoczne określenia głupiej osoby. Pułapka: cymbał to też instrument.,
+2026-11-17,zolty,Instrumenty perkusyjne,BĘBEN,TAMBURYN,KASTANIETY,TRÓJKĄT,Instrumenty perkusyjne|Perkusja|Bęben,"Instrumenty, na których gra się przez uderzanie lub potrząsanie.",
+2026-11-17,pomaranczowy,Z ciasta,PIEROGI,USZKA,KOPYTKA,PIZZA,Ciasto|Pierogi,Dania lepione lub wałkowane z ciasta.,
+2026-11-17,czerwony,Złot(y/a) ___,ŚRODEK,STRZAŁ,INTERES,PODZIAŁ,Złoto|Sztabka złota,"Złoty środek, złoty strzał, złoty interes i złoty podział (proporcja w sztuce).",
+2026-11-18,zielony,Jeść łapczywie,WCINAĆ,PAŁASZOWAĆ,WSUWAĆ,SZAMAĆ,Obżarstwo|Jedzenie|Posiłek,"Potoczne określenia szybkiego, łapczywego jedzenia.",
+2026-11-18,zolty,Spać,KIMAĆ,LULAĆ,DRZEMAĆ,CHRAPAĆ,Sen|Drzemka,"Kimać i lulać to potoczne określenia spania, drzemać i chrapać też kojarzą się ze snem.",
+2026-11-18,pomaranczowy,W sypialni,KOŁDRA,PODUSZKA,PIERZYNA,MATERAC,Sypialnia|Łóżko,"Rzeczy, które znajdziesz w łóżku.",
+2026-11-18,czerwony,Słodk(i/ie/a) ___,LENISTWO,IDIOTKA,TAJEMNICA,ŻYCIE,Cukier|Słodycze|Cukierek,"Słodkie lenistwo, słodka idiotka, słodka tajemnica i słodkie życie (dolce vita).",
+2026-11-19,zielony,Bić,TŁUC,LAĆ,GRZMOCIĆ,ŁOMOTAĆ,Boks|Rękawice bokserskie,"Potoczne określenia bicia. Pułapka: „prać” też znaczy bić, ale tu należy do porządków.",
+2026-11-19,zolty,Domowe porządki,ODKURZAĆ,ZAMIATAĆ,PRASOWAĆ,PRAĆ,Sprzątanie|Odkurzacz,"Czynności domowe: odkurzanie, zamiatanie, prasowanie i pranie.",
+2026-11-19,pomaranczowy,Nalewa się,HERBATA,BENZYNA,ZUPA,KOMPOT,Dzbanek|Herbata,"Herbatę, benzynę, zupę i kompot się nalewa. „Lać” to pułapka.",
+2026-11-19,czerwony,Czyst(e/a/y) ___,SUMIENIE,KONTO,ZYSK,KARTA,Mydło|Czystość,"Czyste sumienie, czyste konto, czysty zysk i czysta karta.",
+2026-11-20,zielony,Śmiać się,CHICHOTAĆ,RECHOTAĆ,PARSKAĆ,RŻEĆ,Śmiech|Uśmiech,Rodzaje śmiechu. Rżeć i rechotać kojarzą się też ze zwierzętami.,
+2026-11-20,zolty,Odgłosy zwierząt,MUCZEĆ,BECZEĆ,GDAKAĆ,KUMKAĆ,Bydło domowe|Krowa|Zwierzęta gospodarskie,"Krowa muczy, owca beczy, kura gdacze, a żaba kumka.",
+2026-11-20,pomaranczowy,Mają puentę,DOWCIP,ANEGDOTA,FRASZKA,LIMERYK,Dowcip|Kabaret,"Krótkie formy, które kończą się zaskakującą puentą.",
+2026-11-20,czerwony,Końsk(i/a/ie) ___,OGON,DAWKA,ZDROWIE,ZALOTY,Koń domowy|Koń,"Koński ogon (fryzura), końska dawka, końskie zdrowie i końskie zaloty.",
+2026-11-21,zielony,Ukraść,PODWĘDZIĆ,ZWINĄĆ,BUCHNĄĆ,ŚWISNĄĆ,Kradzież|Złodziej,Potoczne określenia kradzieży. „Świsnąć” i „buchnąć” mają też inne znaczenia.,
+2026-11-21,zolty,Uderzyć,WALNĄĆ,PRZYŁOŻYĆ,ZDZIELIĆ,TRZASNĄĆ,Pięść|Boks,Synonimy mocnego uderzenia.,
+2026-11-21,pomaranczowy,Zwija się,DYWAN,NAMIOT,ŻAGLE,MATA,Dywan|Namiot,"Dywan, namiot, żagle i matę do jogi się zwija.",
+2026-11-21,czerwony,Gorąc(y/a/e) ___,KARTOFEL,LINIA,TEMAT,KRZESŁO,Ogień|Płomień,"Gorący kartofel (kłopotliwa sprawa), gorąca linia, gorący temat i gorące krzesło (w polityce i sporcie).",
+2026-11-22,zielony,Bardzo zmęczony,WYKOŃCZONY,PADNIĘTY,SKONANY,ZAJECHANY,Zmęczenie|Ziewanie,Potoczne określenia skrajnego zmęczenia.,
+2026-11-22,zolty,Wściekły,WKURZONY,ZŁY,ROZJUSZONY,NABUZOWANY,Gniew|Złość,Synonimy złości.,
+2026-11-22,pomaranczowy,Można naładować,TELEFON,BATERIA,PISTOLET,AKUMULATOR,Akumulator elektryczny|Bateria (elektrotechnika)|Ładowarka,"Telefon, baterię i akumulator ładuje się prądem, a pistolet nabojami.",
+2026-11-22,czerwony,___ dnia,TEMAT,ZUPA,DANIE,PORA,Kalendarz|Zegar,"Temat dnia, zupa dnia, danie dnia i pora dnia.",
+2026-11-23,zielony,Bzdury,BREDNIE,BZDETY,DYRDYMAŁY,FARMAZONY,Nonsens|Absurd,Słowa oznaczające głupstwa i nonsens.,
+2026-11-23,zolty,Niepotwierdzone wieści,SŁUCHY,POGŁOSKI,PLOTKI,WIEŚCI,Plotka|Szept,"Informacje z drugiej ręki, często nieprawdziwe.",
+2026-11-23,pomaranczowy,W gazecie,NEKROLOG,HOROSKOP,KRZYŻÓWKA,FELIETON,Gazeta|Prasa,Stałe działy w gazecie.,
+2026-11-23,czerwony,Babsk(i/ie) ___,GADANIE,LATO,WIECZÓR,SPRAWY,Babie lato|Pajęczyna,"Babskie gadanie, babie lato, babski wieczór i babskie sprawy.",
+2026-11-24,zielony,Odrobina,KRZTA,CIUT,KAPKA,SZCZYPTA,Szczypta|Sól kuchenna,Bardzo mała ilość czegoś. Pułapka: szczypta pasuje też do miar w przepisach.,
+2026-11-24,zolty,Miary w przepisach,ŁYŻKA,SZKLANKA,GARŚĆ,ŁYŻECZKA,Łyżka|Przepis kulinarny,Kuchenne miary objętości.,
+2026-11-24,pomaranczowy,Mają oczka,ZIEMNIAK,RAJSTOPY,PIERŚCIONEK,ROSÓŁ,Ziemniak|Rajstopy,"Ziemniak ma oczka (kiełki), rajstopom „lecą oczka”, pierścionek ma oczko (kamień), a na rosole pływają oczka tłuszczu.",
+2026-11-24,czerwony,Ostatni(a) ___,DESKA,KROPLA,WIECZERZA,PROSTA,Meta (sport)|Linia mety|Bieg (sport),"Ostatnia deska ratunku, ostatnia kropla, Ostatnia Wieczerza i ostatnia prosta.",
+2026-11-25,zielony,Przy kości,PULCHNY,KORPULENTNY,OTYŁY,PUSZYSTY,Pączek|Brzuch,Delikatniejsze i mniej delikatne określenia tęgiej osoby. Puszysty to pułapka z grupy miękkich.,
+2026-11-25,zolty,Miły w dotyku,AKSAMITNY,JEDWABISTY,MIĘCIUTKI,PLUSZOWY,Aksamit|Plusz|Jedwab,"Przymiotniki opisujące miękkie, przyjemne materiały.",
+2026-11-25,pomaranczowy,Na tłusty czwartek,PĄCZEK,FAWOREK,OPONKA,RÓŻA,Tłusty czwartek|Pączek|Faworki,"Pączek, faworek, oponka i róża karnawałowa. Oponka to też żartobliwie brzuch.",
+2026-11-25,czerwony,Grub(a/e) ___,RYBA,KRESKA,SPRAWA,PIENIĄDZE,Ryby|Wieloryb,"Gruba ryba, gruba kreska, gruba sprawa i grube pieniądze.",
+2026-11-26,zielony,Iść powoli,CZŁAPAĆ,DREPTAĆ,TRUPTAĆ,WLEC,Spacer|Chód,Sposoby wolnego chodzenia.,
+2026-11-26,zolty,Pędzić,GNAĆ,ZASUWAĆ,MKNĄĆ,SUNĄĆ,Gepard|Sprint (lekkoatletyka),Synonimy szybkiego poruszania się.,
+2026-11-26,pomaranczowy,Powolne zwierzęta,ŻÓŁW,ŚLIMAK,LENIWIEC,KOALA,Leniwce|Leniwiec|Żółwie,Zwierzęta słynące z powolności.,
+2026-11-26,czerwony,Zawrotn(e/a) ___,TEMPO,KARIERA,SUMA,PRĘDKOŚĆ,Prędkość|Kolejka górska,"Zawrotne tempo, zawrotna kariera, zawrotna suma i zawrotna prędkość.",
+2026-11-27,zielony,"Przystojny, ładny",UROCZY,ŚLICZNY,PRZYSTOJNY,POWABNY,Uroda|Piękno,Komplementy dotyczące wyglądu.,
+2026-11-27,zolty,Sprytny,CWANY,PRZEBIEGŁY,SZCZWANY,KUTY,Lis rudy|Lis,Synonimy cwaniactwa. „Kuty na cztery nogi” to ktoś bardzo sprytny.,
+2026-11-27,pomaranczowy,Rude,LIS,WIEWIÓRKA,MARCHEWKA,RDZA,Jesień|Liście|Rudy (kolor),"Rzeczy rude lub rdzawe: lis, wiewiórka, marchewka i rdza.",
+2026-11-27,czerwony,Czerwon(y/a) ___,KAPTUREK,KRZYŻ,DYWAN,KARTKA,Czerwień|Kolor czerwony,"Czerwony Kapturek, Czerwony Krzyż, czerwony dywan i czerwona kartka.",
+2026-11-28,zielony,Ukryta rzeka,SANKI,BUGATTI,PODRAPANY,WARTOWNIK,Rzeka|Wisła,"SAN w SANKI, BUG w BUGATTI, ODRA w PODRAPANY i WARTA w WARTOWNIK.",
+2026-11-28,zolty,Ukryta liczba,TRZYMAĆ,STODOŁA,ODWAGA,ZEROWANIE,Liczba|Cyfra,"TRZY w TRZYMAĆ, STO w STODOŁA, DWA w ODWAGA i ZERO w ZEROWANIE.",
+2026-11-28,pomaranczowy,Ukryte imię,EWANGELIA,ADAMASZEK,KOLAGEN,MIGAWKA,Imię|Identyfikator,"EWA w EWANGELIA, ADAM w ADAMASZEK, OLA w KOLAGEN i IGA w MIGAWKA.",
+2026-11-28,czerwony,Ukryta marka auta,SZUFLADA,MINISTER,AUDIOBOOK,POPELINA,Samochód osobowy|Samochód,"LADA w SZUFLADA, MINI w MINISTER, AUDI w AUDIOBOOK i OPEL w POPELINA. Bugatti to pułapka.",
+2026-11-29,zielony,Złota…,RYBKA,RĄCZKA,JESIEŃ,KLATKA,Złoto|Sztabka złota,"Złota rybka, złota rączka, złota polska jesień i złota klatka.",
+2026-11-29,zolty,Biała…,GORĄCZKA,DAMA,BROŃ,FLAGA,Biel|Śnieg,"Biała gorączka, biała dama, biała broń i biała flaga.",
+2026-11-29,pomaranczowy,Czarna…,OWCA,ROBOTA,DZIURA,POLEWKA,Czerń|Noc,"Czarna owca, czarna robota, czarna dziura i czarna polewka.",
+2026-11-29,czerwony,Zielona…,GÓRA,NOC,KARTA,HERBATA,Zieleń|Liść,"Zielona Góra, zielona noc, zielona karta i zielona herbata. Herbata bywa też czarna i biała.",
+2026-11-30,zielony,"Mieć coś w kieszeni, nosie, brzuchu, głowie",WĘŻA,MUCHY,MOTYLE,OLEJ,Frazeologizm|Związek frazeologiczny|Motyle,"Mieć węża w kieszeni, muchy w nosie, motyle w brzuchu i olej w głowie.",
+2026-11-30,zolty,Wpuścić lub nabić kogoś w…,MALINY,KANAŁ,BUTELKĘ,POLE,Malina właściwa|Malina,"Wpuścić w maliny, wpuścić w kanał, nabić w butelkę i wyprowadzić w pole.",
+2026-11-30,pomaranczowy,"Zdrowy, uparty, głodny, pracowity jak…",RYBA,OSIOŁ,WILK,PSZCZOŁA,Pszczoła miodna|Osioł domowy,"Zdrowy jak ryba, uparty jak osioł, głodny jak wilk i pracowity jak pszczoła.",
+2026-11-30,czerwony,Idzie jak po… / jak w… / jak z…,MAŚLE,SZNURKU,NUT,ZEGARKU,Masło|Zegarek,"Idzie jak po maśle, jak po sznurku, jak z nut i jak w zegarku.",
+2026-12-01,zielony,Pan…,TADEUSZ,KLEKS,WOŁODYJOWSKI,SAMOCHODZIK,Pan Tadeusz|Adam Mickiewicz,"Pan Tadeusz, Pan Kleks, Pan Wołodyjowski i Pan Samochodzik.",
+2026-12-01,zolty,Kapitan…,NEMO,HAK,ŻBIK,KLOSS,Kapitan|Kapitan statku,"Kapitan Nemo, Kapitan Hak, kapitan Żbik i kapitan Kloss.",
+2026-12-01,pomaranczowy,Doktor…,DOLITTLE,ŻYWAGO,HOUSE,JEKYLL,Lekarz|Stetoskop,"Doktor Dolittle, Doktor Żywago, doktor House i doktor Jekyll.",
+2026-12-01,czerwony,Król…,LEW,MACIUŚ,ARTUR,JULIAN,Król|Korona (insygnium),"Król Lew, Król Maciuś Pierwszy, Król Artur i król Julian.",
+2026-12-02,zielony,Zdenerwować,ZIRYTOWAĆ,ROZDRAŻNIĆ,WKURZYĆ,ROZJUSZYĆ,Gniew|Złość,Różne stopnie wyprowadzania kogoś z równowagi.,
+2026-12-02,zolty,Zaskoczyć,ZDZIWIĆ,ZDUMIEĆ,ZSZOKOWAĆ,OSZOŁOMIĆ,Zdziwienie|Zaskoczenie,Synonimy wywołania zdziwienia. Zszokować łatwo pomylić ze zdenerwować.,
+2026-12-02,pomaranczowy,Mają żądło,OSA,PSZCZOŁA,SKORPION,PŁASZCZKA,Osa|Pszczoła miodna,Zwierzęta z żądłem. Płaszczka ma kolec jadowy na ogonie.,
+2026-12-02,czerwony,Bomba ___,KALORYCZNA,ZEGAROWA,WITAMINOWA,DYMNA,Pączek|Czekolada,"Bomba kaloryczna, zegarowa, witaminowa i dymna.",
+2026-12-03,zielony,Ukryć,SCHOWAĆ,ZATAIĆ,ZAKAMUFLOWAĆ,PRZEMILCZEĆ,Sejf|Skrytka,Sposoby ukrywania rzeczy lub informacji.,
+2026-12-03,zolty,Zgubić,STRACIĆ,ZAPODZIAĆ,POSIAĆ,ZAWIERUSZYĆ,Klucz (narzędzie)|Klucze,"„Posiać” to potocznie zgubić, choć kojarzy się z siewem.",
+2026-12-03,pomaranczowy,Mistrzowie kamuflażu,KAMELEON,PATYCZAK,KAMBAŁA,OŚMIORNICA,Kameleon|Patyczaki,"Zwierzęta, które zmieniają kolor albo udają otoczenie.",
+2026-12-03,czerwony,Siać ___,ZAMĘT,PANIKĘ,POSTRACH,FERMENT,Siew|Siewnik,"Siać zamęt, panikę, postrach i ferment.",
+2026-12-04,zielony,Bardzo dużo,MNÓSTWO,OGROM,BEZLIK,MASA,Mrowisko|Mrówki,Słowa oznaczające wielką ilość.,
+2026-12-04,zolty,Zgromadzenie ludzi,TŁUM,CIŻBA,ZBIEGOWISKO,ŚCISK,Tłum|Koncert,Określenia ludzi zebranych w jednym miejscu.,
+2026-12-04,pomaranczowy,Grupy zwierząt,STADO,ŁAWICA,RÓJ,WATAHA,Ławica|Stado,"Stado krów, ławica ryb, rój pszczół i wataha wilków.",
+2026-12-04,czerwony,Kupa ___,ŚMIECHU,FORSY,ZŁOMU,CZASU,Złom|Złomowisko,"Kupa śmiechu, kupa forsy, kupa złomu i kupa czasu.",
+2026-12-05,zielony,Zachwycający,OBŁĘDNY,ODLOTOWY,CZADOWY,BOSKI,Fajerwerki|Sztuczne ognie,Potoczne określenia czegoś świetnego. Obłędny pasuje też do szaleństwa.,
+2026-12-05,zolty,Szalony,STUKNIĘTY,ZWARIOWANY,PORĄBANY,POMYLONY,Szaleństwo|Obłęd,Potoczne określenia kogoś niezrównoważonego.,
+2026-12-05,pomaranczowy,Latają,SAMOLOT,LATAWIEC,DRON,BALON,Balon (statek powietrzny)|Latawiec,"Rzeczy, które unoszą się w powietrzu. Odlotowy to pułapka.",
+2026-12-05,czerwony,Siódm(e/y/a) ___,NIEBO,POTY,CUD,WODA,Niebo,"Siódme niebo, siódme poty, siódmy cud świata i siódma woda po kisielu.",
+2026-12-06,zielony,Nauczyciel,BELFER,PEDAGOG,WYCHOWAWCA,PROFESOR,Nauczyciel|Szkoła,"Określenia osoby, która uczy.",
+2026-12-06,zolty,Szef,KIEROWNIK,DYREKTOR,PREZES,BOSS,Biuro|Garnitur,Osoby na kierowniczych stanowiskach. Dyrektor kojarzy się też ze szkołą.,
+2026-12-06,pomaranczowy,W piórniku,OŁÓWEK,GUMKA,LINIJKA,TEMPERÓWKA,Piórnik|Ołówek,Przybory szkolne z piórnika.,
+2026-12-06,czerwony,Godzina ___,ZERO,POLICYJNA,SZCZYTU,WYCHOWAWCZA,Zegar|Zegar ścienny,"Godzina zero, policyjna, szczytu i wychowawcza.",
+2026-12-07,zielony,Pić,SĄCZYĆ,ŁYKAĆ,CHLEPTAĆ,POPIJAĆ,Herbata|Filiżanka,Sposoby picia. Chleptać kojarzy się też z kotem.,
+2026-12-07,zolty,Jeść po trochu,SKUBAĆ,DZIOBAĆ,PODJADAĆ,GRYMASIĆ,Wróbel|Wróbel zwyczajny,Jedzenie bez apetytu albo małymi kęsami.,
+2026-12-07,pomaranczowy,Robi kot,MRUCZEĆ,MIAUCZEĆ,SYCZEĆ,PRYCHAĆ,Kot domowy|Kot,"Odgłosy, które wydaje kot.",
+2026-12-07,czerwony,Słomian(y/a) ___,WDOWIEC,ZAPAŁ,KAPELUSZ,DACH,Słoma|Strzecha,"Słomiany wdowiec, słomiany zapał, słomiany kapelusz i słomiany dach.",
+2026-12-08,zielony,Bogaty,ZAMOŻNY,NADZIANY,MAJĘTNY,DZIANY,Pieniądz|Banknot,Określenia bogatej osoby. Nadziany pasuje też do pierogów.,
+2026-12-08,zolty,Pełny,NAPCHANY,WYPCHANY,NABITY,ZAPCHANY,Walizka|Bagaż,Synonimy zapełnienia czegoś do granic.,
+2026-12-08,pomaranczowy,Z nadzieniem,PĄCZEK,PIERÓG,KROKIET,NALEŚNIK,Krokiety|Pierogi,"Potrawy, które się nadziewa.",
+2026-12-08,czerwony,Świnka ___,MORSKA,SKARBONKA,WIETNAMSKA,PEPPA,Świnka morska|Skarbonka,"Świnka morska, świnka-skarbonka, świnka wietnamska i świnka Peppa.",
+2026-12-09,zielony,Zimno,ZIĄB,CHŁÓD,MRÓZ,ZIMNICA,Mróz|Szron,Słowa oznaczające zimno.,
+2026-12-09,zolty,Na zimowy spacer,CZAPKA,SZALIK,RĘKAWICZKI,NAUSZNIKI,Czapka|Szalik,"Rzeczy, które chronią przed mrozem.",
+2026-12-09,pomaranczowy,Mają płatki,RÓŻA,OWSIANKA,UCHO,ŚNIEG,Płatki owsiane|Róża,"Płatki róży, płatki owsiane, płatek ucha i płatki śniegu.",
+2026-12-09,czerwony,___ lodowa,GÓRA,EPOKA,TAFLA,SAŁATA,Góra lodowa,"Góra lodowa, epoka lodowcowa, tafla lodowa i sałata lodowa.",
+2026-12-10,zielony,Zrozumieć,KAPOWAĆ,ŁAPAĆ,CZAIĆ,KUMAĆ,Żarówka,Potoczne określenia rozumienia.,
+2026-12-10,zolty,Złapać,CHWYCIĆ,POCHWYCIĆ,ZŁOWIĆ,CAPNĄĆ,Wędkarstwo|Wędka,Synonimy łapania. Łapać to pułapka: tu znaczy rozumieć.,
+2026-12-10,pomaranczowy,Pracują z siecią,RYBAK,PAJĄK,SIATKARZ,HAKER,Pajęczyna|Sieć rybacka,"Rybak ma sieć, pająk pajęczynę, siatkarz siatkę, a haker włamuje się do sieci.",
+2026-12-10,czerwony,Żyw(a/y) ___,GOTÓWKA,LEGENDA,REKLAMA,TRUP,Gotówka|Banknot,"Żywa gotówka, żywa legenda, żywa reklama i żywy trup.",
+2026-12-11,zielony,Nudny,MDŁY,NIJAKI,MONOTONNY,DRĘTWY,Nuda|Ziewanie,Określenia czegoś bez wyrazu.,
+2026-12-11,zolty,Zdrętwiały,ZESZTYWNIAŁY,SKOSTNIAŁY,ŚCIERPNIĘTY,ZGRABIAŁY,Mróz|Dłoń,Stan ciała po zimnie albo długim bezruchu.,
+2026-12-11,pomaranczowy,Ćwiczenia,PRZYSIAD,POMPKA,BRZUSZEK,PODCIĄGANIE,Siłownia|Pompka,Podstawowe ćwiczenia na siłowni i w domu.,
+2026-12-11,czerwony,Martw(y/a/e) ___,NATURA,PUNKT,SEZON,CIĄG,Martwa natura|Morze Martwe,"Martwa natura, martwy punkt, martwy sezon i martwy ciąg.",
+2026-12-12,zielony,Kłótnia,SPRZECZKA,AWANTURA,SCYSJA,UTARCZKA,Kłótnia|Konflikt,Różne natężenia kłótni.,
+2026-12-12,zolty,Niezłe zamieszanie,CYRK,HECA,JAZDA,AKCJA,Karnawał|Konfetti,"„Ale cyrk!”, „ale heca!”, „niezła jazda” i „ale akcja”.",
+2026-12-12,pomaranczowy,W cyrku,KLAUN,AKROBATA,ŻONGLER,TRESER,Cyrk|Namiot cyrkowy,Artyści cyrkowi. Cyrk z drugiej grupy to pułapka.,
+2026-12-12,czerwony,___ domowa,WOJNA,PRACA,APTECZKA,KUCHNIA,Dom|Kuchnia,"Wojna domowa, praca domowa, apteczka domowa i kuchnia domowa.",
+2026-12-13,zielony,Szybko,MIGIEM,ŻWAWO,CHYŻO,DUCHEM,Błyskawica|Piorun,"Przysłówki oznaczające pośpiech. „Duchem” to szybko, nie straszno.",
+2026-12-13,zolty,Wkrótce,ZARAZ,NIEBAWEM,RYCHŁO,WNET,Zegar|Klepsydra,Słowa oznaczające niedaleką przyszłość.,
+2026-12-13,pomaranczowy,Zjawy,UPIÓR,ZJAWA,WIDMO,POLTERGEIST,Duch|Zamek,Nadprzyrodzone istoty z opowieści o duchach.,
+2026-12-13,czerwony,Szybk(i/a) ___,RANDKA,KASA,PIŁKA,KOLEJ,Pociąg dużych prędkości|Kolej dużych prędkości,"Szybka randka, szybka kasa, szybka piłka i szybka kolej.",
+2026-12-14,zielony,Oszust,NACIĄGACZ,KANCIARZ,HOCHSZTAPLER,CWANIAK,Karty do gry|Oszustwo,"Określenia kogoś, kto oszukuje.",
+2026-12-14,zolty,Złodziej,KIESZONKOWIEC,WŁAMYWACZ,RABUŚ,SZABROWNIK,Włamanie|Złodziej,Różne rodzaje złodziei.,
+2026-12-14,pomaranczowy,Noszą maskę,NURKOWIEC,SZERMIERZ,CHIRURG,SPAWACZ,Maska|Szermierka,"Zawody i sporty, w których nosi się maskę.",
+2026-12-14,czerwony,Kieszonkow(y/e) ___,NÓŻ,ZEGAREK,WYDANIE,SŁOWNIK,Zegarek kieszonkowy|Kieszeń,"Nóż, zegarek, wydanie i słownik kieszonkowy. Kieszonkowiec to pułapka.",
+2026-12-15,zielony,Smutny,PRZYGNĘBIONY,MARKOTNY,OSOWIAŁY,STRAPIONY,Smutek|Łzy,Określenia smutnego nastroju.,
+2026-12-15,zolty,Samotny,OPUSZCZONY,OSAMOTNIONY,ODIZOLOWANY,PORZUCONY,Samotność|Ławka,Określenia kogoś zostawionego samemu sobie.,
+2026-12-15,pomaranczowy,O deszczu,SIĄPI,LEJE,MŻY,KROPI,Deszcz|Parasol,"Jak mówimy, że pada.",
+2026-12-15,czerwony,Szar(y/a/e) ___,STREFA,KOMÓRKI,MYSZKA,EMINENCJA,Mysz domowa|Mysz,"Szara strefa, szare komórki, szara myszka i szara eminencja.",
+2026-12-16,zielony,Ciężko pracować,HARÓWAĆ,TYRAĆ,ORAĆ,ZASUWAĆ,Praca|Robotnik,Potoczne określenia ciężkiej pracy. Orać pasuje też do pola.,
+2026-12-16,zolty,Prace w polu,SIAĆ,KOSIĆ,ŻĄĆ,BRONOWAĆ,Kombajn zbożowy|Pole uprawne,Czynności rolnicze.,
+2026-12-16,pomaranczowy,Narzędzia rolnicze,KOSA,SIERP,GRABIE,WIDŁY,Kosa|Sierp,Tradycyjne narzędzia do pracy w polu.,
+2026-12-16,czerwony,Poln(a/y/e) ___,MYSZ,DROGA,KWIATY,KONIK,Konik polny|Pasikonik,"Mysz polna, polna droga, polne kwiaty i konik polny.",
+2026-12-17,zielony,Ozdabiać,DEKOROWAĆ,ZDOBIĆ,UPIĘKSZAĆ,PRZYSTRAJAĆ,Choinka|Dekoracja,Synonimy ozdabiania.,
+2026-12-17,zolty,Na choinkę,BOMBKA,ŁAŃCUCH,LAMPKI,ANIOŁEK,Bombka choinkowa|Choinka,Ozdoby choinkowe.,
+2026-12-17,pomaranczowy,Stroi się,GITARA,SKRZYPCE,PIANINO,RADIO,Gitara|Skrzypce,"Instrumenty i radio się stroi. Stroić to też ozdabiać, co mogło zmylić.",
+2026-12-17,czerwony,Łańcuch ___,POKARMOWY,GÓRSKI,SZCZĘŚCIA,DOSTAW,Łańcuch|Łańcuch górski,"Łańcuch pokarmowy, górski, szczęścia i dostaw. Łańcuch na choinkę to pułapka.",

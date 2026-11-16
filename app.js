@@ -48,6 +48,7 @@
       words: [r.slowo1, r.slowo2, r.slowo3, r.slowo4].map((w) => w.toUpperCase()),
       level: LEVELS[r.kolor] ?? 0,
       img: r.zdjecie,
+      credit: r.zdjecie_podpis || "",
     }))
     .sort((a, b) => a.level - b.level);
   const groupOf = (w) => groups.findIndex((g) => g.words.includes(w));
@@ -101,9 +102,12 @@
       rowEl.prepend(bg);
       rowEl.classList.add("has-img");
       requestAnimationFrame(() => bg.classList.add("on"));
-      if (im.link) {
-        const a = document.createElement("a");
-        a.className = "credit"; a.href = im.link; a.target = "_blank"; a.rel = "noopener"; a.textContent = "fot. Wikipedia";
+      const pexels = /images\.pexels\.com/.test(im.src);
+      const text = g.credit || (im.link ? "fot. Wikipedia" : "");
+      if (text) {
+        const a = document.createElement(im.link || pexels ? "a" : "span");
+        a.className = "credit"; a.textContent = text;
+        if (a.tagName === "A") { a.href = im.link || "https://www.pexels.com"; a.target = "_blank"; a.rel = "noopener"; }
         rowEl.appendChild(a);
       }
     };

@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Panel – Czwórki</title>
 <script>try{if(localStorage.getItem("cz-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
-<link rel="stylesheet" href="style.css?v=17">
+<link rel="stylesheet" href="style.css?v=19">
 <style>
 .page{max-width:760px}
 .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 14px;font-size:14px}
@@ -78,11 +78,12 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
   <label>Słowa</label>
   <div class="w4"><input id="ed-w1"><input id="ed-w2"><input id="ed-w3"><input id="ed-w4"></div>
   <label>Wyjaśnienie (do archiwum)</label><textarea id="ed-ex" rows="2"></textarea>
-  <label>Zdjęcie: hasła z Wikipedii oddzielone | albo adres URL</label>
+  <label>Zdjęcie: adres URL albo hasła z Wikipedii oddzielone |</label>
   <div class="row2"><input id="ed-img"><button class="btn sm" id="ed-retry" type="button">↻ Sprawdź</button></div>
   <div class="prev" id="ed-prev"><span id="ed-prev-t">brak zdjęcia</span></div>
+  <label>Podpis zdjęcia (autor)</label><input id="ed-credit" placeholder="np. fot. Jan Kowalski / Pexels">
   <label>Szukaj zdjęcia</label>
-  <div class="row2"><input id="ed-q" placeholder="np. rzeka, samochód, Pinokio"><button class="btn sm dark" id="ed-search" type="button">Szukaj</button></div>
+  <div class="row2"><input id="ed-q" placeholder="np. rzeka, samochód, kłódka"><button class="btn sm dark" id="ed-search" type="button">Szukaj</button></div>
   <div class="res" id="ed-res"></div>
   <p class="err" id="ed-err"></p>
   <div class="foot-btns"><button class="btn" id="ed-cancel" type="button">Anuluj</button><button class="btn dark" id="ed-save" type="button">Zapisz</button></div>
@@ -97,7 +98,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
 
 <div class="toast" id="toast" hidden></div>
 
-<script src="images.js?v=17"></script>
+<script src="images.js?v=19"></script>
 <script>
 (async () => {
   const REPO = "cinas99/czworki", BRANCH = "main";
@@ -133,6 +134,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
 
   // ---- GitHub ----
   let token = ""; try { token = localStorage.getItem("cz-gh-token") || ""; } catch {}
+  let pexKey = ""; try { pexKey = localStorage.getItem("cz-pexels-key") || ""; } catch {}
   const b64dec = (b) => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\s/g, "")), (c) => c.charCodeAt(0)));
   const b64enc = (s) => { const u = new TextEncoder().encode(s); let bin = ""; for (let i = 0; i < u.length; i += 0x8000) bin += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000)); return btoa(bin); };
   const gh = (path, opt = {}) => fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, { ...opt, headers: { Authorization: "Bearer " + token, Accept: "application/vnd.github+json", ...(opt.headers || {}) } });
@@ -156,7 +158,8 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
   async function reload() {
     const a = await load("zagadki.csv"), b = await load("zapas.csv");
     Z = parseCSV(a.text); zSha = a.sha; R = parseCSV(b.text); rSha = b.sha;
-    if (!Z.head.includes("wyjasnienie")) Z.head.push("wyjasnienie");
+    ["wyjasnienie", "zdjecie_podpis"].forEach((c) => { if (!Z.head.includes(c)) Z.head.push(c); });
+    if (!R.head.includes("zdjecie_podpis")) R.head.push("zdjecie_podpis");
   }
   await reload();
 
@@ -187,6 +190,15 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
            <button class="btn dark sm" id="gh-in">Połącz</button>
            <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="font-size:13px;margin-left:8px">Utwórz token →</a>
            <div style="font-size:12px;color:var(--muted);margin-top:6px">Token: „Only select repositories” → czworki; uprawnienie Repository permissions → Contents: Read and write. Token zostaje tylko w tej przeglądarce.</div>`}
+      </div>
+      <div class="box">${pexKey
+        ? `<span class="ok">● Zdjęcia z Pexels włączone</span> <button class="btn sm" id="px-out">Usuń klucz</button>
+           <div style="margin-top:8px"><button class="btn dark sm" id="px-bulk">Dobierz zdjęcia z Pexels dla wszystkich dni od dziś</button>
+           <div id="px-prog" style="font-size:12px;color:var(--muted);margin-top:6px">Podmienia zdjęcia z Wikipedii na pierwsze trafienie z Pexels. Grup, którym już wybrałeś zdjęcie z Pexels albo własny adres, nie rusza.</div></div>`
+        : `<b>Lepsze zdjęcia: podłącz Pexels (darmowe).</b>
+           <input id="px-key" type="password" placeholder="Wklej klucz API Pexels">
+           <button class="btn dark sm" id="px-in">Zapisz klucz</button>
+           <a href="https://www.pexels.com/api/" target="_blank" rel="noopener" style="font-size:13px;margin-left:8px">Załóż klucz →</a>`}
       </div>
       <div class="summary">
         <div><b>${future.length}</b><span>dni w zapasie</span></div>
@@ -219,6 +231,14 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
       try { localStorage.setItem("cz-gh-token", t); } catch {}
       await reload(); render(); toast("Połączono z GitHubem");
     };
+    if ($("px-in")) $("px-in").onclick = async () => {
+      const k = $("px-key").value.trim(); if (!k) return toast("Wklej klucz");
+      const t = await window.czImage.pexels("kot", k, 1);
+      if (t.error) return toast("Pexels: " + t.error);
+      pexKey = k; try { localStorage.setItem("cz-pexels-key", k); } catch {} render(); toast("Pexels podłączony");
+    };
+    if ($("px-out")) $("px-out").onclick = () => { try { localStorage.removeItem("cz-pexels-key"); } catch {} pexKey = ""; render(); };
+    if ($("px-bulk")) $("px-bulk").onclick = bulkPexels;
     if ($("gh-out")) $("gh-out").onclick = () => { try { localStorage.removeItem("cz-gh-token"); } catch {} token = ""; render(); };
     app.querySelectorAll(".gc").forEach((el) => {
       const row = Z.rows[+el.dataset.i];
@@ -237,7 +257,8 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     if (!im) { el.classList.add("noimg"); el.querySelector(".ph").style.backgroundImage = ""; tag.textContent = row.zdjecie ? "brak zdjęcia: " + row.zdjecie : "brak hasła zdjęcia"; tag.classList.add("bad"); return; }
     el.classList.remove("noimg");
     el.querySelector(".ph").style.backgroundImage = `url("${im.src}")`;
-    tag.textContent = /^https?:/.test(im.title) ? "własny adres" : im.title;
+    const srcName = window.czImage.source(row.zdjecie);
+    tag.textContent = srcName === "Wikipedia" ? "Wikipedia: " + im.title : row.zdjecie_podpis || srcName;
   }
 
   // ---- Edycja ----
@@ -251,7 +272,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     editing = row;
     $("ed-title").textContent = `Edytuj grupę · ${fmt(row.data)}`;
     $("ed-kat").value = row.kategoria; words(row).forEach((w, i) => ($("ed-w" + (i + 1)).value = w));
-    $("ed-ex").value = row.wyjasnienie || ""; $("ed-img").value = row.zdjecie || "";
+    $("ed-ex").value = row.wyjasnienie || ""; $("ed-img").value = row.zdjecie || ""; $("ed-credit").value = row.zdjecie_podpis || "";
     $("ed-q").value = row.kategoria.replace(/[_.…()/]/g, " ").replace(/\s+/g, " ").trim();
     $("ed-res").innerHTML = ""; $("ed-err").textContent = "";
     preview();
@@ -261,12 +282,17 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
   async function doSearch() {
     const qv = $("ed-q").value.trim(); if (!qv) return;
     $("ed-res").innerHTML = "<small>Szukam…</small>";
-    const res = await window.czImage.search(qv);
-    $("ed-res").innerHTML = res.length ? "" : "<small>Nic nie znaleziono. Spróbuj innego słowa.</small>";
-    res.forEach((r) => {
+    const { items, errors } = await window.czImage.search(qv, pexKey);
+    $("ed-res").innerHTML = "";
+    const note = [];
+    if (!pexKey) note.push("Podłącz Pexels (u góry panelu), żeby widzieć profesjonalne zdjęcia.");
+    if (errors.length) note.push(errors.join("; "));
+    if (!items.length) note.push("Nic nie znaleziono. Spróbuj innego słowa (także po angielsku).");
+    if (note.length) { const p = document.createElement("small"); p.style.gridColumn = "1/-1"; p.textContent = note.join(" "); $("ed-res").appendChild(p); }
+    items.forEach((r) => {
       const b = document.createElement("button"); b.type = "button";
       b.innerHTML = `<img src="${esc(r.thumb)}" alt="" loading="lazy"><small>${esc(r.kind)} · ${esc(r.label)}</small>`;
-      b.onclick = () => { $("ed-img").value = r.value; preview(); };
+      b.onclick = () => { $("ed-img").value = r.value; $("ed-credit").value = r.credit || ""; preview(); };
       $("ed-res").appendChild(b);
     });
   }
@@ -286,12 +312,36 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     if (clash.length) return ($("ed-err").textContent = "Te słowa są już w innej grupie tego dnia: " + clash.join(", "));
     if (!token) return ($("ed-err").textContent = "Połącz panel z GitHubem (u góry), żeby zapisać.");
     const backup = { ...editing };
-    Object.assign(editing, { kategoria: kat, slowo1: ws[0], slowo2: ws[1], slowo3: ws[2], slowo4: ws[3], wyjasnienie: $("ed-ex").value.trim(), zdjecie: $("ed-img").value.trim() });
+    Object.assign(editing, { kategoria: kat, slowo1: ws[0], slowo2: ws[1], slowo3: ws[2], slowo4: ws[3], wyjasnienie: $("ed-ex").value.trim(), zdjecie: $("ed-img").value.trim(), zdjecie_podpis: $("ed-credit").value.trim() });
     $("ed-save").disabled = true;
     try { zSha = await save("zagadki.csv", toCSV(Z.head, Z.rows), zSha, `Panel: zmiana grupy „${kat}” (${editing.data})`); $("dlg-edit").close(); render(); toast("Zapisano. Na stronie za ok. minutę."); }
     catch (e) { Object.assign(editing, backup); $("ed-err").textContent = e.message; }
     $("ed-save").disabled = false;
   };
+
+  // ---- Hurtowe dobranie zdjęć z Pexels ----
+  async function bulkPexels() {
+    if (!token) return toast("Połącz panel z GitHubem, żeby zapisać zmiany");
+    const todo = Z.rows.filter((r) => r.data >= today && window.czImage.source(r.zdjecie) !== "Pexels" && !/^https?:/.test(r.zdjecie || ""));
+    if (!todo.length) return toast("Wszystkie grupy od dziś mają już zdjęcia z Pexels");
+    if (!confirm(`Dobrać zdjęcia z Pexels dla ${todo.length} grup? Potem możesz poprawić pojedyncze w panelu.`)) return;
+    const prog = $("px-prog"), backup = todo.map((r) => ({ r, z: r.zdjecie, c: r.zdjecie_podpis }));
+    let ok = 0, miss = [];
+    for (let i = 0; i < todo.length; i++) {
+      const r = todo[i];
+      const q = window.czImage.isWiki(r.zdjecie) ? r.zdjecie.split("|")[0].replace(/\s*\(.*?\)/g, "") : r.kategoria.replace(/[_.…()/]/g, " ");
+      prog.textContent = `Szukam ${i + 1}/${todo.length}: ${r.kategoria} („${q}”)…`;
+      const res = await window.czImage.pexels(q.trim(), pexKey, 1);
+      if (res.error && /limit|klucz/.test(res.error)) { prog.textContent = "Przerwano: " + res.error; break; }
+      if (res.items[0]) { r.zdjecie = res.items[0].value; r.zdjecie_podpis = res.items[0].credit; ok++; } else miss.push(r.kategoria);
+    }
+    if (!ok) { prog.textContent = "Nie znaleziono żadnych zdjęć."; return; }
+    prog.textContent = `Zapisuję ${ok} zdjęć…`;
+    try {
+      zSha = await save("zagadki.csv", toCSV(Z.head, Z.rows), zSha, `Panel: ${ok} zdjęć z Pexels`);
+      render(); toast(`Podmieniono ${ok} zdjęć${miss.length ? ", bez wyniku: " + miss.length : ""}. Przejrzyj je poniżej.`, 5000);
+    } catch (e) { backup.forEach((b) => { b.r.zdjecie = b.z; b.r.zdjecie_podpis = b.c; }); prog.textContent = e.message; }
+  }
 
   // ---- Wymiana z rezerwy ----
   function openSwap(row) {
@@ -304,9 +354,9 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
       const b = document.createElement("button"); b.className = "btn sm dark"; b.textContent = "Użyj"; b.disabled = !!clash.length;
       b.onclick = async () => {
         if (!token) return toast("Połącz panel z GitHubem, żeby zapisać");
-        const old = { kategoria: row.kategoria, slowo1: row.slowo1, slowo2: row.slowo2, slowo3: row.slowo3, slowo4: row.slowo4, zdjecie: row.zdjecie, wyjasnienie: row.wyjasnienie };
+        const old = { kategoria: row.kategoria, slowo1: row.slowo1, slowo2: row.slowo2, slowo3: row.slowo3, slowo4: row.slowo4, zdjecie: row.zdjecie, wyjasnienie: row.wyjasnienie, zdjecie_podpis: row.zdjecie_podpis || "" };
         const zBackup = { ...row }, rBackup = R.rows.slice();
-        Object.assign(row, { kategoria: g.kategoria, slowo1: g.slowo1, slowo2: g.slowo2, slowo3: g.slowo3, slowo4: g.slowo4, zdjecie: g.zdjecie, wyjasnienie: g.wyjasnienie });
+        Object.assign(row, { kategoria: g.kategoria, slowo1: g.slowo1, slowo2: g.slowo2, slowo3: g.slowo3, slowo4: g.slowo4, zdjecie: g.zdjecie, wyjasnienie: g.wyjasnienie, zdjecie_podpis: g.zdjecie_podpis || "" });
         R.rows.splice(R.rows.indexOf(g), 1); R.rows.push(old);
         b.disabled = true;
         try {
