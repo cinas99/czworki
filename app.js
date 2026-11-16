@@ -310,6 +310,7 @@
   };
   if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) document.body.classList.add("is-mobile");
   $("btn-help").onclick = () => $("dlg-help").showModal();
+  $("foot-help").onclick = (e) => { e.preventDefault(); $("dlg-help").showModal(); };
   $("btn-stats").onclick = showStats;
   if (!store.get("cz-seen", false)) { $("dlg-help").showModal(); store.set("cz-seen", true); }
   render();
