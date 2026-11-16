@@ -96,13 +96,18 @@
     if (!im) return;
     const pic = new Image();
     pic.onload = () => {
+      // Tło: to samo zdjęcie mocno rozmyte; na wierzchu całe zdjęcie bez przycinania
       const bg = document.createElement("div");
       bg.className = "row-bg";
       bg.style.backgroundImage = `url("${im.src}")`;
-      bg.style.backgroundPosition = g.focus || "50% 40%";
+      const fg = document.createElement("div");
+      fg.className = "row-fg";
+      fg.style.backgroundImage = `url("${im.src}")`;
+      if (g.focus) fg.style.backgroundPosition = g.focus;
+      rowEl.prepend(fg);
       rowEl.prepend(bg);
       rowEl.classList.add("has-img");
-      requestAnimationFrame(() => bg.classList.add("on"));
+      requestAnimationFrame(() => { bg.classList.add("on"); fg.classList.add("on"); });
       const pexels = /images\.pexels\.com/.test(im.src);
       const text = g.credit || (im.link ? "fot. Wikipedia" : "");
       if (text) {

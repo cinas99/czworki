@@ -30,7 +30,7 @@
 .gs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 @media (max-width:520px){.gs{grid-template-columns:1fr}}
 .gc{position:relative;border-radius:10px;overflow:hidden;min-height:150px;background:#333;color:#fff;border-left:8px solid var(--gc);border-right:8px solid var(--gc);display:flex;flex-direction:column}
-.gc .ph{position:absolute;inset:0;background-size:cover;background-position:center}
+.gc .ph{position:absolute;inset:0;background-size:contain;background-repeat:no-repeat;background-position:center}
 .gc .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.75))}
 .gc .tx{position:relative;padding:28px 10px 8px;flex:1;display:flex;flex-direction:column;justify-content:flex-end;text-shadow:0 1px 3px #000}
 .gc b{text-transform:uppercase;font-size:13px}
@@ -49,9 +49,9 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
 .ed .w4{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .ed .row2{display:flex;gap:6px}
 .ed .row2 input{flex:1}
-.prev{border-radius:10px;background:#444 50% 40%/cover no-repeat;margin-top:8px;position:relative;cursor:crosshair;overflow:hidden}
+.prev{border-radius:10px;background:#444 50% 50%/contain no-repeat;margin-top:8px;position:relative;cursor:crosshair;overflow:hidden}
 .prev.pm{aspect-ratio:2.6/1}.prev.pd{aspect-ratio:6.5/1}
-.prev i{position:absolute;width:14px;height:14px;margin:-7px 0 0 -7px;border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 1px #000;pointer-events:none}
+.prev i{display:none!important;position:absolute;width:14px;height:14px;margin:-7px 0 0 -7px;border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 1px #000;pointer-events:none}
 .prevs small{display:block;font-size:11px;color:var(--muted);margin:6px 0 -4px}
 .prev span{position:absolute;left:8px;bottom:6px;font-size:11px;color:#fff;background:rgba(0,0,0,.55);padding:2px 6px;border-radius:999px}
 .res{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
@@ -84,7 +84,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
   <label>Zdjęcie: adres URL albo hasła z Wikipedii oddzielone |</label>
   <div class="row2"><input id="ed-img"><button class="btn sm" id="ed-retry" type="button">↻ Sprawdź</button></div>
   <div class="prevs">
-    <small>Kliknij na zdjęciu, gdzie ma być środek kadru · <span id="ed-focus-t">kadr: domyślny</span> <a href="#" id="ed-focus-reset">resetuj</a></small>
+    <small style="display:none"><span id="ed-focus-t"></span> <a href="#" id="ed-focus-reset"></a></small>
     <small>Telefon</small><div class="prev pm" id="ed-prev"><i></i><span id="ed-prev-t">brak zdjęcia</span></div>
     <small>Komputer</small><div class="prev pd" id="ed-prev2"><i></i></div>
   </div>
@@ -264,7 +264,6 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     if (!im) { el.classList.add("noimg"); el.querySelector(".ph").style.backgroundImage = ""; tag.textContent = row.zdjecie ? "brak zdjęcia: " + row.zdjecie : "brak hasła zdjęcia"; tag.classList.add("bad"); return; }
     el.classList.remove("noimg");
     el.querySelector(".ph").style.backgroundImage = `url("${im.src}")`;
-    el.querySelector(".ph").style.backgroundPosition = row.zdjecie_kadr || "50% 40%";
     const srcName = window.czImage.source(row.zdjecie);
     tag.textContent = srcName === "Wikipedia" ? "Wikipedia: " + im.title : row.zdjecie_podpis || srcName;
   }
