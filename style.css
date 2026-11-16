@@ -110,7 +110,7 @@ html[data-theme="dark"] .row:not(.has-img) b,html[data-theme="dark"] .row:not(.h
 .credit{right:12px}
 /* ---- 7] większe ikony ---- */
 .icon{width:44px;height:44px;font-size:20px;display:flex;align-items:center;justify-content:center}
-.icon.help{font-size:24px;font-weight:800;border-width:2px;border-color:var(--fg)}
+.icon.help{font-size:19px;font-weight:800;border-width:1.5px;border-color:var(--fg)}
 /* ---- 6] życia jako serca ---- */
 .lives{display:flex;align-items:center;justify-content:center;gap:10px;font-size:14px}
 .lives i{display:none}
