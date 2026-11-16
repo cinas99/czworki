@@ -1,6 +1,5 @@
 (async () => {
   const SITE = location.host || "czworki.pl";
-  const EMOJI = ["🟩", "🟨", "🟧", "🟥"];
   const LEVELS = { zielony: 0, zolty: 1, pomaranczowy: 2, czerwony: 3 };
   const MAX_MISTAKES = 4;
   const $ = (id) => document.getElementById(id);
@@ -141,11 +140,18 @@
       grid.appendChild(b);
     });
   }
-  function renderLives() { $("lives").innerHTML = "<i></i>".repeat(MAX_MISTAKES - state.mistakes); }
+  let shownMistakes = null;
+  function renderLives() {
+    const left = MAX_MISTAKES - state.mistakes, justLost = shownMistakes !== null && state.mistakes > shownMistakes;
+    $("lives").innerHTML = '<span class="hearts">' + Array.from({ length: MAX_MISTAKES }, (_, i) =>
+      `<span class="h${i >= left ? " off" : ""}${justLost && i === left ? " lost" : ""}"></span>`).join("") + "</span>";
+    shownMistakes = state.mistakes;
+  }
   function render() { renderSolved(); renderGrid(); renderLives(); if (state.done) showEnd(); }
 
   function toggle(w) {
     if (busy) return;
+    if (!state.startedAt) { state.startedAt = Date.now(); save(); }
     $("msg").textContent = "";
     if (selected.includes(w)) selected = selected.filter((x) => x !== w);
     else if (selected.length < 4) selected.push(w);
@@ -211,6 +217,7 @@
 
   function finish(won) {
     state.done = true; state.won = won; selected = [];
+    state.timeMs = Date.now() - (state.startedAt || Date.now());
     if (state.replay) { save(); return; }
     stats.played++;
     if (won) {
@@ -236,16 +243,20 @@
     $("end-title").textContent = state.won ? titles[Math.min(state.mistakes, 3)] : "Tym razem się nie udało";
     $("e-mist").textContent = state.mistakes;
     $("e-streak").textContent = stats.streak;
-    $("end-grid").innerHTML = state.history.map((r) => "<div>" + r.map((l) => `<i class="c${groups[l].level}"></i>`).join("") + "</div>").join("");
+    $("e-time").textContent = fmtTime(state.timeMs);
     updateWa();
     tick();
   }
 
   const gameUrl = () => `https://${SITE}${location.pathname.replace(/index\.html$/, "")}`;
+  function fmtTime(ms) {
+    const t = Math.max(0, Math.round((ms || 0) / 1000)), m = Math.floor(t / 60), sec = t % 60;
+    return m >= 60 ? `${Math.floor(m / 60)}:${String(m % 60).padStart(2, "0")}:${String(sec).padStart(2, "0")}` : `${m}:${String(sec).padStart(2, "0")}`;
+  }
   function shareText() {
     if (!$("with-score").checked) return gameUrl();
-    const rows = state.history.map((r) => r.map((l) => EMOJI[groups[l].level]).join("")).join("\n");
-    return `Czwórki #${puzzleNo}\n${rows}\nZagraj: ${gameUrl()}`;
+    if (!state.won) return `Czwórki #${puzzleNo} mnie dziś pokonały. Spróbuj Ty: ${gameUrl()}`;
+    return `Czwórki #${puzzleNo} rozwiązane w ${fmtTime(state.timeMs)} ⏱ Pobijesz mój czas? ${gameUrl()}`;
   }
   function updateWa() {
     const t = encodeURIComponent(shareText()), u = encodeURIComponent(gameUrl());

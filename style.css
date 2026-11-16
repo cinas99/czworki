@@ -1,9 +1,9 @@
 :root{--card:#f7f7f3;
   --bg:#ffffff;--fg:#121212;--muted:#6b6b6b;--tile:#efefe6;--tile-sel:#5a594e;--line:#d6d6cc;
-  --c0:#c3e6ad;--c1:#f6e49c;--c2:#f7c99a;--c3:#f2aeae;--danger:#c0392b;
+  --c0:#e6e3d8;--c1:#e6e3d8;--c2:#e6e3d8;--c3:#e6e3d8;--danger:#c0392b;
   --r:10px;
 }
-html[data-theme="dark"]{--card:#1c1c1e;--bg:#121213;--fg:#f2f2f2;--muted:#9a9a9a;--tile:#2c2c2e;--tile-sel:#d8d8d0;--line:#3a3a3c;color-scheme:dark}
+html[data-theme="dark"]{--c0:#3a3a3c;--c1:#3a3a3c;--c2:#3a3a3c;--c3:#3a3a3c;--card:#1c1c1e;--bg:#121213;--fg:#f2f2f2;--muted:#9a9a9a;--tile:#2c2c2e;--tile-sel:#d8d8d0;--line:#3a3a3c;color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
@@ -101,3 +101,49 @@ body:not(.is-mobile) .share-grid{grid-template-columns:repeat(2,1fr);max-width:1
 .arch-link:hover{border-color:var(--fg)}
 .row.has-img{min-height:118px;display:flex;flex-direction:column;justify-content:center}
 @media (min-width:600px){.row.has-img{min-height:150px}}
+
+/* ---- bez kolorów grup ---- */
+.row.has-img::before,.row.has-img::after{display:none}
+.row.has-img{padding-left:16px;padding-right:16px}
+.row:not(.has-img){color:var(--fg)}
+html[data-theme="dark"] .row:not(.has-img) b,html[data-theme="dark"] .row:not(.has-img) span{color:var(--fg)}
+.credit{right:12px}
+/* ---- 7] większe ikony ---- */
+.icon{width:44px;height:44px;font-size:20px;display:flex;align-items:center;justify-content:center}
+.icon.help{font-size:24px;font-weight:800;border-width:2px;border-color:var(--fg)}
+/* ---- 6] życia jako serca ---- */
+.lives{display:flex;align-items:center;justify-content:center;gap:10px;font-size:14px}
+.lives i{display:none}
+.hearts{display:inline-flex;gap:6px}
+.h{width:22px;height:20px;display:inline-block;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 22'%3E%3Cpath d='M12 21s-8.5-5.3-10.6-10.2C-.1 6.2 3 1.5 7.3 1.5c2.2 0 3.7 1.2 4.7 2.7 1-1.5 2.5-2.7 4.7-2.7 4.3 0 7.4 4.7 5.9 9.3C20.5 15.7 12 21 12 21z' fill='%23e5484d'/%3E%3C/svg%3E")}
+.h.off{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 22'%3E%3Cpath d='M12 21s-8.5-5.3-10.6-10.2C-.1 6.2 3 1.5 7.3 1.5c2.2 0 3.7 1.2 4.7 2.7 1-1.5 2.5-2.7 4.7-2.7 4.3 0 7.4 4.7 5.9 9.3C20.5 15.7 12 21 12 21z' fill='none' stroke='%23999' stroke-width='1.8'/%3E%3C/svg%3E")}
+.h.lost{animation:heartLost .6s}
+@keyframes heartLost{0%{transform:scale(1)}30%{transform:scale(1.35)}60%{transform:scale(.8)}100%{transform:scale(1)}}
+/* ---- 4] czas na ekranie końcowym ---- */
+.time-big{font-size:40px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+.time-l{font-size:11px;color:var(--muted);margin:2px 0 12px}
+/* ---- 5] tutorial jako arkusz od dołu ---- */
+dialog.sheet{margin:auto auto 0;width:100%;max-width:560px;border-radius:24px 24px 0 0;padding:10px 20px 22px;max-height:92vh;overflow:auto;animation:sheetUp .3s ease-out}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
+.grab{width:44px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 12px}
+.sheet-h{display:flex;justify-content:space-between;align-items:flex-start}
+.sheet-h h2{margin:0;font-size:26px}
+.sub2{margin:4px 0 0;color:var(--muted)}
+dialog .x{width:40px;height:40px;border-radius:12px;border:none;background:var(--tile);color:var(--fg);font-size:16px;padding:0;cursor:pointer}
+.ex{border-top:1px solid var(--line);padding:14px 0 4px;margin-top:14px}
+.ex p{margin:8px 0 0;font-size:15px;color:var(--muted);line-height:1.45}
+.ex p b{color:var(--fg)}
+.ex-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.ex-tiles span{background:var(--tile);border-radius:8px;padding:12px 2px;text-align:center;font-weight:700;font-size:11px}
+.ex-tiles span.sel{background:var(--tile-sel);color:var(--bg)}
+.ex-tiles span.trap{outline:2px dashed #e5484d;outline-offset:-2px}
+.ex-row{background:var(--c0);border-radius:10px;padding:10px;text-align:center}
+.ex-row b{display:block;font-size:14px}.ex-row span{font-size:12px}
+.ex-lives{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ex-lives em{font-style:normal;font-weight:700;color:var(--danger);font-size:13px;margin-left:8px}
+.pill{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:18px 0 0;font-weight:600}
+.pill i{width:10px;height:10px;border-radius:50%;background:#46a758;display:inline-block}
+.sheet-f{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+.sheet-f a{color:var(--fg);font-weight:600;font-size:14px}
+.sheet-f form{margin:0}
+dialog .go{padding:13px 30px;font-size:16px}

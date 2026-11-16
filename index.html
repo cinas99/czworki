@@ -11,12 +11,12 @@
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='1' y='1' width='14' height='14' rx='3' fill='%23c3e6ad'/><rect x='17' y='1' width='14' height='14' rx='3' fill='%23f6e49c'/><rect x='1' y='17' width='14' height='14' rx='3' fill='%23f7c99a'/><rect x='17' y='17' width='14' height='14' rx='3' fill='%23f2aeae'/></svg>">
 <script>try{if(localStorage.getItem("cz-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
-<link rel="stylesheet" href="style.css?v=20">
+<link rel="stylesheet" href="style.css?v=21">
 <!-- AdSense: po akceptacji wklej tu skrypt z panelu AdSense (oraz baner zgody CMP) -->
 </head>
 <body>
 <header class="top">
-  <div class="top-l"><button class="icon" id="btn-help" aria-label="Jak grać">?</button></div>
+  <div class="top-l"><button class="icon help" id="btn-help" aria-label="Jak grać">?</button></div>
   <h1>Czwórki</h1>
   <div class="top-r">
     <button class="icon" id="btn-theme" aria-label="Włącz ciemny motyw">☾</button>
@@ -28,7 +28,7 @@
   <p class="sub" id="subtitle">Ułóż 4 grupy po 4 słowa</p>
   <div id="solved"></div>
   <div class="grid" id="grid" aria-live="polite"></div>
-  <p class="lives">Pozostałe błędy: <span id="lives"></span></p>
+  <p class="lives">Szanse: <span id="lives"></span></p>
   <p class="msg" id="msg" role="status"></p>
   <div class="actions" id="actions">
     <button id="btn-shuffle">Przetasuj</button>
@@ -41,7 +41,7 @@
       <div class="end-col">
         <p class="eyebrow">Twój wynik</p>
         <h2 id="end-title"></h2>
-        <div id="end-grid" class="end-grid"></div>
+        <div class="time-big" id="e-time">0:00</div><div class="time-l">czas rozwiązania</div>
         <div class="mini">
           <div><b id="e-mist">0</b><span>błędy</span></div>
           <div><b id="e-streak">0</b><span>seria</span></div>
@@ -58,7 +58,7 @@
         <button class="sh cp" id="sh-copy" type="button"><span><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></span>Kopiuj</button>
         <button class="sh more mobile-only" id="btn-share" type="button"><span><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" d="M6 12h.01M12 12h.01M18 12h.01"/></svg></span>Więcej</button>
         </div>
-        <label class="opt"><input type="checkbox" id="with-score"> dołącz mój wynik</label>
+        <label class="opt"><input type="checkbox" id="with-score"> dołącz mój czas</label>
       </div>
     </div>
     <p class="next"><span>Następna zagadka za</span> <b id="countdown"></b></p>
@@ -73,17 +73,28 @@
   <a href="jak-grac.html">Jak grać</a> · <a href="archiwum.html">Archiwum</a> · <a href="polityka-prywatnosci.html">Prywatność</a>
 </footer>
 
-<dialog id="dlg-help">
-  <h2>Jak grać</h2>
-  <p>Znajdź 4 grupy po 4 słowa, które coś łączy.</p>
-  <ul>
-    <li>Zaznacz 4 słowa i kliknij „Sprawdź”.</li>
-    <li>Masz 4 błędy do wykorzystania.</li>
-    <li>Każda grupa jest trudna. Uważaj na pułapki: wiele słów pasuje do kilku grup.</li>
-    <li>„Prawie!” znaczy, że 3 z 4 słów są z jednej grupy.</li>
-  </ul>
-  <p>Nowa zagadka codziennie o północy.</p>
-  <form method="dialog"><button class="primary">Graj</button></form>
+<dialog id="dlg-help" class="sheet">
+  <div class="grab"></div>
+  <div class="sheet-h"><div><h2>Jak grać</h2><p class="sub2">Znajdź 4 ukryte grupy po 4 słowa</p></div>
+    <form method="dialog"><button class="x" aria-label="Zamknij">✕</button></form></div>
+  <div class="ex">
+    <div class="ex-tiles"><span class="sel">BUT</span><span class="sel">DZWON</span><span class="sel">PŁOMIEŃ</span><span class="sel">PROGRAMISTA</span></div>
+    <p><b>Zaznacz 4 słowa</b>, które coś łączy, i kliknij „Sprawdź”.</p>
+  </div>
+  <div class="ex">
+    <div class="ex-row"><b>MA JĘZYK</b><span>BUT, DZWON, PŁOMIEŃ, PROGRAMISTA</span></div>
+    <p>Trafiona grupa znika z planszy i <b>odkrywa swoją nazwę</b>.</p>
+  </div>
+  <div class="ex">
+    <div class="ex-lives"><span class="h"></span><span class="h"></span><span class="h"></span><span class="h off"></span><em>Prawie! Jedno słowo nie pasuje</em></div>
+    <p>Masz <b>4 szanse</b>. „Prawie!” znaczy, że 3 z 4 zaznaczonych słów są z jednej grupy.</p>
+  </div>
+  <div class="ex">
+    <div class="ex-tiles"><span>KRĘCIĆ</span><span class="trap">BUJAĆ</span><span>KIWAĆ</span><span>ZMYŚLAĆ</span></div>
+    <p><b>Uważaj na pułapki.</b> Wiele słów pasuje do kilku grup, ale rozwiązanie jest tylko jedno.</p>
+  </div>
+  <div class="pill"><i></i>Nowa zagadka codziennie o północy</div>
+  <div class="sheet-f"><a href="jak-grac.html">Więcej o zasadach</a><form method="dialog"><button class="primary go">Zagraj</button></form></div>
 </dialog>
 
 <dialog id="dlg-stats">
@@ -99,7 +110,7 @@
 
 <div class="toast" id="toast" hidden></div>
 
-<script src="images.js?v=20"></script>
-<script src="app.js?v=20"></script>
+<script src="images.js?v=21"></script>
+<script src="app.js?v=21"></script>
 </body>
 </html>
