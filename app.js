@@ -256,7 +256,7 @@
   function shareText() {
     if (!$("with-score").checked) return gameUrl();
     if (!state.won) return `Czwórki #${puzzleNo} mnie dziś pokonały. Spróbuj Ty: ${gameUrl()}`;
-    return `Czwórki #${puzzleNo} rozwiązane w ${fmtTime(state.timeMs)} ⏱ Pobijesz mój czas? ${gameUrl()}`;
+    return `Czwórki #${puzzleNo} rozwiązane w ${fmtTime(state.timeMs)} 🏁 Pobijesz mój czas? ${gameUrl()}`;
   }
   function updateWa() {
     const t = encodeURIComponent(shareText()), u = encodeURIComponent(gameUrl());
