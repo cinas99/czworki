@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Archiwum zagadek z odpowiedziami i wyjaśnieniami – Czwórki</title>
+<title>Archiwum zagadek – zagraj w poprzednie Czwórki</title>
 <meta name="description" content="Wszystkie poprzednie zagadki Czwórek z rozwiązaniami. Sprawdź, jakie grupy kryły się w słowach i dlaczego.">
 <script>try{if(localStorage.getItem("cz-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='9' fill='%23FFD84A'/><rect x='7' y='7' width='12' height='12' rx='3' fill='%23141413'/><rect x='21' y='7' width='12' height='12' rx='3' fill='%23141413'/><rect x='7' y='21' width='12' height='12' rx='3' fill='%23141413'/><rect x='21' y='21' width='12' height='12' rx='3' fill='%23fff'/></svg>">
-<link rel="stylesheet" href="style.css?v=28">
+<link rel="stylesheet" href="style.css?v=29">
 <style>
 .day{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 0 16px}
 .day h2{font-size:17px;margin:0 0 10px;display:flex;justify-content:space-between;align-items:baseline}
@@ -17,13 +17,24 @@
 .g .w{font-size:13px;letter-spacing:.3px;color:var(--fg)}
 .g p{margin:3px 0 0;font-size:14px;color:var(--muted);line-height:1.5}
 .lead{color:var(--muted)}
+.day-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 4px}
+.day-top h2{margin:0;display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.play{display:inline-block;background:var(--brand);color:var(--on-brand)!important;text-decoration:none;font-weight:700;padding:9px 18px;border-radius:999px;font-size:14px;white-space:nowrap}
+.play.again{background:var(--card);border:1px solid var(--line);color:var(--fg)!important}
+.done-badge{font-size:13px;color:var(--muted);margin:0 0 8px}
+.done-badge b{color:var(--fg)}
+details{margin-top:6px}
+summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--muted);padding:6px 0;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸ ";}
+details[open] summary::before{content:"▾ ";}
 </style>
 </head>
 <body>
 <main class="page">
 <p><a href="./">← Wróć do gry</a></p>
 <h1>Archiwum zagadek</h1>
-<p class="lead">Poprzednie zagadki Czwórek z odpowiedziami i wyjaśnieniem każdej grupy. Dzisiejszej zagadki tu nie ma, żeby nie psuć zabawy. Pojawi się jutro.</p>
+<p class="lead">Przegapiłeś któryś dzień? Zagraj w poprzednie zagadki albo sprawdź odpowiedzi z wyjaśnieniem każdej grupy. Gra w archiwum nie wpływa na Twoją serię. Dzisiejsza zagadka pojawi się tu jutro.</p>
 <div id="list">Wczytywanie…</div>
 </main>
 <footer class="foot"><a href="./">Graj</a> · <a href="jak-grac.html">Jak grać</a> · <a href="polityka-prywatnosci.html">Prywatność</a></footer>
@@ -54,12 +65,18 @@
   const fmt = (d) => new Date(d + "T12:00:00Z").toLocaleDateString("pl-PL", { day: "numeric", month: "long", year: "numeric" });
   const list = document.getElementById("list");
   if (!past.length) { list.textContent = "Archiwum jest jeszcze puste. Wróć jutro."; return; }
+  const played = (d) => { try { return JSON.parse(localStorage.getItem("cz-arch-" + d) || "null"); } catch { return null; } };
+  const fmtT = (ms) => { const t = Math.round((ms || 0) / 1000); return Math.floor(t / 60) + ":" + String(t % 60).padStart(2, "0"); };
   list.innerHTML = past.map((d) => {
     const groups = by.get(d).sort((a, b) => (LV[a.kolor] ?? 0) - (LV[b.kolor] ?? 0));
-    return `<section class="day"><h2>Zagadka #${all.indexOf(d) + 1} <small>${fmt(d)}</small></h2>` +
+    const st = played(d), done = st && st.done;
+    const badge = done ? `<p class="done-badge">${st.won ? `✓ Rozwiązana w <b>${fmtT(st.timeMs)}</b>` : "✗ Tym razem się nie udało"}${st.mistakes != null ? ` · błędy: ${st.mistakes}` : ""}</p>` : "";
+    return `<section class="day"><div class="day-top"><h2>Zagadka #${all.indexOf(d) + 1} <small>${fmt(d)}</small></h2>` +
+      `<a class="play${done ? " again" : ""}" href="./?dzien=${d}">${done ? "Zagraj jeszcze raz" : "Zagraj →"}</a></div>` + badge +
+      `<details><summary>Pokaż odpowiedzi i wyjaśnienia</summary>` +
       groups.map((g) => `<div class="g c${LV[g.kolor] ?? 0}" style="background:none"><b>${esc(g.kategoria)}</b>` +
         `<span class="w">${esc([g.slowo1, g.slowo2, g.slowo3, g.slowo4].join(", "))}</span>` +
-        (g.wyjasnienie ? `<p>${esc(g.wyjasnienie)}</p>` : "") + `</div>`).join("") + `</section>`;
+        (g.wyjasnienie ? `<p>${esc(g.wyjasnienie)}</p>` : "") + `</div>`).join("") + `</details></section>`;
   }).join("");
 })();
 </script>

@@ -9,7 +9,12 @@
   const dayDiff = (a, b) => Math.round((Date.parse(b + "T00:00:00Z") - Date.parse(a + "T00:00:00Z")) / 864e5);
   const qs = new URLSearchParams(location.search);
   const adminNow = (() => { try { return localStorage.getItem("cz-admin") === "1" || qs.has("admin"); } catch { return false; } })();
-  const today = adminNow && /^\d{4}-\d{2}-\d{2}$/.test(qs.get("dzien") || "") ? qs.get("dzien") : todayStr();
+  const realToday = todayStr();
+  const askedDay = /^\d{4}-\d{2}-\d{2}$/.test(qs.get("dzien") || "") ? qs.get("dzien") : null;
+  // Przeszłe dni (archiwum) może otworzyć każdy, przyszłe tylko admin
+  const today = askedDay && (askedDay < realToday || adminNow) ? askedDay : realToday;
+  const isArchive = today !== realToday;
+  const stateKey = isArchive ? "cz-arch-" + today : "cz-day";
 
   // ---- Baza zagadek (zagadki.csv) ----
   function parseCSV(text) {
@@ -70,7 +75,7 @@
     try { localStorage.removeItem("cz-day"); if (rq.get("reset") === "all") localStorage.removeItem("cz-stats"); } catch {}
     history.replaceState(null, "", location.pathname);
   }
-  let state = store.get("cz-day", null);
+  let state = store.get(stateKey, null);
   if (!state || state.date !== today) {
     state = { date: today, solved: [], mistakes: 0, history: [], tried: [], done: false, won: false, order: null };
   }
@@ -88,7 +93,7 @@
     for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
     return a;
   }
-  const save = () => store.set("cz-day", state);
+  const save = () => store.set(stateKey, state);
   const remaining = () => state.order.filter((w) => !state.solved.includes(groupOf(w)));
 
   async function decorate(rowEl, g) {
@@ -133,13 +138,15 @@
       decorate(el, g);
     });
   }
-  function renderGrid() {
+  let enterAnim = true;
+  function renderGrid(popWord) {
     const grid = $("grid");
     grid.innerHTML = "";
     if (state.done) return;
-    remaining().forEach((w) => {
+    remaining().forEach((w, i) => {
       const b = document.createElement("button");
-      b.className = "tile" + (selected.includes(w) ? " sel" : "");
+      b.className = "tile" + (selected.includes(w) ? " sel" : "") + (enterAnim ? " enter" : "") + (w === popWord ? " pop" : "");
+      if (enterAnim) b.style.animationDelay = i * 28 + "ms";
       b.textContent = w;
       b.onclick = () => toggle(w);
       grid.appendChild(b);
@@ -152,7 +159,7 @@
       `<span class="h${i >= left ? " off" : ""}${justLost && i === left ? " lost" : ""}"></span>`).join("") + "</span>";
     shownMistakes = state.mistakes;
   }
-  function render() { renderSolved(); renderGrid(); renderLives(); if (state.done) showEnd(); }
+  function render() { renderSolved(); renderGrid(); enterAnim = false; renderLives(); if (state.done) showEnd(); }
 
   function toggle(w) {
     if (busy) return;
@@ -160,7 +167,8 @@
     $("msg").textContent = "";
     if (selected.includes(w)) selected = selected.filter((x) => x !== w);
     else if (selected.length < 4) selected.push(w);
-    renderGrid();
+    else return;
+    renderGrid(w);
   }
 
   function toast(t) {
@@ -179,14 +187,24 @@
 
     const gi = groupOf(selected[0]);
     if (selected.every((w) => groupOf(w) === gi)) {
-      state.solved.push(gi);
-      selected = [];
-      if (state.solved.length === 4) finish(true);
-      else if (state.solved.length === 3) setTimeout(autoLast, 650);
+      // fala: zaznaczone kafelki podskakują po kolei, potem zamieniają się w odkrytą grupę
+      busy = true;
+      const order = state.order.filter((w) => selected.includes(w));
+      document.querySelectorAll(".tile.sel").forEach((t) => { t.style.animationDelay = order.indexOf(t.textContent) * 70 + "ms"; t.classList.add("jump"); });
+      setTimeout(() => {
+        state.solved.push(gi);
+        selected = []; busy = false;
+        if (state.solved.length === 4) finish(true);
+        else if (state.solved.length === 3) setTimeout(autoLast, 650);
+        save(); render();
+      }, 620);
+      save();
+      return;
     } else {
       state.mistakes++;
       const best = Math.max(...[0, 1, 2, 3].map((i) => selected.filter((w) => groupOf(w) === i).length));
       $("msg").textContent = best === 3 ? "Prawie! Jedno słowo nie pasuje" : "Nie tym razem";
+      $("msg").classList.remove("bump"); void $("msg").offsetWidth; $("msg").classList.add("bump");
       document.querySelectorAll(".tile.sel").forEach((t) => { t.classList.add("shake"); setTimeout(() => t.classList.remove("shake"), 400); });
       if (state.mistakes >= MAX_MISTAKES) {
         groups.forEach((g, i) => { if (!state.solved.includes(i)) state.solved.push(i); });
@@ -220,9 +238,38 @@
     }, 220 * 5 + 550);
   }
 
+  const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function countUp(el, ms) {
+    if (calm || !ms || el.dataset.done === String(ms)) { el.textContent = fmtTime(ms); return; }
+    el.dataset.done = String(ms);
+    const t0 = performance.now(), dur = 700;
+    const step = (t) => { const k = Math.min(1, (t - t0) / dur); el.textContent = fmtTime(ms * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  function celebrate(won) {
+    if (!won || calm) return;
+    const c = document.createElement("canvas"); c.className = "confetti";
+    const dpr = Math.min(2, window.devicePixelRatio || 1), W = innerWidth, H = innerHeight;
+    c.width = W * dpr; c.height = H * dpr; document.body.appendChild(c);
+    const x = c.getContext("2d"); x.scale(dpr, dpr);
+    const cols = ["#FFD84A", "#141413", "#FFFFFF", "#E5484D", "#FFD84A"];
+    const ps = Array.from({ length: 140 }, () => ({ x: W / 2 + (Math.random() - 0.5) * 80, y: H * 0.35, vx: (Math.random() - 0.5) * 12, vy: -Math.random() * 13 - 4, s: 6 + Math.random() * 7, r: Math.random() * 6, vr: (Math.random() - 0.5) * 0.3, c: cols[(Math.random() * cols.length) | 0] }));
+    const t0 = performance.now();
+    const frame = (t) => {
+      const age = t - t0; x.clearRect(0, 0, W, H);
+      ps.forEach((p) => { p.vy += 0.35; p.vx *= 0.99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+        x.save(); x.translate(p.x, p.y); x.rotate(p.r); x.globalAlpha = Math.max(0, 1 - age / 2600);
+        x.fillStyle = p.c; x.strokeStyle = "rgba(0,0,0,.25)"; x.fillRect(-p.s / 2, -p.s / 3, p.s, p.s * 0.66); x.strokeRect(-p.s / 2, -p.s / 3, p.s, p.s * 0.66); x.restore(); });
+      if (age < 2600) requestAnimationFrame(frame); else c.remove();
+    };
+    requestAnimationFrame(frame);
+  }
+
   function finish(won) {
     state.done = true; state.won = won; selected = [];
     state.timeMs = Date.now() - (state.startedAt || Date.now());
+    if (!isArchive) store.set("cz-arch-" + today, { date: today, done: true, won, timeMs: state.timeMs, mistakes: state.mistakes });
+    setTimeout(() => celebrate(won), 350);
     if (state.replay) { save(); return; }
     stats.played++;
     if (won) {
@@ -248,20 +295,22 @@
     $("end-title").textContent = state.won ? titles[Math.min(state.mistakes, 3)] : "Tym razem się nie udało";
     $("e-mist").textContent = state.mistakes;
     $("e-streak").textContent = stats.streak;
-    $("e-time").textContent = fmtTime(state.timeMs);
+    countUp($("e-time"), state.timeMs);
     updateWa();
-    tick();
+    if (isArchive) document.querySelector(".next").innerHTML = '<a href="./">Zagraj w dzisiejszą zagadkę →</a>';
+    else tick();
   }
 
-  const gameUrl = () => `https://${SITE}${location.pathname.replace(/index\.html$/, "")}`;
+  const gameUrl = () => `https://${SITE}${location.pathname.replace(/index\.html$/, "")}${isArchive ? "?dzien=" + today : ""}`;
   function fmtTime(ms) {
     const t = Math.max(0, Math.round((ms || 0) / 1000)), m = Math.floor(t / 60), sec = t % 60;
     return m >= 60 ? `${Math.floor(m / 60)}:${String(m % 60).padStart(2, "0")}:${String(sec).padStart(2, "0")}` : `${m}:${String(sec).padStart(2, "0")}`;
   }
   function shareText() {
     if (!$("with-score").checked) return gameUrl();
-    if (!state.won) return `Czwórki #${puzzleNo} mnie dziś pokonały. Spróbuj Ty: ${gameUrl()}`;
-    return `Czwórki #${puzzleNo} rozwiązane w ${fmtTime(state.timeMs)} 🏁 Pobijesz mój czas? ${gameUrl()}`;
+    const tag = isArchive ? ` (z archiwum)` : "";
+    if (!state.won) return `Czwórki #${puzzleNo}${tag} mnie pokonały. Spróbuj Ty: ${gameUrl()}`;
+    return `Czwórki #${puzzleNo}${tag} rozwiązane w ${fmtTime(state.timeMs)} 🏁 Pobijesz mój czas? ${gameUrl()}`;
   }
   function updateWa() {
     const t = encodeURIComponent(shareText()), u = encodeURIComponent(gameUrl());
@@ -299,15 +348,23 @@
   }
 
   // ---- Start ----
-  $("subtitle").textContent = `Zagadka #${puzzleNo} · ułóż 4 grupy po 4 słowa`;
+  if (isArchive) {
+    const d = new Date(today + "T12:00:00Z").toLocaleDateString("pl-PL", { day: "numeric", month: "long" });
+    $("subtitle").innerHTML = `<span class="arch-badge">Archiwum</span> Zagadka #${puzzleNo} z ${d} · <a href="./">dzisiejsza →</a>`;
+    document.body.classList.add("is-archive");
+  } else $("subtitle").textContent = `Zagadka #${puzzleNo} · ułóż 4 grupy po 4 słowa`;
   $("btn-check").onclick = check;
   $("btn-clear").onclick = () => { selected = []; $("msg").textContent = ""; renderGrid(); };
-  $("btn-shuffle").onclick = () => { state.order = shuffle(state.order); save(); renderGrid(); };
+  $("btn-shuffle").onclick = () => {
+    if (busy) return;
+    $("grid").classList.add("shuffling");
+    setTimeout(() => { $("grid").classList.remove("shuffling"); state.order = shuffle(state.order); save(); enterAnim = true; renderGrid(); enterAnim = false; }, 180);
+  };
   $("btn-share").onclick = share;
   $("with-score").onchange = updateWa;
-  $("btn-reset").hidden = !isAdmin;
+  $("btn-reset").hidden = !(isAdmin || isArchive);
   $("btn-reset").onclick = () => {
-    store.set("cz-day", { date: today, solved: [], mistakes: 0, history: [], tried: [], done: false, won: false, order: null, replay: true });
+    store.set(stateKey, { date: today, solved: [], mistakes: 0, history: [], tried: [], done: false, won: false, order: null, replay: true });
     location.reload();
   };
   $("sh-copy").onclick = async () => {
