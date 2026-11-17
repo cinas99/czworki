@@ -214,8 +214,8 @@ html[data-theme="dark"] .tile.sel{color:#141413}
 @keyframes sheetPop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
 
 /* Wariant B: kurtyna. Nowy pasek i jego zdjęcie odsłaniają się od góry, napis wjeżdża z boku (ok. 0,5 s) */
-.row.fresh{animation:curtain .33s cubic-bezier(.2,.8,.2,1) both}
-.row.fresh .row-txt{animation:txtIn .23s cubic-bezier(.2,.8,.2,1) .16s both}
-.row-bg.curtain,.row-fg.curtain{transition:none;opacity:1;animation:curtain .33s cubic-bezier(.2,.8,.2,1) both}
+.row.fresh{animation:curtain .65s cubic-bezier(.2,.8,.2,1) both}
+.row.fresh .row-txt{animation:txtIn .45s cubic-bezier(.2,.8,.2,1) .32s both}
+.row-bg.curtain,.row-fg.curtain{transition:none;opacity:1;animation:curtain .65s cubic-bezier(.2,.8,.2,1) both}
 @keyframes curtain{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
 @keyframes txtIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
