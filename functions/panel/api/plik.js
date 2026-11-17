@@ -3,7 +3,7 @@
 const FILES = new Set(["zagadki.csv", "zapas.csv"]);
 const gh = (env, path, init = {}) => fetch(`https://api.github.com/repos/${env.GITHUB_REPO || "cinas99/czworki"}/contents/${path}`, {
   ...init,
-  headers: { Authorization: "Bearer " + env.GITHUB_TOKEN, Accept: "application/vnd.github+json", "User-Agent": "czworki-panel", ...(init.headers || {}) },
+  headers: { Authorization: "Bearer " + String(env.GITHUB_TOKEN).trim().replace(/^["']|["']$/g, ""), Accept: "application/vnd.github+json", "User-Agent": "czworki-panel", ...(init.headers || {}) },
 });
 const out = (d, s = 200) => new Response(JSON.stringify(d), { status: s, headers: { "content-type": "application/json" } });
 const dec = (b) => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\s/g, "")), (c) => c.charCodeAt(0)));
