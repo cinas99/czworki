@@ -30,4 +30,6 @@ function parseCSV(text) {
 const rows = parseCSV(fs.readFileSync("zagadki.csv", "utf8"));
 fs.mkdirSync(path.join(__dirname, "functions/_generated"), { recursive: true });
 fs.writeFileSync(path.join(__dirname, "functions/_generated/puzzles.js"), "export default " + JSON.stringify(rows) + ";\n");
+// Informacja o wdrożeniu (Cloudflare podaje commit w zmiennych środowiskowych)
+fs.writeFileSync(path.join(__dirname, "functions/_generated/build.js"), "export default " + JSON.stringify({ commit: (process.env.CF_PAGES_COMMIT_SHA || "lokalnie").slice(0, 7), at: new Date().toISOString() }) + ";\n");
 console.log(`Zbudowano: ${SITE.length} plików strony, ${rows.length / 4} dni zagadek`);

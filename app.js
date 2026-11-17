@@ -4,6 +4,15 @@
   const MAX_MISTAKES = 4;
   const $ = (id) => document.getElementById(id);
 
+  // Zgłaszanie błędów gry (tylko komunikat i miejsce, max 3 na wizytę)
+  let errSent = 0;
+  const report = (m) => {
+    if (errSent++ >= 3) return;
+    try { navigator.sendBeacon("api/blad", new Blob([JSON.stringify({ m: String(m).slice(0, 220) })], { type: "application/json" })); } catch {}
+  };
+  window.addEventListener("error", (e) => report(`${e.message} @ ${(e.filename || "").split("/").pop()}:${e.lineno}`));
+  window.addEventListener("unhandledrejection", (e) => report("Promise: " + (e.reason && (e.reason.message || e.reason))));
+
   // ---- Data dnia w strefie Europe/Warsaw ----
   const todayStr = () => new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Warsaw" }).format(new Date());
   const dayDiff = (a, b) => Math.round((Date.parse(b + "T00:00:00Z") - Date.parse(a + "T00:00:00Z")) / 864e5);
@@ -40,7 +49,8 @@
     if (!r.ok || !(r.headers.get("content-type") || "").includes("json")) throw new Error("brak API");
     const j = await r.json();
     startDate = j.startDate; puzzleNo = j.nr; dayRows = j.rows;
-  } catch {
+  } catch (apiErr) {
+    if (location.hostname.endsWith("czworki.pl")) report("API zagadki niedostępne: " + (apiErr && apiErr.message));
     try {
       const res = await fetch("zagadki.csv?d=" + today, { cache: "no-cache" });
       const rows = parseCSV(await res.text());
@@ -53,6 +63,7 @@
       dayRows = byDate.get(today) || byDate.get(dates[dayIndex % dates.length]);
     } catch (e) {
       $("msg").textContent = "Nie udało się wczytać zagadki. Odśwież stronę.";
+      report("Nie wczytano zagadki: " + (e && e.message));
       return;
     }
   }
