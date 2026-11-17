@@ -317,7 +317,10 @@
   $("btn-help").onclick = () => $("dlg-help").showModal();
   $("foot-help").onclick = (e) => { e.preventDefault(); $("dlg-help").showModal(); };
   $("btn-stats").onclick = showStats;
-  if (!store.get("cz-seen", false)) { $("dlg-help").showModal(); store.set("cz-seen", true); }
+  // Samouczek: przy pierwszej wizycie, potem dopiero po 30 dniach od ostatniego pokazania
+  const HELP_EVERY = 30 * 864e5, seenAt = store.get("cz-help-at", 0) || (store.get("cz-seen", false) ? Date.now() : 0);
+  if (!seenAt || Date.now() - seenAt > HELP_EVERY) { $("dlg-help").showModal(); store.set("cz-help-at", Date.now()); }
+  else if (!store.get("cz-help-at", 0)) store.set("cz-help-at", seenAt);
   render();
   if (!state.done && state.solved.length === 3) setTimeout(autoLast, 500);
 })();
