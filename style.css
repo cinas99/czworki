@@ -205,3 +205,4 @@ html[data-theme="dark"] .tile.sel{color:#141413}
 .mg-link{background:var(--card);border:1px solid var(--line);color:var(--fg);font-weight:600}
 .mg-btn b,.mg-link b{flex:none;font-size:18px}
 .mg-btn:active,.mg-link:active{transform:scale(.97)}
+.end button.replay{display:block;margin:12px auto 0;background:none;border:1.5px solid var(--fg);color:var(--fg);border-radius:999px;padding:10px 22px;font-weight:700;font-size:15px}

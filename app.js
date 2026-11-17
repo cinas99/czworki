@@ -262,7 +262,7 @@
   function finish(won) {
     state.done = true; state.won = won; selected = [];
     state.timeMs = Date.now() - (state.startedAt || Date.now());
-    if (!isArchive) store.set("cz-arch-" + today, { date: today, done: true, won, timeMs: state.timeMs, mistakes: state.mistakes });
+    if (!isArchive && !state.replay) store.set("cz-arch-" + today, { date: today, done: true, won, timeMs: state.timeMs, mistakes: state.mistakes });
     setTimeout(() => celebrate(won), 350);
     if (state.replay) { save(); return; }
     stats.played++;
@@ -290,6 +290,7 @@
     $("e-mist").textContent = state.mistakes;
     $("e-streak").textContent = stats.streak;
     countUp($("e-time"), state.timeMs);
+    if (state.replay) { $("with-score").checked = false; $("with-score").closest("label").hidden = true; }
     updateWa();
     // Przycisk do poprzedniej zagadki (dzień przed tą, którą właśnie rozwiązano)
     const prev = new Date(Date.parse(today + "T00:00:00Z") - 864e5).toISOString().slice(0, 10);
@@ -362,7 +363,6 @@
   };
   $("btn-share").onclick = share;
   $("with-score").onchange = updateWa;
-  $("btn-reset").hidden = !(isAdmin || isArchive);
   $("btn-reset").onclick = () => {
     store.set(stateKey, { date: today, solved: [], mistakes: 0, history: [], tried: [], done: false, won: false, order: null, replay: true });
     location.reload();
