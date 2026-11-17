@@ -251,7 +251,8 @@
         save(); render(); busy = false;
         if (!reduce) document.querySelectorAll("#grid .tile").forEach((t) => {
           const a = before.get(t.textContent), b = t.getBoundingClientRect();
-          if (a && (a.left !== b.left || a.top !== b.top)) t.animate([{ transform: `translate(${a.left - b.left}px,${a.top - b.top}px)` }, { transform: "none" }], { duration: 650, easing: "cubic-bezier(.2,.8,.2,1)" });
+          const dx = Math.round(a ? a.left - b.left : 0), dy = Math.round(a ? a.top - b.top : 0);
+          if (a && (dx || dy)) t.animate([{ transform: `translate(${dx}px,${dy}px)` }, { transform: "none" }], { duration: 650, easing: "cubic-bezier(.2,.8,.2,1)" });
         });
       };
       if (reduce) { done(); return; }

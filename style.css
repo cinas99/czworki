@@ -214,9 +214,10 @@ html[data-theme="dark"] .tile.sel{color:#141413}
 @keyframes sheetPop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
 
 /* Wariant B: kurtyna. Nowy pasek i jego zdjęcie odsłaniają się od góry, napis wjeżdża z boku (ok. 0,5 s) */
-.row.fresh{animation:curtain 1.5s cubic-bezier(.2,.8,.2,1) both}
-.row.fresh .row-txt{animation:txtIn .6s cubic-bezier(.2,.8,.2,1) .6s both}
-.row-bg.curtain,.row-fg.curtain{transition:none;opacity:1;animation:curtain 1.5s cubic-bezier(.2,.8,.2,1) both}
+.row.fresh{animation:curtain 1.5s cubic-bezier(.2,.8,.2,1) backwards}
+.row.fresh .row-txt{animation:txtIn .6s cubic-bezier(.2,.8,.2,1) .6s backwards}
+.row-bg.curtain{transition:none;opacity:1}
+.row-fg.curtain{transition:none;opacity:1;animation:curtain 1.5s cubic-bezier(.2,.8,.2,1) backwards}
 @keyframes curtain{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
 @keyframes txtIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
 
@@ -244,3 +245,12 @@ body.finished .row.open .credit{display:block}
 @media (max-width:600px){.arch-nav .an-mid .arch-badge{display:none}}
 .arch-nav .an-d{color:var(--muted)}
 @media (max-width:360px){.arch-nav .an-today{padding:0 9px;font-size:12px}}
+
+/* Bez „pęknięć” przy animacji: rozmyte tło rysowane w osobnej, przyciętej warstwie */
+.row.has-img{isolation:isolate;overflow:hidden}
+.row-bg{will-change:auto;transform:translateZ(0)}
+/* Po grze zwinięte paski: zdjęcie na całą szerokość (kadr od środka), bez rozmytych pasów po bokach */
+body.finished .row.has-img:not(.open) .row-fg{background-size:cover;background-position:center 40%}
+body.finished .row.has-img:not(.open) .row-bg{display:none}
+body.finished .row.has-img:not(.open)::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.38);z-index:1}
+body.finished .row.has-img:not(.open) .row-txt{position:relative;z-index:2}
