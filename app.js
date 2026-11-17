@@ -229,7 +229,7 @@
         selected = [];
         freshRow = true;
         if (state.solved.length === 4) finish(true);
-        else if (state.solved.length === 3) setTimeout(autoLast, 1300);
+        else if (state.solved.length === 3) setTimeout(autoLast, 3300);
         save(); render(); busy = false;
         if (!reduce) document.querySelectorAll("#grid .tile").forEach((t) => {
           const a = before.get(t.textContent), b = t.getBoundingClientRect();
@@ -274,7 +274,7 @@
       $("grid").classList.remove("closing");
       state.history.push(rest.map(groupOf));
       state.solved.push(groupOf(rest[0]));
-      selected = []; busy = false;
+      selected = []; busy = false; freshRow = true;
       finish(true); save(); render();
     }, 220 * 5 + 550);
   }
