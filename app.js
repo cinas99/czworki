@@ -307,7 +307,7 @@
   }
 
   function finish(won) {
-    state.done = true; state.won = won; selected = [];
+    state.done = true; state.won = won; selected = []; justFinished = true;
     state.timeMs = Date.now() - (state.startedAt || Date.now());
     if (!isArchive && !state.replay) store.set("cz-arch-" + today, { date: today, done: true, won, timeMs: state.timeMs, mistakes: state.mistakes });
     setTimeout(() => celebrate(won), 350);
@@ -329,7 +329,20 @@
     if (typeof gtag === "function") gtag("event", won ? "win" : "loss", { puzzle: puzzleNo, mistakes: state.mistakes });
   }
 
+  let justFinished = false;
   function showEnd() {
+    // Ekran po grze: wynik i reklama na górze, rozwiązane grupy zwinięte poniżej (dotknięcie rozwija)
+    if (!document.body.classList.contains("finished")) {
+      document.body.classList.add("finished");
+      $("end").querySelector(".end-card").after($("ad-slot"));
+      $("solved").before($("end"));
+      const lab = document.createElement("p");
+      lab.className = "groups-label";
+      lab.textContent = isArchive ? "Grupy z tej zagadki" : "Dzisiejsze grupy";
+      $("solved").before(lab);
+      $("solved").addEventListener("click", (e) => { const r = e.target.closest(".row"); if (r && !e.target.closest("a")) r.classList.toggle("open"); });
+    }
+    if (justFinished) { justFinished = false; setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 450); }
     $("actions").hidden = true;
     $("lives").parentElement.hidden = true;
     $("msg").textContent = "";
@@ -401,7 +414,23 @@
   // ---- Start ----
   if (isArchive) {
     const d = new Date(today + "T12:00:00Z").toLocaleDateString("pl-PL", { day: "numeric", month: "long" });
-    $("subtitle").innerHTML = `<span class="arch-badge">Archiwum</span> Zagadka #${puzzleNo} z ${d} · <a href="./">dzisiejsza →</a>`;
+    // Stały pasek w archiwum: poprzednia/następna zagadka, lista, zacznij od nowa, powrót do dzisiejszej
+    const shift = (n) => new Date(Date.parse(today + "T12:00:00Z") + n * 864e5).toISOString().slice(0, 10);
+    const prev = shift(-1), next = shift(1);
+    const sub = $("subtitle");
+    sub.className = "arch-nav";
+    sub.innerHTML =
+      `<a class="an-btn" ${prev >= startDate ? `href="./?dzien=${prev}"` : 'aria-disabled="true"'} aria-label="Poprzednia zagadka">‹</a>` +
+      `<a class="an-mid" href="archiwum.html" aria-label="Lista poprzednich zagadek"><span class="arch-badge">Archiwum</span><b>#${puzzleNo}</b><span class="an-d">${new Date(today + "T12:00:00Z").toLocaleDateString("pl-PL", { day: "numeric", month: "short" })}</span><i aria-hidden="true">▾</i></a>` +
+      `<a class="an-btn" href="${next < realToday ? `./?dzien=${next}` : "./"}" aria-label="Następna zagadka">›</a>` +
+      `<button class="an-btn" id="an-reset" type="button" aria-label="Zacznij od nowa" title="Zacznij od nowa">↺</button>` +
+      `<a class="an-today" href="./">Dzisiejsza</a>`;
+    $("an-reset").onclick = () => {
+      const started = state.solved.length || state.mistakes || state.done;
+      if (started && !confirm("Zacząć tę zagadkę od nowa?")) return;
+      store.set(stateKey, { date: today, solved: [], mistakes: 0, history: [], tried: [], done: false, won: false, order: null, replay: true });
+      location.reload();
+    };
     document.body.classList.add("is-archive");
   } else $("subtitle").textContent = `Zagadka #${puzzleNo} · ułóż 4 grupy po 4 słowa`;
   $("btn-check").onclick = check;
