@@ -141,6 +141,8 @@
       rowEl.prepend(fg);
       rowEl.prepend(bg);
       rowEl.classList.add("has-img");
+      // Zdjęcie świeżo odgadniętej grupy zjeżdża od góry jak roleta (zamiast zwykłego pojawienia się)
+      if (rowEl.dataset.at && Date.now() - rowEl.dataset.at < 4000) { bg.classList.add("curtain"); fg.classList.add("curtain"); }
       requestAnimationFrame(() => { bg.classList.add("on"); fg.classList.add("on"); });
       const pexels = /images\.pexels\.com/.test(im.src);
       const text = g.credit || (im.link ? "fot. Wikipedia" : "");
@@ -155,13 +157,15 @@
   }
 
   // ---- Rysowanie ----
+  let freshRow = false;
   function renderSolved() {
     const box = $("solved");
     state.solved.forEach((gi, i) => {
       if (box.children[i]) return;
       const g = groups[gi];
       const el = document.createElement("div");
-      el.className = `row c${g.level}`;
+      el.className = `row c${g.level}` + (freshRow ? " fresh" : "");
+      if (freshRow) { el.dataset.at = Date.now(); freshRow = false; }
       el.innerHTML = `<div class="row-txt"><b>${g.name}</b><span>${g.words.join(", ")}</span></div>`;
       box.appendChild(el);
       decorate(el, g);
@@ -216,11 +220,26 @@
 
     const gi = groupOf(selected[0]);
     if (selected.every((w) => groupOf(w) === gi)) {
-      state.solved.push(gi);
-      selected = [];
-      if (state.solved.length === 4) finish(true);
-      else if (state.solved.length === 3) setTimeout(autoLast, 650);
-      save(); render();
+      // Trafione: zaznaczone kafelki znikają, pasek grupy odsłania się od góry (kurtyna),
+      // a pozostałe kafelki płynnie podjeżdżają na nowe miejsca.
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const done = () => {
+        const before = new Map([...document.querySelectorAll("#grid .tile")].map((t) => [t.textContent, t.getBoundingClientRect()]));
+        state.solved.push(gi);
+        selected = [];
+        freshRow = true;
+        if (state.solved.length === 4) finish(true);
+        else if (state.solved.length === 3) setTimeout(autoLast, 900);
+        save(); render(); busy = false;
+        if (!reduce) document.querySelectorAll("#grid .tile").forEach((t) => {
+          const a = before.get(t.textContent), b = t.getBoundingClientRect();
+          if (a && (a.left !== b.left || a.top !== b.top)) t.animate([{ transform: `translate(${a.left - b.left}px,${a.top - b.top}px)` }, { transform: "none" }], { duration: 330, easing: "cubic-bezier(.2,.8,.2,1)" });
+        });
+      };
+      if (reduce) { done(); return; }
+      busy = true;
+      document.querySelectorAll("#grid .tile.sel").forEach((t) => t.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "scale(.85)" }], { duration: 175, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }));
+      setTimeout(done, 175);
       return;
     } else {
       state.mistakes++;
