@@ -160,3 +160,12 @@ dialog .go{padding:13px 30px;font-size:16px}
 .row.has-img .row-txt{z-index:2}
 .row.has-img{min-height:150px}
 @media (min-width:600px){.row.has-img{min-height:190px}}
+
+/* ---- żółty akcent marki ---- */
+:root{--brand:#FFD84A;--on-brand:#141413}
+.top h1.brand{display:flex;align-items:center;gap:10px}
+.top h1.brand .mark{color:var(--fg);flex:none}
+.end-col:first-child{background:var(--brand);color:var(--on-brand)}
+.end-col:first-child .eyebrow,.end-col:first-child .time-l,.end-col:first-child .mini span{color:rgba(20,20,19,.7)}
+dialog .go,.btn-play{background:var(--brand)!important;color:var(--on-brand)!important;border-color:var(--brand)!important}
+.pill i{background:var(--brand);box-shadow:0 0 0 2px var(--on-brand) inset}
