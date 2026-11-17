@@ -229,17 +229,17 @@
         selected = [];
         freshRow = true;
         if (state.solved.length === 4) finish(true);
-        else if (state.solved.length === 3) setTimeout(autoLast, 900);
+        else if (state.solved.length === 3) setTimeout(autoLast, 1100);
         save(); render(); busy = false;
         if (!reduce) document.querySelectorAll("#grid .tile").forEach((t) => {
           const a = before.get(t.textContent), b = t.getBoundingClientRect();
-          if (a && (a.left !== b.left || a.top !== b.top)) t.animate([{ transform: `translate(${a.left - b.left}px,${a.top - b.top}px)` }, { transform: "none" }], { duration: 330, easing: "cubic-bezier(.2,.8,.2,1)" });
+          if (a && (a.left !== b.left || a.top !== b.top)) t.animate([{ transform: `translate(${a.left - b.left}px,${a.top - b.top}px)` }, { transform: "none" }], { duration: 500, easing: "cubic-bezier(.2,.8,.2,1)" });
         });
       };
       if (reduce) { done(); return; }
       busy = true;
-      document.querySelectorAll("#grid .tile.sel").forEach((t) => t.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "scale(.85)" }], { duration: 175, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }));
-      setTimeout(done, 175);
+      document.querySelectorAll("#grid .tile.sel").forEach((t) => t.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "scale(.85)" }], { duration: 200, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }));
+      setTimeout(done, 200);
       return;
     } else {
       state.mistakes++;
