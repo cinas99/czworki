@@ -174,7 +174,7 @@
     if (state.done) return;
     remaining().forEach((w, i) => {
       const b = document.createElement("button");
-      b.className = "tile" + (selected.includes(w) ? " sel" : "") + (enterAnim ? " enter" : "") + (w === popWord ? " pop" : "");
+      b.className = "tile" + (selected.includes(w) ? " sel" : "") + (enterAnim ? " enter" : "") + (w === popWord ? " pop" : "") + (w.length > 9 ? " long" : "");
       if (enterAnim) b.style.animationDelay = i * 28 + "ms";
       b.textContent = w;
       b.onclick = () => toggle(w);
