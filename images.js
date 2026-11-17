@@ -47,7 +47,9 @@ window.czImage = (() => {
   fn.pexels = async function (q, key, n = 15) {
     if (!key) return { items: [], error: "brak klucza Pexels" };
     try {
-      const r = await fetch(`https://api.pexels.com/v1/search?locale=pl-PL&orientation=landscape&per_page=${n}&query=` + encodeURIComponent(q), { headers: { Authorization: key } });
+      const r = key === "server"
+        ? await fetch(`panel/api/pexels?n=${n}&q=` + encodeURIComponent(q), { cache: "no-store" })
+        : await fetch(`https://api.pexels.com/v1/search?locale=pl-PL&orientation=landscape&per_page=${n}&query=` + encodeURIComponent(q), { headers: { Authorization: key } });
       if (r.status === 401 || r.status === 403) return { items: [], error: "nieprawidłowy klucz Pexels" };
       if (r.status === 429) return { items: [], error: "limit zapytań Pexels wyczerpany, spróbuj za godzinę" };
       const j = await r.json();

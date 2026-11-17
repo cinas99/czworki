@@ -31,21 +31,31 @@
     const head = rows.shift().map((h) => h.trim().toLowerCase());
     return rows.filter((r) => r.some((x) => x.trim())).map((r) => Object.fromEntries(head.map((h, i) => [h, (r[i] || "").trim()])));
   }
-  let rows;
+  // Dane zagadki: najpierw serwer (Cloudflare: /api/dzis, przyszłe dni tylko dla admina),
+  // a gdy go nie ma (np. stary hosting), plik zagadki.csv.
+  let startDate, puzzleNo, dayRows;
   try {
-    const res = await fetch("zagadki.csv?d=" + today, { cache: "no-cache" });
-    rows = parseCSV(await res.text());
-  } catch (e) {
-    $("msg").textContent = "Nie udało się wczytać zagadki. Odśwież stronę.";
-    return;
+    const api = today > realToday ? "panel/api/dzien?d=" : "api/dzis?d=";
+    const r = await fetch(api + today, { cache: "no-store" });
+    if (!r.ok || !(r.headers.get("content-type") || "").includes("json")) throw new Error("brak API");
+    const j = await r.json();
+    startDate = j.startDate; puzzleNo = j.nr; dayRows = j.rows;
+  } catch {
+    try {
+      const res = await fetch("zagadki.csv?d=" + today, { cache: "no-cache" });
+      const rows = parseCSV(await res.text());
+      const byDate = new Map();
+      rows.forEach((r) => { if (!byDate.has(r.data)) byDate.set(r.data, []); byDate.get(r.data).push(r); });
+      const dates = [...byDate.keys()].sort();
+      startDate = dates[0];
+      const dayIndex = Math.max(0, dayDiff(startDate, today));
+      puzzleNo = dayIndex + 1;
+      dayRows = byDate.get(today) || byDate.get(dates[dayIndex % dates.length]);
+    } catch (e) {
+      $("msg").textContent = "Nie udało się wczytać zagadki. Odśwież stronę.";
+      return;
+    }
   }
-  const byDate = new Map();
-  rows.forEach((r) => { if (!byDate.has(r.data)) byDate.set(r.data, []); byDate.get(r.data).push(r); });
-  const dates = [...byDate.keys()].sort();
-  const startDate = dates[0];
-  const dayIndex = Math.max(0, dayDiff(startDate, today));
-  const puzzleNo = dayIndex + 1;
-  const dayRows = byDate.get(today) || byDate.get(dates[dayIndex % dates.length]);
   const groups = dayRows
     .map((r) => ({
       name: r.kategoria,
@@ -57,6 +67,24 @@
     }))
     .sort((a, b) => a.level - b.level);
   const groupOf = (w) => groups.findIndex((g) => g.words.includes(w));
+
+  // ---- Anonimowe statystyki (licznik zdarzeń na serwerze, bez cookies i identyfikatorów) ----
+  const track = (e, ms) => {
+    try {
+      const body = JSON.stringify(ms ? { e, ms: Math.round(ms) } : { e });
+      if (navigator.sendBeacon) navigator.sendBeacon("api/zdarzenie", new Blob([body], { type: "application/json" }));
+      else fetch("api/zdarzenie", { method: "POST", body, keepalive: true, headers: { "content-type": "application/json" } });
+    } catch {}
+  };
+  try {
+    if (localStorage.getItem("cz-visit") !== realToday) {
+      const yesterday = new Date(Date.parse(realToday + "T00:00:00Z") - 864e5).toISOString().slice(0, 10);
+      const last = localStorage.getItem("cz-visit");
+      track("visit");
+      if (last && last >= yesterday) track("visit_return");
+      localStorage.setItem("cz-visit", realToday);
+    }
+  } catch {}
 
   // ---- Pamięć lokalna ----
   const store = {
@@ -164,7 +192,7 @@
 
   function toggle(w) {
     if (busy) return;
-    if (!state.startedAt) { state.startedAt = Date.now(); save(); }
+    if (!state.startedAt) { state.startedAt = Date.now(); save(); if (!state.replay) track(isArchive ? "archive_start" : "start"); }
     $("msg").textContent = "";
     if (selected.includes(w)) selected = selected.filter((x) => x !== w);
     else if (selected.length < 4) selected.push(w);
@@ -265,6 +293,8 @@
     if (!isArchive && !state.replay) store.set("cz-arch-" + today, { date: today, done: true, won, timeMs: state.timeMs, mistakes: state.mistakes });
     setTimeout(() => celebrate(won), 350);
     if (state.replay) { save(); return; }
+    if (isArchive) { if (won) track("archive_win", state.timeMs); }
+    else track(won ? "win" : "loss", won ? state.timeMs : 0);
     stats.played++;
     if (won) {
       stats.wins++;
@@ -321,6 +351,7 @@
     $("sh-sms").href = (/iPhone|iPad/i.test(navigator.userAgent) ? "sms:&body=" : "sms:?body=") + t;
     $("sh-x").href = "https://x.com/intent/post?text=" + t;
   }
+  const shareTrack = (k) => { track("share_" + k); if ($("with-score").checked) track("share_time"); };
   async function share() {
     const text = shareText();
     const linkOnly = !$("with-score").checked;
@@ -364,10 +395,14 @@
   $("btn-share").onclick = share;
   $("with-score").onchange = updateWa;
   $("btn-reset").onclick = () => {
+    track("replay");
     store.set(stateKey, { date: today, solved: [], mistakes: 0, history: [], tried: [], done: false, won: false, order: null, replay: true });
     location.reload();
   };
+  [["sh-wa", "wa"], ["sh-ms", "ms"], ["sh-fb", "fb"], ["sh-sms", "sms"], ["sh-x", "x"]].forEach(([id, k]) => $(id).addEventListener("click", () => shareTrack(k)));
+  $("btn-share").addEventListener("click", () => shareTrack("native"));
   $("sh-copy").onclick = async () => {
+    shareTrack("copy");
     try { await navigator.clipboard.writeText(shareText()); toast("Skopiowano"); } catch { prompt("Skopiuj:", shareText()); }
   };
   if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) document.body.classList.add("is-mobile");

@@ -57,3 +57,22 @@ W panelu można edytować każdą grupę, wymienić ją na grupę z rezerwy (`za
 
 ## Zdjęcia z Pexels
 W panelu wklej darmowy klucz API z https://www.pexels.com/api/ (zapamiętywany w przeglądarce). Wyszukiwarka pokazuje wtedy zdjęcia z Pexels (główne źródło), Openverse i Wikipedii. Przycisk „Dobierz zdjęcia z Pexels” podmienia hurtowo zdjęcia z Wikipedii dla wszystkich dni od dziś.
+
+## Hosting na Cloudflare Pages (zalecany)
+
+- Budowanie: `node build.js`, katalog wyjściowy `public`.
+  - Baza zagadek jest wbudowana w kod serwera, więc przyszłe zagadki nie są publiczne.
+  - Serwer podaje tylko zagadkę na dziś i dni archiwalne.
+- Zmienne w Cloudflare (Settings → Variables and Secrets):
+  - `GITHUB_TOKEN`: token z uprawnieniem Contents: Read and write do repo;
+  - `PEXELS_KEY`: klucz Pexels;
+  - `ADMIN_EMAILS`: e-maile adminów, oddzielone przecinkami.
+- Baza D1 powiązana jako `DB` zbiera anonimowe statystyki. Tabela tworzy się sama.
+- Cloudflare Access chroni `/panel.html` i `/panel/*` (logowanie kodem z e-maila).
+- Test lokalny:
+
+  ```
+  node build.js
+  echo ADMIN_EMAILS=ty@example.com > .dev.vars
+  npx wrangler pages dev public --d1 DB
+  ```

@@ -67,6 +67,10 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
 .rz div{font-size:12px;color:var(--muted)}
 .rz.bad{opacity:.45}
 .lock{padding:40px 0;text-align:center}
+.st{width:100%;border-collapse:collapse;font-size:13px}
+.st th,.st td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.st th:first-child,.st td:first-child{text-align:left}
+.st th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
 </style>
 </head>
 <body>
@@ -114,8 +118,10 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
   const app = $("app");
   const q = new URLSearchParams(location.search);
   try { if (q.has("admin")) localStorage.setItem("cz-admin", "1"); } catch {}
-  let admin = false; try { admin = localStorage.getItem("cz-admin") === "1"; } catch {}
-  if (!admin) { app.innerHTML = '<p class="lock">Panel jest dostępny w trybie admina. Otwórz <b>panel.html?admin</b>.</p>'; return; }
+  let server = null;
+  try { const r = await fetch("panel/api/ping", { cache: "no-store" }); if (r.ok && (r.headers.get("content-type") || "").includes("json")) server = await r.json(); } catch {}
+  let admin = !!server; try { admin = admin || localStorage.getItem("cz-admin") === "1"; } catch {}
+  if (!admin) { app.innerHTML = '<p class="lock">Panel wymaga zalogowania. Otwórz <b>czworki.pl/panel.html</b> i zaloguj się swoim e-mailem.</p>'; return; }
 
   const LV = { zielony: 0, zolty: 1, pomaranczowy: 2, czerwony: 3 };
   const today = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Warsaw" }).format(new Date());
@@ -143,10 +149,17 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
   // ---- GitHub ----
   let token = ""; try { token = localStorage.getItem("cz-gh-token") || ""; } catch {}
   let pexKey = ""; try { pexKey = localStorage.getItem("cz-pexels-key") || ""; } catch {}
+  if (server) { token = server.github ? "server" : ""; pexKey = server.pexels ? "server" : ""; }
   const b64dec = (b) => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\s/g, "")), (c) => c.charCodeAt(0)));
   const b64enc = (s) => { const u = new TextEncoder().encode(s); let bin = ""; for (let i = 0; i < u.length; i += 0x8000) bin += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000)); return btoa(bin); };
   const gh = (path, opt = {}) => fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, { ...opt, headers: { Authorization: "Bearer " + token, Accept: "application/vnd.github+json", ...(opt.headers || {}) } });
   async function load(path) {
+    if (server) {
+      const r = await fetch("panel/api/plik?p=" + path, { cache: "no-store" });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) { toast(j.error || "Błąd wczytywania"); return { text: "kategoria,slowo1,slowo2,slowo3,slowo4,zdjecie,wyjasnienie\n", sha: null }; }
+      return j;
+    }
     if (token) {
       const r = await gh(path + "?ref=" + BRANCH);
       if (r.ok) { const j = await r.json(); return { text: b64dec(j.content), sha: j.sha }; }
@@ -157,6 +170,12 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     return { text: r.ok ? await r.text() : "kategoria,slowo1,slowo2,slowo3,slowo4,zdjecie,wyjasnienie\n", sha: null };
   }
   async function save(path, text, sha, msg) {
+    if (server) {
+      const r = await fetch("panel/api/plik", { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ p: path, text, sha, message: msg }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(j.error || "Błąd zapisu " + r.status);
+      return j.sha;
+    }
     const r = await gh(path, { method: "PUT", body: JSON.stringify({ message: msg, content: b64enc(text), branch: BRANCH, ...(sha ? { sha } : {}) }) });
     if (!r.ok) { const j = await r.json().catch(() => ({})); throw new Error(r.status === 409 ? "Plik zmienił się w międzyczasie. Odśwież panel." : (j.message || "Błąd zapisu " + r.status)); }
     return (await r.json()).content.sha;
@@ -191,7 +210,9 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     const last = all[all.length - 1];
     let list = filter === "past" ? all.filter((d) => d < today).reverse() : filter === "warn" ? warnDays : future;
     app.innerHTML = `
-      <div class="box">${token
+      ${server ? `<div class="box"><span class="ok">● Zalogowano: ${esc(server.email || "")}</span> · zapis do repo ${server.github ? "włączony" : '<b class="warn">wyłączony (brak GITHUB_TOKEN)</b>'} · Pexels ${server.pexels ? "włączony" : '<b class="warn">wyłączony (brak PEXELS_KEY)</b>'}
+        ${server.pexels ? `<div style="margin-top:8px"><button class="btn dark sm" id="px-bulk">Dobierz zdjęcia z Pexels dla wszystkich dni od dziś</button><div id="px-prog" style="font-size:12px;color:var(--muted);margin-top:6px">Podmienia zdjęcia z Wikipedii na pierwsze trafienie z Pexels. Grup z wybranym już zdjęciem z Pexels albo własnym adresem nie rusza.</div></div>` : ""}</div>
+      <div class="box" id="stats-box"><b>Statystyki graczy</b> <span style="color:var(--muted);font-size:12px">(anonimowe, ostatnie 14 dni)</span><div id="stats">${server.stats ? "Wczytywanie…" : '<span class="warn">Włącz bazę D1 (powiązanie DB) w Cloudflare, żeby zbierać statystyki.</span>'}</div></div>` : `<div class="box">${token
         ? `<span class="ok">● Połączono z GitHubem</span>: zmiany zapisują się od razu w repo i są na stronie po ok. minucie. <button class="btn sm" id="gh-out">Rozłącz</button>`
         : `<b>Połącz z GitHubem, żeby zapisywać zmiany.</b> Bez tego panel działa tylko do podglądu.
            <input id="gh-token" type="password" placeholder="Wklej token (github_pat_…)">
@@ -207,7 +228,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
            <input id="px-key" type="password" placeholder="Wklej klucz API Pexels">
            <button class="btn dark sm" id="px-in">Zapisz klucz</button>
            <a href="https://www.pexels.com/api/" target="_blank" rel="noopener" style="font-size:13px;margin-left:8px">Załóż klucz →</a>`}
-      </div>
+      </div>`}
       <div class="summary">
         <div><b>${future.length}</b><span>dni w zapasie</span></div>
         <div><b>${last ? new Date(last + "T12:00:00Z").toLocaleDateString("pl-PL", { day: "numeric", month: "short" }) : "–"}</b><span>ostatnia zagadka</span></div>
@@ -230,6 +251,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
           </div>`; }).join("")}</div></section>`;
       }).join("") || "<p>Brak dni do pokazania.</p>"}</div>`;
 
+    if (server && server.stats) loadStats();
     app.querySelectorAll(".bar button").forEach((b) => (b.onclick = () => { filter = b.dataset.f; render(); }));
     if ($("gh-in")) $("gh-in").onclick = async () => {
       const t = $("gh-token").value.trim(); if (!t) return toast("Wklej token");
@@ -267,6 +289,23 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     el.querySelector(".ph").style.backgroundImage = `url("${im.src}")`;
     const srcName = window.czImage.source(row.zdjecie);
     tag.textContent = srcName === "Wikipedia" ? "Wikipedia: " + im.title : row.zdjecie_podpis || srcName;
+  }
+
+  // ---- Statystyki graczy ----
+  async function loadStats() {
+    const box = $("stats"); if (!box) return;
+    let rows = [];
+    try { rows = (await (await fetch("panel/api/staty?dni=14", { cache: "no-store" })).json()).rows || []; } catch {}
+    if (!rows.length) { box.innerHTML = '<span style="color:var(--muted);font-size:13px">Brak danych. Pierwsze liczby pojawią się po wejściach graczy.</span>'; return; }
+    const days = {}; rows.forEach((r) => ((days[r.day] = days[r.day] || {})[r.event] = r));
+    const n = (d, e) => (d[e] ? d[e].count : 0);
+    const shares = (d) => Object.keys(d).filter((k) => k.startsWith("share_") && k !== "share_time").reduce((a, k) => a + d[k].count, 0);
+    const avg = (d) => (d.win && d.win.count ? Math.round(d.win.sum_ms / d.win.count / 1000) : null);
+    const mm = (s) => (s == null ? "–" : Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"));
+    const pct = (a, b) => (b ? Math.round((a / b) * 100) + "%" : "–");
+    const list = Object.keys(days).sort().reverse();
+    box.innerHTML = `<div style="overflow-x:auto;margin-top:8px"><table class="st"><thead><tr><th>Dzień</th><th>Gracze</th><th>Wracający</th><th>Zaczęli</th><th>Wygrali</th><th>Śr. czas</th><th>Poleceń</th><th>Archiwum</th></tr></thead><tbody>${list.map((day) => { const d = days[day]; return `<tr><td>${new Date(day + "T12:00:00Z").toLocaleDateString("pl-PL", { day: "numeric", month: "short" })}</td><td><b>${n(d, "visit")}</b></td><td>${pct(n(d, "visit_return"), n(d, "visit"))}</td><td>${n(d, "start")}</td><td>${n(d, "win")} <small>(${pct(n(d, "win"), n(d, "start"))})</small></td><td>${mm(avg(d))}</td><td>${shares(d)}</td><td>${n(d, "archive_start")}</td></tr>`; }).join("")}</tbody></table></div>
+      <p style="font-size:12px;color:var(--muted);margin:8px 0 0">Gracze = urządzenia, które weszły tego dnia. Wracający = byli też dzień wcześniej. Śr. czas liczy tylko wygrane.</p>`;
   }
 
   // ---- Edycja ----

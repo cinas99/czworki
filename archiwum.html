@@ -57,10 +57,21 @@ details[open] summary::before{content:"▾ ";}
     const h = rows.shift().map((x) => x.trim().toLowerCase());
     return rows.filter((r) => r.some((x) => x.trim())).map((r) => Object.fromEntries(h.map((k, i) => [k, (r[i] || "").trim()])));
   }
-  const rows = parseCSV(await (await fetch("zagadki.csv?d=" + today, { cache: "no-cache" })).text());
+  // Serwer zwraca tylko dni sprzed dzisiaj; bez serwera (stary hosting) czytamy zagadki.csv
+  let rows, startDate;
+  try {
+    const r = await fetch("api/archiwum", { cache: "no-store" });
+    if (!r.ok || !(r.headers.get("content-type") || "").includes("json")) throw 0;
+    const j = await r.json();
+    startDate = j.startDate; rows = j.days.flatMap((d) => d.rows);
+  } catch {
+    rows = parseCSV(await (await fetch("zagadki.csv?d=" + today, { cache: "no-cache" })).text());
+  }
   const by = new Map();
   rows.forEach((r) => { if (!by.has(r.data)) by.set(r.data, []); by.get(r.data).push(r); });
   const all = [...by.keys()].sort();
+  startDate = startDate || all[0];
+  const nrOf = (d) => Math.round((Date.parse(d + "T00:00:00Z") - Date.parse(startDate + "T00:00:00Z")) / 864e5) + 1;
   const past = all.filter((d) => d < today).reverse();
   const fmt = (d) => new Date(d + "T12:00:00Z").toLocaleDateString("pl-PL", { day: "numeric", month: "long", year: "numeric" });
   const list = document.getElementById("list");
@@ -71,7 +82,7 @@ details[open] summary::before{content:"▾ ";}
     const groups = by.get(d).sort((a, b) => (LV[a.kolor] ?? 0) - (LV[b.kolor] ?? 0));
     const st = played(d), done = st && st.done;
     const badge = done ? `<p class="done-badge">${st.won ? `✓ Rozwiązana w <b>${fmtT(st.timeMs)}</b>` : "✗ Tym razem się nie udało"}${st.mistakes != null ? ` · błędy: ${st.mistakes}` : ""}</p>` : "";
-    return `<section class="day"><div class="day-top"><h2>Zagadka #${all.indexOf(d) + 1} <small>${fmt(d)}</small></h2>` +
+    return `<section class="day"><div class="day-top"><h2>Zagadka #${nrOf(d)} <small>${fmt(d)}</small></h2>` +
       `<a class="play${done ? " again" : ""}" href="./?dzien=${d}">${done ? "Zagraj jeszcze raz" : "Zagraj →"}</a></div>` + badge +
       `<details><summary>Pokaż odpowiedzi i wyjaśnienia</summary>` +
       groups.map((g) => `<div class="g c${LV[g.kolor] ?? 0}" style="background:none"><b>${esc(g.kategoria)}</b>` +
