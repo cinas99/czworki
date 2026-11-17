@@ -246,7 +246,7 @@
     const dpr = Math.min(2, window.devicePixelRatio || 1), W = innerWidth, H = innerHeight;
     c.width = W * dpr; c.height = H * dpr; document.body.appendChild(c);
     const x = c.getContext("2d"); x.scale(dpr, dpr);
-    const cols = ["#FFD84A", "#141413", "#FFFFFF", "#E5484D", "#FFD84A"];
+    const cols = ["#F6DF94", "#141413", "#FFFFFF", "#E5484D", "#F6DF94"];
     const ps = Array.from({ length: 140 }, () => ({ x: W / 2 + (Math.random() - 0.5) * 80, y: H * 0.35, vx: (Math.random() - 0.5) * 12, vy: -Math.random() * 13 - 4, s: 6 + Math.random() * 7, r: Math.random() * 6, vr: (Math.random() - 0.5) * 0.3, c: cols[(Math.random() * cols.length) | 0] }));
     const t0 = performance.now();
     const frame = (t) => {

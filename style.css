@@ -1,6 +1,6 @@
 :root{--card:#f7f7f3;
-  --bg:#ffffff;--fg:#141413;--muted:#6b6b6b;--tile:#FFF6DA;--tile-sel:#141413;--line:#d6d6cc;
-  --c0:#FFF0B8;--c1:#FFF0B8;--c2:#FFF0B8;--c3:#FFF0B8;--danger:#c0392b;
+  --bg:#ffffff;--fg:#141413;--muted:#6b6b6b;--tile:#FAF5E6;--tile-sel:#141413;--line:#d6d6cc;
+  --c0:#F8EDC8;--c1:#F8EDC8;--c2:#F8EDC8;--c3:#F8EDC8;--danger:#c0392b;
   --r:10px;
 }
 html[data-theme="dark"]{--c0:#3a3a3c;--c1:#3a3a3c;--c2:#3a3a3c;--c3:#3a3a3c;--card:#1c1c1e;--bg:#121213;--fg:#f2f2f2;--muted:#9a9a9a;--tile:#2c2c2e;--tile-sel:#d8d8d0;--line:#3a3a3c;color-scheme:dark}
@@ -162,7 +162,7 @@ dialog .go{padding:13px 30px;font-size:16px}
 @media (min-width:600px){.row.has-img{min-height:190px}}
 
 /* ---- żółty akcent marki ---- */
-:root{--brand:#FFD84A;--on-brand:#141413}
+:root{--brand:#F6DF94;--on-brand:#141413}
 .top h1.brand{display:flex;align-items:center;gap:10px}
 .top h1.brand .mark{color:var(--fg);flex:none}
 .end-col:first-child{background:var(--brand);color:var(--on-brand)}
@@ -170,7 +170,7 @@ dialog .go{padding:13px 30px;font-size:16px}
 dialog .go,.btn-play{background:var(--brand)!important;color:var(--on-brand)!important;border-color:var(--brand)!important}
 .pill i{background:var(--brand);box-shadow:0 0 0 2px var(--on-brand) inset}
 .top h1.brand .mark{border-radius:9px}
-html[data-theme="dark"]{--tile-sel:#FFD84A}
+html[data-theme="dark"]{--tile-sel:#F6DF94}
 html[data-theme="dark"] .tile.sel{color:#141413}
 
 /* ---- efekty ---- */
