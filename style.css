@@ -183,8 +183,8 @@ html[data-theme="dark"] .tile.sel{color:#141413}
 .grid.shuffling .tile{transition:transform .18s,opacity .18s;transform:scale(.85) rotate(-3deg);opacity:.2}
 .tile.jump{animation:tileJump .45s cubic-bezier(.3,1.6,.5,1) both}
 @keyframes tileJump{0%{transform:none}40%{transform:translateY(-14px) scale(1.06)}70%{transform:translateY(2px)}100%{transform:none}}
-.row{animation:rowIn .45s cubic-bezier(.2,.9,.3,1.2)}
-@keyframes rowIn{from{opacity:0;transform:scale(.92) translateY(8px)}to{opacity:1;transform:none}}
+.row{animation:rowIn .3s ease-out}
+@keyframes rowIn{from{opacity:0}to{opacity:1}}
 .msg.bump{animation:msgBump .35s ease-out}
 @keyframes msgBump{0%{transform:scale(.8);opacity:0}60%{transform:scale(1.06);opacity:1}100%{transform:none}}
 .actions button,.end button,.sh span,.arch-link{transition:transform .12s}

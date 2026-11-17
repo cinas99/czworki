@@ -187,18 +187,11 @@
 
     const gi = groupOf(selected[0]);
     if (selected.every((w) => groupOf(w) === gi)) {
-      // fala: zaznaczone kafelki podskakują po kolei, potem zamieniają się w odkrytą grupę
-      busy = true;
-      const order = state.order.filter((w) => selected.includes(w));
-      document.querySelectorAll(".tile.sel").forEach((t) => { t.style.animationDelay = order.indexOf(t.textContent) * 70 + "ms"; t.classList.add("jump"); });
-      setTimeout(() => {
-        state.solved.push(gi);
-        selected = []; busy = false;
-        if (state.solved.length === 4) finish(true);
-        else if (state.solved.length === 3) setTimeout(autoLast, 650);
-        save(); render();
-      }, 620);
-      save();
+      state.solved.push(gi);
+      selected = [];
+      if (state.solved.length === 4) finish(true);
+      else if (state.solved.length === 3) setTimeout(autoLast, 650);
+      save(); render();
       return;
     } else {
       state.mistakes++;
