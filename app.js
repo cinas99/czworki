@@ -142,7 +142,7 @@
       rowEl.prepend(bg);
       rowEl.classList.add("has-img");
       // Zdjęcie świeżo odgadniętej grupy zjeżdża od góry jak roleta (zamiast zwykłego pojawienia się)
-      if (rowEl.dataset.at && Date.now() - rowEl.dataset.at < 4000) { bg.classList.add("curtain"); fg.classList.add("curtain"); }
+      if (rowEl.dataset.at && Date.now() - rowEl.dataset.at < 6000) { bg.classList.add("curtain"); fg.classList.add("curtain"); }
       requestAnimationFrame(() => { bg.classList.add("on"); fg.classList.add("on"); });
       const pexels = /images\.pexels\.com/.test(im.src);
       const text = g.credit || (im.link ? "fot. Wikipedia" : "");
