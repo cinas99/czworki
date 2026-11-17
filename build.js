@@ -4,13 +4,14 @@
 const fs = require("fs");
 const path = require("path");
 
-const SITE = ["index.html", "app.js", "images.js", "style.css", "archiwum.html", "jak-grac.html", "polityka-prywatnosci.html", "panel.html", "ads.txt"];
+const SITE = ["index.html", "app.js", "images.js", "style.css", "archiwum.html", "jak-grac.html", "polityka-prywatnosci.html", "panel.html", "ads.txt", "manifest.webmanifest", "sw.js"];
 const out = path.join(__dirname, "public");
 fs.rmSync(out, { recursive: true, force: true });
 fs.mkdirSync(out, { recursive: true });
 for (const f of SITE) if (fs.existsSync(f)) fs.copyFileSync(f, path.join(out, f));
+for (const dir of ["ikony", ".well-known"]) if (fs.existsSync(dir)) fs.cpSync(dir, path.join(out, dir), { recursive: true });
 // Bezpieczeństwo: baza zagadek i pliki pomocnicze nie trafiają na publiczną stronę
-fs.writeFileSync(path.join(out, "_headers"), "/panel*\n  X-Robots-Tag: noindex\n  Cache-Control: no-store\n/api/*\n  Cache-Control: no-store\n");
+fs.writeFileSync(path.join(out, "_headers"), "/panel*\n  X-Robots-Tag: noindex\n  Cache-Control: no-store\n/api/*\n  Cache-Control: no-store\n/sw.js\n  Cache-Control: no-cache\n/.well-known/*\n  Content-Type: application/json\n");
 
 function parseCSV(text) {
   const rows = []; let row = [], cur = "", q = false;
