@@ -22,6 +22,23 @@ window.czImage = (() => {
     else for (const t of spec.split("|").filter(Boolean)) { found = await wiki(t); if (found) break; }
     return (cache[spec] = found);
   };
+  // Zawsze jakieś zdjęcie: najpierw kolumna "zdjecie", potem wyszukiwanie w Wikipedii
+  // po nazwie kategorii i po słowach z grupy (pierwszy artykuł ze zdjęciem)
+  async function wikiFirst(q) {
+    try {
+      const u = "https://pl.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrlimit=6&prop=pageimages&piprop=thumbnail&pithumbsize=900&gsrsearch=" + encodeURIComponent(q);
+      const j = await (await fetch(u)).json();
+      const p = Object.values((j.query && j.query.pages) || {}).sort((a, b) => a.index - b.index).find((x) => x.thumbnail);
+      return p ? { src: p.thumbnail.source, link: "https://pl.wikipedia.org/wiki/" + encodeURIComponent(p.title.replace(/ /g, "_")), title: p.title } : null;
+    } catch { return null; }
+  }
+  fn.forGroup = async function (spec, queries) {
+    const key = "G|" + spec + "|" + queries.join("|");
+    if (key in cache) return cache[key];
+    let found = await fn(spec);
+    for (const q of queries) { if (found) break; if (q) found = await wikiFirst(q); }
+    return (cache[key] = found);
+  };
   fn.isWiki = (spec) => !!spec && !/^https?:\/\//.test(spec.trim());
   fn.source = (spec) => !spec ? "" : /images\.pexels\.com/.test(spec) ? "Pexels" : /^https?:/.test(spec) ? "własny adres" : "Wikipedia";
 

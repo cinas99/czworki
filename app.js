@@ -97,7 +97,8 @@
   const remaining = () => state.order.filter((w) => !state.solved.includes(groupOf(w)));
 
   async function decorate(rowEl, g) {
-    const im = await window.czImage(g.img);
+    const clean = (t) => t.replace(/[_.…()/]/g, " ").split(/\s+/).filter((w) => w.length > 2).join(" ");
+    const im = await window.czImage.forGroup(g.img, [clean(g.name), ...g.words.map((w) => w.charAt(0) + w.slice(1).toLowerCase())]);
     if (!im) return;
     const pic = new Image();
     pic.onload = () => {
@@ -290,6 +291,12 @@
     $("e-streak").textContent = stats.streak;
     countUp($("e-time"), state.timeMs);
     updateWa();
+    // Przycisk do poprzedniej zagadki (dzień przed tą, którą właśnie rozwiązano)
+    const prev = new Date(Date.parse(today + "T00:00:00Z") - 864e5).toISOString().slice(0, 10);
+    if (prev >= startDate) {
+      $("btn-prev").href = "./?dzien=" + prev;
+      $("btn-prev").querySelector("span").textContent = isArchive ? `Zagraj w poprzednią (#${puzzleNo - 1})` : "Zagraj we wczorajszą zagadkę";
+    } else $("btn-prev").hidden = true;
     if (isArchive) document.querySelector(".next").innerHTML = '<a href="./">Zagraj w dzisiejszą zagadkę →</a>';
     else tick();
   }

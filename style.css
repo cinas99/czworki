@@ -199,3 +199,9 @@ html[data-theme="dark"] .tile.sel{color:#141413}
 .arch-badge{display:inline-block;background:var(--brand);color:var(--on-brand);font-weight:700;font-size:12px;padding:2px 8px;border-radius:999px;margin-right:4px;vertical-align:1px}
 .sub a{color:var(--fg);font-weight:600}
 .next a{color:var(--fg);font-weight:700;text-decoration:none}
+.more-games{display:flex;flex-direction:column;gap:8px;max-width:380px;margin:14px auto 0}
+.mg-btn,.mg-link{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-radius:14px;text-decoration:none;font-weight:700;font-size:15px;transition:transform .12s}
+.mg-btn{background:var(--brand);color:var(--on-brand)}
+.mg-link{background:var(--card);border:1px solid var(--line);color:var(--fg);font-weight:600}
+.mg-btn b,.mg-link b{flex:none;font-size:18px}
+.mg-btn:active,.mg-link:active{transform:scale(.97)}
