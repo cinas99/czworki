@@ -192,7 +192,14 @@
       `<span class="h${i >= left ? " off" : ""}${justLost && i === left ? " lost" : ""}"></span>`).join("") + "</span>";
     shownMistakes = state.mistakes;
   }
-  function render() { renderSolved(); renderGrid(); enterAnim = false; renderLives(); if (state.done) showEnd(); }
+  function render() {
+    renderSolved(); renderGrid(); enterAnim = false; renderLives();
+    if (!state.done) return;
+    // Zaraz po wygranej: najpierw chwila na przeczytanie ostatniej kategorii (odsłonięcie 1,5 s + 2 s), potem ekran wyniku
+    if (justFinished && !endTimer) { $("actions").hidden = true; $("lives").parentElement.hidden = true; endTimer = setTimeout(showEnd, 3500); }
+    else if (!justFinished) showEnd();
+  }
+  let endTimer = null;
 
   function toggle(w) {
     if (busy) return;
@@ -229,7 +236,7 @@
         selected = [];
         freshRow = true;
         if (state.solved.length === 4) finish(true);
-        else if (state.solved.length === 3) setTimeout(autoLast, 3300);
+        else if (state.solved.length === 3) setTimeout(autoLast, 1300);
         save(); render(); busy = false;
         if (!reduce) document.querySelectorAll("#grid .tile").forEach((t) => {
           const a = before.get(t.textContent), b = t.getBoundingClientRect();
