@@ -135,6 +135,11 @@
   const save = () => store.set(stateKey, state);
   const remaining = () => state.order.filter((w) => !state.solved.includes(groupOf(w)));
 
+  // Zdjęcia grup wczytujemy w tle od razu po starcie gry, więc po trafieniu są już gotowe
+  const preloadPhotos = () => groups.forEach((g) => {
+    const clean = (t) => t.replace(/[_.…()/]/g, " ").split(/\s+/).filter((w) => w.length > 2).join(" ");
+    window.czImage.forGroup(g.img, [clean(g.name), ...g.words.map((w) => w.charAt(0) + w.slice(1).toLowerCase())]).then((im) => { if (im) new Image().src = im.src; }).catch(() => {});
+  });
   async function decorate(rowEl, g) {
     const clean = (t) => t.replace(/[_.…()/]/g, " ").split(/\s+/).filter((w) => w.length > 2).join(" ");
     const im = await window.czImage.forGroup(g.img, [clean(g.name), ...g.words.map((w) => w.charAt(0) + w.slice(1).toLowerCase())]);
@@ -153,7 +158,8 @@
       rowEl.prepend(bg);
       rowEl.classList.add("has-img");
       // Zdjęcie świeżo odgadniętej grupy zjeżdża od góry jak roleta (zamiast zwykłego pojawienia się)
-      if (rowEl.dataset.at && Date.now() - rowEl.dataset.at < 6000) { bg.classList.add("curtain"); fg.classList.add("curtain"); }
+      // (tylko gdy zdjęcie zdążyło przed końcem odsłaniania paska; później już tylko płynnie się pojawia)
+      if (rowEl.dataset.at && Date.now() - rowEl.dataset.at < 900) { bg.classList.add("curtain"); fg.classList.add("curtain"); }
       requestAnimationFrame(() => { bg.classList.add("on"); fg.classList.add("on"); });
       const pexels = /images\.pexels\.com/.test(im.src);
       const text = g.credit || (im.link ? "fot. Wikipedia" : "");
@@ -482,6 +488,7 @@
   else if (!store.get("cz-help-at", 0)) store.set("cz-help-at", seenAt);
   render();
   if (!state.done && state.solved.length === 3) setTimeout(autoLast, 500);
+  if (!state.done) setTimeout(preloadPhotos, 1200);
 })();
 
 // ---- Motyw: jasny domyślnie, przełącznik na ciemny ----

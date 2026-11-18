@@ -254,3 +254,9 @@ body.finished .row.has-img:not(.open) .row-fg{background-size:cover;background-p
 body.finished .row.has-img:not(.open) .row-bg{display:none}
 body.finished .row.has-img:not(.open)::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.38);z-index:1}
 body.finished .row.has-img:not(.open) .row-txt{position:relative;z-index:2}
+
+/* Bez przeskoków: pasek grupy od razu ma docelową wysokość (zdjęcie nie „rozpycha” go po wczytaniu),
+   a kolor tła zmienia się płynnie */
+#solved .row{min-height:150px;display:flex;flex-direction:column;justify-content:center;padding:22px 22px;transition:background-color .4s ease,color .4s ease}
+@media (min-width:600px){#solved .row{min-height:190px}}
+body.finished #solved .row:not(.open){min-height:64px;padding:10px 14px}
