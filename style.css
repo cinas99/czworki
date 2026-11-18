@@ -260,3 +260,8 @@ body.finished .row.has-img:not(.open) .row-txt{position:relative;z-index:2}
 #solved .row{min-height:150px;display:flex;flex-direction:column;justify-content:center;padding:22px 22px;transition:background-color .4s ease,color .4s ease}
 @media (min-width:600px){#solved .row{min-height:190px}}
 body.finished #solved .row:not(.open){min-height:64px;padding:10px 14px}
+
+/* Bez cienkich kresek (Firefox): kafelki na pełnych pikselach i w osobnych warstwach, bez ruchu przy najechaniu */
+.grid.px .tile{aspect-ratio:auto;height:var(--tile-h)}
+.tile{will-change:transform;backface-visibility:hidden}
+.tile:hover{transform:none}

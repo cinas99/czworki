@@ -135,6 +135,14 @@
   const save = () => store.set(stateKey, state);
   const remaining = () => state.order.filter((w) => !state.solved.includes(groupOf(w)));
 
+  // Wysokość kafelków zaokrąglona do pełnych pikseli (ułamki pikseli dają w Firefoksie cienkie kreski)
+  const fitTiles = () => {
+    const g = $("grid"), gap = parseFloat(getComputedStyle(g).columnGap) || 8;
+    const w = (g.clientWidth - 3 * gap) / 4;
+    if (w > 0) { g.style.setProperty("--tile-h", Math.round(w / 1.15) + "px"); g.classList.add("px"); }
+  };
+  window.addEventListener("resize", fitTiles);
+  requestAnimationFrame(fitTiles);
   // Zdjęcia grup wczytujemy w tle od razu po starcie gry, więc po trafieniu są już gotowe
   const preloadPhotos = () => groups.forEach((g) => {
     const clean = (t) => t.replace(/[_.…()/]/g, " ").split(/\s+/).filter((w) => w.length > 2).join(" ");
