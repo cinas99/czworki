@@ -7,6 +7,7 @@ const SCHEMA = "CREATE TABLE IF NOT EXISTS stats (day TEXT NOT NULL, event TEXT 
 
 export async function onRequestPost({ request, env }) {
   if (!env.DB) return json({ ok: false, reason: "no-db" }, 202);
+  if (/bot|crawl|spider|facebookexternalhit|meta-externalagent|headless/i.test(request.headers.get("user-agent") || "")) return json({ ok: false, reason: "bot" }, 202);
   let body = {};
   try { body = await request.json(); } catch {}
   const e = String(body.e || "");

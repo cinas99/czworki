@@ -87,15 +87,22 @@
       else fetch("api/zdarzenie", { method: "POST", body, keepalive: true, headers: { "content-type": "application/json" } });
     } catch {}
   };
-  try {
-    if (localStorage.getItem("cz-visit") !== realToday) {
+  // Wizyta liczy się dopiero, gdy strona jest naprawdę na ekranie przez 2 s (bez botów i wczytywania w tle)
+  const isBot = navigator.webdriver || /bot|crawl|spider|facebookexternalhit|meta-externalagent|headless|preview|lighthouse/i.test(navigator.userAgent);
+  const countVisit = () => {
+    try {
+      if (isBot || localStorage.getItem("cz-visit") === realToday) return;
       const yesterday = new Date(Date.parse(realToday + "T00:00:00Z") - 864e5).toISOString().slice(0, 10);
       const last = localStorage.getItem("cz-visit");
       track("visit");
       if (last && last >= yesterday) track("visit_return");
       localStorage.setItem("cz-visit", realToday);
-    }
-  } catch {}
+    } catch {}
+  };
+  let visitTimer = null;
+  const armVisit = () => { clearTimeout(visitTimer); if (document.visibilityState === "visible") visitTimer = setTimeout(countVisit, 2000); };
+  document.addEventListener("visibilitychange", armVisit);
+  armVisit();
 
   // ---- Pamięć lokalna ----
   const store = {
