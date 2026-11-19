@@ -265,3 +265,9 @@ body.finished #solved .row:not(.open){min-height:64px;padding:10px 14px}
 .grid.px .tile{aspect-ratio:auto;height:var(--tile-h)}
 .tile{will-change:transform;backface-visibility:hidden}
 .tile:hover{transform:none}
+
+/* Krótka podpowiedź dla nowych graczy (zamiast okna z instrukcją) */
+.hint{display:flex;align-items:center;gap:8px;margin:-4px 0 12px;padding:10px 10px 10px 14px;border-radius:14px;background:var(--brand);color:var(--on-brand);font-size:14px;line-height:1.35;animation:cardIn .4s ease-out both}
+.hint span{flex:1}
+.hint button{flex:none;border:none;background:rgba(0,0,0,.08);color:inherit;border-radius:10px;font:inherit;font-weight:700;padding:7px 10px;cursor:pointer}
+.hint #hint-x{background:none;font-size:20px;line-height:1;padding:4px 6px}

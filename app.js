@@ -250,6 +250,7 @@
 
   // ---- Logika ----
   function check() {
+    if (!$("hint").hidden) { $("hint").hidden = true; store.set("cz-help-at", Date.now()); }
     if (state.done || busy) return;
     if (selected.length !== 4) { $("msg").textContent = "Zaznacz 4 słowa"; return; }
     const key = [...selected].sort().join("|");
@@ -499,8 +500,12 @@
   $("btn-stats").onclick = showStats;
   // Samouczek: przy pierwszej wizycie, potem dopiero po 30 dniach od ostatniego pokazania
   const HELP_EVERY = 30 * 864e5, seenAt = store.get("cz-help-at", 0) || (store.get("cz-seen", false) ? Date.now() : 0);
-  if (!seenAt || Date.now() - seenAt > HELP_EVERY) { $("dlg-help").showModal(); store.set("cz-help-at", Date.now()); }
-  else if (!store.get("cz-help-at", 0)) store.set("cz-help-at", seenAt);
+  // Zamiast okna z instrukcją od razu plansza + krótka podpowiedź nad nią (pełny samouczek pod „Jak grać?”)
+  const hideHint = () => { $("hint").hidden = true; store.set("cz-help-at", Date.now()); };
+  if ((!seenAt || Date.now() - seenAt > HELP_EVERY) && !state.done) $("hint").hidden = false;
+  $("hint-x").onclick = hideHint;
+  $("hint-more").onclick = () => { $("dlg-help").showModal(); hideHint(); };
+  if (seenAt && !store.get("cz-help-at", 0)) store.set("cz-help-at", seenAt);
   render();
   if (!state.done && state.solved.length === 3) setTimeout(autoLast, 500);
   if (!state.done) setTimeout(preloadPhotos, 1200);
