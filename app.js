@@ -502,7 +502,7 @@
   const HELP_EVERY = 30 * 864e5, seenAt = store.get("cz-help-at", 0) || (store.get("cz-seen", false) ? Date.now() : 0);
   // Zamiast okna z instrukcją od razu plansza + krótka podpowiedź nad nią (pełny samouczek pod „Jak grać?”)
   const hideHint = () => { $("hint").hidden = true; store.set("cz-help-at", Date.now()); };
-  if ((!seenAt || Date.now() - seenAt > HELP_EVERY) && !state.done) $("hint").hidden = false;
+  $("hint").hidden = !((!seenAt || Date.now() - seenAt > HELP_EVERY) && !state.done);
   $("hint-x").onclick = hideHint;
   $("hint-more").onclick = () => { $("dlg-help").showModal(); hideHint(); };
   if (seenAt && !store.get("cz-help-at", 0)) store.set("cz-help-at", seenAt);

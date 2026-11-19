@@ -271,3 +271,6 @@ body.finished #solved .row:not(.open){min-height:64px;padding:10px 14px}
 .hint span{flex:1}
 .hint button{flex:none;border:none;background:rgba(0,0,0,.08);color:inherit;border-radius:10px;font:inherit;font-weight:700;padding:7px 10px;cursor:pointer}
 .hint #hint-x{background:none;font-size:20px;line-height:1;padding:4px 6px}
+
+/* Bez przesunięć przy wczytywaniu: miejsce na planszę zarezerwowane, zanim przyjdzie zagadka */
+.grid:empty{aspect-ratio:1.1/1}
