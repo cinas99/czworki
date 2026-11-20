@@ -413,8 +413,10 @@
   function shareText() {
     if (!$("with-score").checked) return gameUrl();
     const tag = isArchive ? ` (z archiwum)` : "";
-    if (!state.won) return `Czwórki #${puzzleNo}${tag} mnie pokonały. Spróbuj Ty: ${gameUrl()}`;
-    return `Czwórki #${puzzleNo}${tag} rozwiązane w ${fmtTime(state.timeMs)} 🏁 Pobijesz mój czas? ${gameUrl()}`;
+    if (!state.won) return `Czwórki #${puzzleNo}${tag} – tym razem mnie pokonały 🙈 Spróbuj Ty!\n${gameUrl()}`;
+    const m = state.mistakes || 0;
+    const how = ["bez ani jednej pomyłki! 🏆", "prawie idealnie! 💪", "z dwiema pomyłkami 😅", "na ostatnim sercu! 😅"][Math.min(m, 3)];
+    return `Czwórki #${puzzleNo}${tag} – ${how} ${fmtTime(state.timeMs)}\n${gameUrl()}`;
   }
   function updateWa() {
     const t = encodeURIComponent(shareText()), u = encodeURIComponent(gameUrl());
