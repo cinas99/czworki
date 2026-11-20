@@ -426,6 +426,43 @@
     $("sh-sms").href = (/iPhone|iPad/i.test(navigator.userAgent) ? "sms:&body=" : "sms:?body=") + t;
     $("sh-x").href = "https://x.com/intent/post?text=" + t;
   }
+  // ---- Przypomnienia o nowej zagadce (powiadomienia, codziennie 8:00) ----
+  (() => {
+    const box = $("remind"), btn = $("btn-remind"), info = $("remind-info");
+    const ua = navigator.userAgent, inApp = /FBAN|FBAV|FB_IAB|Instagram|Messenger/i.test(ua), ios = /iPhone|iPad/i.test(ua);
+    const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+    const can = "serviceWorker" in navigator && "PushManager" in window && "Notification" in window && window.isSecureContext;
+    const on = () => store.get("cz-push", false) && Notification.permission === "granted";
+    const show = () => {
+      box.hidden = false;
+      if (on()) { btn.innerHTML = '<span aria-hidden="true">✅</span> <b>Przypomnienia włączone</b><small>codziennie o 8:00 · dotknij, by wyłączyć</small>'; btn.classList.add("on"); info.textContent = ""; return; }
+      btn.classList.remove("on");
+      btn.innerHTML = '<span aria-hidden="true">🔔</span> <b>Przypominaj mi o nowej zagadce</b><small>codziennie o 8:00 · bez konta</small>';
+    };
+    if (inApp) { box.hidden = false; btn.hidden = true; info.innerHTML = "🔔 Chcesz codzienne przypomnienie? Otwórz <b>czworki.pl</b> w przeglądarce (⋮ → „Otwórz w przeglądarce”)."; }
+    else if (ios && !standalone) { box.hidden = false; btn.hidden = true; info.innerHTML = "🔔 Chcesz codzienne przypomnienie? Dodaj Czwórki do ekranu początkowego (Udostępnij → „Do ekranu początk.”)."; }
+    else if (can) show();
+    const b64 = (s) => { const p = "=".repeat((4 - (s.length % 4)) % 4), r = atob((s + p).replace(/-/g, "+").replace(/_/g, "/")); return Uint8Array.from(r, (c) => c.charCodeAt(0)); };
+    btn.onclick = async () => {
+      try {
+        const reg = await navigator.serviceWorker.ready;
+        if (on()) {
+          const sub = await reg.pushManager.getSubscription();
+          if (sub) { fetch("api/push/zapis", { method: "DELETE", headers: { "content-type": "application/json" }, body: JSON.stringify({ endpoint: sub.endpoint }) }); await sub.unsubscribe(); }
+          store.set("cz-push", false); track("push_off"); show(); return;
+        }
+        if ((await Notification.requestPermission()) !== "granted") { info.textContent = "Bez zgody na powiadomienia przypomnienie nie zadziała. Możesz ją włączyć w ustawieniach przeglądarki."; return; }
+        const { key } = await (await fetch("api/push/klucz")).json();
+        const sub = (await reg.pushManager.getSubscription()) || (await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64(key) }));
+        const r = await fetch("api/push/zapis", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ endpoint: sub.endpoint }) });
+        if (!r.ok) throw new Error("zapis " + r.status);
+        store.set("cz-push", true); track("push_on"); show();
+        info.textContent = "Gotowe! Jutro o 8:00 dostaniesz powiadomienie o nowej zagadce.";
+      } catch (e) { info.textContent = "Nie udało się włączyć przypomnień w tej przeglądarce."; report("push: " + (e && e.message)); }
+    };
+  })();
+  if (/[?&]src=push/.test(location.search)) track("push_open");
+
   const shareTrack = (k) => { track("share_" + k); if ($("with-score").checked) track("share_time"); };
   async function share() {
     const text = shareText();

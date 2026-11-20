@@ -33,6 +33,7 @@ export async function onRequestGet({ env }) {
       out.bledy = { dzis: c?.dzis || 0, tydzien: c?.tydzien || 0, ostatnie: results };
     } catch {}
   }
+  if (env.DB) { try { out.przypomnienia = (await env.DB.prepare("SELECT COUNT(*) AS n FROM push_subs").first()).n; } catch { out.przypomnienia = 0; } }
   out.ok = out.zagadki.jestDzisiejsza && out.zagadki.dniWZapasie >= 7 && out.bledy.dzis === 0;
   return new Response(JSON.stringify(out, null, 1), { headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store", "access-control-allow-origin": "*" } });
 }

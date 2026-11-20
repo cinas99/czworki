@@ -1,0 +1,20 @@
+# Codzienne przypomnienie o nowej zagadce (8:00 czasu polskiego; serwer sam pilnuje godziny i nie wysyła dwa razy)
+name: Przypomnienie o nowej zagadce
+on:
+  schedule:
+    - cron: "0 6 * * *"
+    - cron: "0 7 * * *"
+    - cron: "40 7 * * *"
+  workflow_dispatch:
+jobs:
+  wyslij:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: |
+          for i in $(seq 1 50); do
+            r=$(curl -s -X POST https://czworki.pl/api/push/wyslij)
+            echo "$r"
+            echo "$r" | grep -q '"remaining":0' && break
+            sleep 1
+          done
