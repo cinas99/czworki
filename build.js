@@ -4,7 +4,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const SITE = ["index.html", "app.js", "images.js", "style.css", "archiwum.html", "jak-grac.html", "polityka-prywatnosci.html", "panel.html", "ads.txt", "manifest.webmanifest", "sw.js"];
+const SITE = ["index.html", "app.js", "images.js", "style.css", "archiwum.html", "jak-grac.html", "polityka-prywatnosci.html", "o-grze.html", "panel.html", "ads.txt", "manifest.webmanifest", "sw.js"];
 const out = path.join(__dirname, "public");
 fs.rmSync(out, { recursive: true, force: true });
 fs.mkdirSync(out, { recursive: true });
