@@ -93,3 +93,17 @@ window.czImage = (() => {
   };
   return fn;
 })();
+// Mniejsze zdjęcia z Pexels na telefonach (szybsze wczytywanie): szerokość dopasowana do ekranu
+(() => {
+  const fit = (u) => {
+    if (!u || !/images\.pexels\.com/.test(u)) return u;
+    const w = Math.min(1600, Math.ceil(Math.min(window.innerWidth, 720) * Math.min(window.devicePixelRatio || 1, 2) / 100) * 100);
+    return u.replace(/([?&])w=\d+/, "$1w=" + w);
+  };
+  const orig = window.czImage, origFor = orig.forGroup;
+  const wrap = (p) => p.then((im) => (im && im.src ? { ...im, src: fit(im.src) } : im));
+  const ci = (...a) => wrap(orig(...a));
+  Object.assign(ci, orig);
+  ci.forGroup = (...a) => wrap(origFor(...a));
+  window.czImage = ci;
+})();
