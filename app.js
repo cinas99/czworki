@@ -443,22 +443,30 @@
     else if (ios && !standalone) { box.hidden = false; btn.hidden = true; info.innerHTML = "🔔 Chcesz codzienne przypomnienie? Dodaj Czwórki do ekranu początkowego (Udostępnij → „Do ekranu początk.”)."; }
     else if (can) show();
     const b64 = (s) => { const p = "=".repeat((4 - (s.length % 4)) % 4), r = atob((s + p).replace(/-/g, "+").replace(/_/g, "/")); return Uint8Array.from(r, (c) => c.charCodeAt(0)); };
+    // Klucz pobieramy zawczasu, a przycisk zmienia się od razu (zapis na serwerze idzie w tle)
+    let keyP = null;
+    const getKey = () => (keyP = keyP || fetch("api/push/klucz").then((r) => r.json()).then((j) => j.key));
+    if (can && !inApp) setTimeout(getKey, 3000);
+    const busy = (t) => { btn.classList.add("busy"); btn.querySelector("b").textContent = t; };
     btn.onclick = async () => {
+      if (btn.classList.contains("busy")) return;
       try {
-        const reg = await navigator.serviceWorker.ready;
         if (on()) {
-          const sub = await reg.pushManager.getSubscription();
-          if (sub) { fetch("api/push/zapis", { method: "DELETE", headers: { "content-type": "application/json" }, body: JSON.stringify({ endpoint: sub.endpoint }) }); await sub.unsubscribe(); }
-          store.set("cz-push", false); track("push_off"); show(); return;
+          store.set("cz-push", false); track("push_off"); show(); info.textContent = "Przypomnienia wyłączone.";
+          const reg = await navigator.serviceWorker.ready, sub = await reg.pushManager.getSubscription();
+          if (sub) { fetch("api/push/zapis", { method: "DELETE", headers: { "content-type": "application/json" }, body: JSON.stringify({ endpoint: sub.endpoint }) }); sub.unsubscribe(); }
+          return;
         }
-        if ((await Notification.requestPermission()) !== "granted") { info.textContent = "Bez zgody na powiadomienia przypomnienie nie zadziała. Możesz ją włączyć w ustawieniach przeglądarki."; return; }
-        const { key } = await (await fetch("api/push/klucz")).json();
+        busy("Włączam przypomnienia…");
+        if ((await Notification.requestPermission()) !== "granted") { btn.classList.remove("busy"); show(); info.textContent = "Bez zgody na powiadomienia przypomnienie nie zadziała. Możesz ją włączyć w ustawieniach przeglądarki."; return; }
+        const [reg, key] = await Promise.all([navigator.serviceWorker.ready, getKey()]);
         const sub = (await reg.pushManager.getSubscription()) || (await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64(key) }));
-        const r = await fetch("api/push/zapis", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ endpoint: sub.endpoint }) });
-        if (!r.ok) throw new Error("zapis " + r.status);
-        store.set("cz-push", true); track("push_on"); show();
+        store.set("cz-push", true); btn.classList.remove("busy"); show();
         info.textContent = "Gotowe! Jutro o 8:00 dostaniesz powiadomienie o nowej zagadce.";
-      } catch (e) { info.textContent = "Nie udało się włączyć przypomnień w tej przeglądarce."; report("push: " + (e && e.message)); }
+        fetch("api/push/zapis", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ endpoint: sub.endpoint }) })
+          .then((r) => { if (!r.ok) throw new Error("zapis " + r.status); track("push_on"); })
+          .catch((e) => { store.set("cz-push", false); show(); info.textContent = "Nie udało się zapisać przypomnienia. Spróbuj ponownie."; report("push: " + e.message); });
+      } catch (e) { btn.classList.remove("busy"); show(); info.textContent = "Nie udało się włączyć przypomnień w tej przeglądarce."; report("push: " + (e && e.message)); }
     };
   })();
   if (/[?&]src=push/.test(location.search)) track("push_open");

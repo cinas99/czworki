@@ -284,3 +284,4 @@ body.finished #solved .row:not(.open){min-height:64px;padding:10px 14px}
 .remind button.on{border-style:solid;background:transparent}
 .remind p{margin:8px 0 0;font-size:13px;color:var(--muted);line-height:1.4}
 .remind p:empty{display:none}
+.remind button.busy{opacity:.7;cursor:progress}
