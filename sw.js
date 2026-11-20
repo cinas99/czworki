@@ -1,6 +1,6 @@
 // Czwórki: service worker. Pozwala zainstalować grę jako aplikację i otworzyć ją bez sieci
 // (wtedy z ostatnio pobranych plików). Zagadka i statystyki zawsze idą z sieci.
-const CACHE = "cz-v2";
+const CACHE = "cz-v3";
 const SHELL = ["/", "/style.css", "/app.js", "/images.js", "/archiwum.html", "/jak-grac.html", "/manifest.webmanifest", "/ikony/ikona-192.png"];
 self.addEventListener("install", (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).catch(() => {})); self.skipWaiting(); });
 self.addEventListener("activate", (e) => {
@@ -8,7 +8,7 @@ self.addEventListener("activate", (e) => {
 });
 // Codzienne przypomnienie (powiadomienie bez treści z serwera, tekst ustalamy tutaj)
 self.addEventListener("push", (e) => {
-  e.waitUntil(self.registration.showNotification("Czwórki 🧩", { body: "Nowa zagadka już czeka! Znajdziesz wszystkie 4 grupy?", icon: "/ikony/ikona-192.png", badge: "/ikony/ikona-192.png", tag: "cz-daily", renotify: true, data: { url: "/?src=push" } }));
+  e.waitUntil(self.registration.showNotification("Czwórki 🧩", { body: "Nowa zagadka już czeka! Znajdziesz wszystkie 4 grupy?", icon: "/ikony/ikona-192.png", badge: "/ikony/powiadomienie-96.png", tag: "cz-daily", renotify: true, data: { url: "/?src=push" } }));
 });
 self.addEventListener("notificationclick", (e) => {
   e.notification.close();
