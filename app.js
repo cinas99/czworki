@@ -128,10 +128,11 @@
   let stats = store.get("cz-stats", { played: 0, wins: 0, streak: 0, max: 0, lastWin: null });
 
   const allWords = groups.flatMap((g) => g.words);
-  if (state.order && (state.order.length !== allWords.length || !state.order.every((w) => allWords.includes(w)))) {
+  // Zagadka zmieniona w ciągu dnia: kto już skończył, zachowuje wynik; kto był w trakcie, zaczyna od nowa
+  if (!state.done && state.order && (state.order.length !== allWords.length || !state.order.every((w) => allWords.includes(w)))) {
     state = { date: today, solved: [], mistakes: 0, history: [], tried: [], done: false, won: false, order: null };
   }
-  if (!state.order) state.order = shuffle([...allWords]);
+  if (!state.order || state.done) state.order = state.order && state.order.every((w) => allWords.includes(w)) ? state.order : shuffle([...allWords]);
   if (today !== todayStr()) state.replay = true; // podgląd innego dnia nie liczy się do statystyk
   let selected = [];
 
