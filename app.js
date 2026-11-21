@@ -371,6 +371,13 @@
     if (typeof gtag === "function") gtag("event", won ? "win" : "loss", { puzzle: puzzleNo, mistakes: state.mistakes });
   }
 
+  // Znaczek serii u góry (odświeżany także po wygranej, żeby zgadzał się z kartą wyniku)
+  function renderStreakChip() {
+    if (isArchive) return;
+    const y = new Date(Date.parse(realToday + "T00:00:00Z") - 864e5).toISOString().slice(0, 10);
+    const live = stats.streak >= 2 && (stats.lastWin === y || stats.lastWin === realToday);
+    $("subtitle").innerHTML = `Zagadka #${puzzleNo} · ułóż 4 grupy po 4 słowa` + (live ? ` <span class="streak-chip" title="Tyle dni z rzędu rozwiązujesz Czwórki">🔥 ${stats.streak}</span>` : "");
+  }
   let justFinished = false;
   function showEnd() {
     // Ekran po grze: wynik i reklama na górze, rozwiązane grupy zwinięte poniżej (dotknięcie rozwija)
@@ -393,6 +400,7 @@
     $("end-title").textContent = state.won ? titles[Math.min(state.mistakes, 3)] : "Tym razem się nie udało";
     $("e-mist").textContent = state.mistakes;
     $("e-streak").textContent = stats.streak;
+    renderStreakChip();
     // Seria dni z rzędu: delikatnie, tylko gdy trwa co najmniej 2 dni
     $("e-streak").nextElementSibling.textContent = stats.streak >= 2 ? "dni z rzędu 🔥" : "seria";
     const sn = $("streak-note");
@@ -540,9 +548,7 @@
     };
     document.body.classList.add("is-archive");
   } else {
-    const y = new Date(Date.parse(realToday + "T00:00:00Z") - 864e5).toISOString().slice(0, 10);
-    const live = stats.streak >= 2 && (stats.lastWin === y || stats.lastWin === realToday);
-    $("subtitle").innerHTML = `Zagadka #${puzzleNo} · ułóż 4 grupy po 4 słowa` + (live ? ` <span class="streak-chip" title="Tyle dni z rzędu rozwiązujesz Czwórki">🔥 ${stats.streak}</span>` : "");
+    renderStreakChip();
   }
   $("btn-check").onclick = check;
   $("btn-clear").onclick = () => { selected = []; $("msg").textContent = ""; renderGrid(); };
