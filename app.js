@@ -407,7 +407,7 @@
     const prev = new Date(Date.parse(today + "T00:00:00Z") - 864e5).toISOString().slice(0, 10);
     if (prev >= startDate) {
       $("btn-prev").href = "./?dzien=" + prev;
-      $("btn-prev").querySelector("span").textContent = isArchive ? `Zagraj w poprzednią (#${puzzleNo - 1})` : "Zagraj we wczorajszą zagadkę";
+      $("btn-prev").querySelector("span").textContent = isArchive ? `Poprzednia (#${puzzleNo - 1})` : "Wczorajsza zagadka";
     } else $("btn-prev").hidden = true;
     if (isArchive) document.querySelector(".next").innerHTML = '<a href="./">Zagraj w dzisiejszą zagadkę →</a>';
     else tick();
@@ -443,9 +443,11 @@
     const on = () => store.get("cz-push", false) && Notification.permission === "granted";
     const show = () => {
       box.hidden = false;
-      if (on()) { btn.innerHTML = '<span aria-hidden="true">✅</span> <b>Przypomnienia włączone</b><small>codziennie o 8:00 · dotknij, by wyłączyć</small>'; btn.classList.add("on"); info.textContent = ""; return; }
-      btn.classList.remove("on");
-      btn.innerHTML = '<span aria-hidden="true">🔔</span> <b>Przypominaj mi o nowej zagadce</b><small>codziennie o 8:00 · bez konta</small>';
+      const o = on();
+      btn.classList.toggle("on", o); btn.setAttribute("aria-checked", String(o));
+      btn.querySelector("b").textContent = "Przypomnij mi o nowej zagadce";
+      btn.querySelector("small").textContent = o ? "włączone · codziennie o 8:00" : "codziennie o 8:00 · bez konta";
+      if (o) info.textContent = "";
     };
     if (inApp) { box.hidden = false; btn.hidden = true; info.innerHTML = "🔔 Chcesz codzienne przypomnienie? Otwórz <b>czworki.pl</b> w przeglądarce (⋮ → „Otwórz w przeglądarce”)."; }
     else if (ios && !standalone) { box.hidden = false; btn.hidden = true; info.innerHTML = "🔔 Chcesz codzienne przypomnienie? Dodaj Czwórki do ekranu początkowego (Udostępnij → „Do ekranu początk.”)."; }
@@ -455,7 +457,7 @@
     let keyP = null;
     const getKey = () => (keyP = keyP || fetch("api/push/klucz").then((r) => r.json()).then((j) => j.key));
     if (can && !inApp) setTimeout(() => getKey().catch(() => { keyP = null; }), 3000);
-    const busy = (t) => { btn.classList.add("busy"); btn.querySelector("b").textContent = t; };
+    const busy = (t) => { btn.classList.add("busy"); btn.querySelector("small").textContent = t; };
     btn.onclick = async () => {
       if (btn.classList.contains("busy")) return;
       try {
@@ -465,7 +467,7 @@
           if (sub) { fetch("api/push/zapis", { method: "DELETE", headers: { "content-type": "application/json" }, body: JSON.stringify({ endpoint: sub.endpoint }) }); sub.unsubscribe(); }
           return;
         }
-        busy("Włączam przypomnienia…");
+        busy("włączam…");
         if ((await Notification.requestPermission()) !== "granted") { btn.classList.remove("busy"); show(); info.textContent = "Bez zgody na powiadomienia przypomnienie nie zadziała. Możesz ją włączyć w ustawieniach przeglądarki."; return; }
         const [reg, key] = await Promise.all([navigator.serviceWorker.ready, getKey()]);
         const sub = (await reg.pushManager.getSubscription()) || (await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64(key) }));
