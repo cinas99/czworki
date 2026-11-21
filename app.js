@@ -471,6 +471,15 @@
     };
   })();
   if (/[?&]src=push/.test(location.search)) track("push_open");
+  // Zapasowy wyzwalacz codziennych przypomnień: pierwsza wizyta po 8:00 prosi serwer o wysyłkę
+  // (serwer wysyła każdemu najwyżej raz dziennie, więc kolejne prośby nic nie robią)
+  try {
+    const h = +new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Warsaw", hour: "2-digit", hourCycle: "h23" }).format(new Date());
+    if (h >= 8 && !isArchive && store.get("cz-push-kick", "") !== realToday) {
+      store.set("cz-push-kick", realToday);
+      setTimeout(() => navigator.sendBeacon && navigator.sendBeacon("api/push/wyslij"), 4000);
+    }
+  } catch {}
 
   const shareTrack = (k) => { track("share_" + k); if ($("with-score").checked) track("share_time"); };
   async function share() {
