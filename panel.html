@@ -311,7 +311,13 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
       <p style="font-size:12px;color:var(--muted);margin:8px 0 0">Gracze = urządzenia, na których gra była widoczna min. 2 s (od 19.11, bez botów). Wracający = byli też dzień wcześniej. Śr. czas liczy tylko wygrane.</p>`;
     fetch("panel/api/push-lista", { cache: "no-store" }).then((r) => r.json()).then((j) => {
       const el = $("push-list"); if (!el) return;
-      el.innerHTML = j.list.length ? '<table class="st"><thead><tr><th>#</th><th>Przeglądarka</th><th>Zapisane</th><th>Końcówka adresu</th></tr></thead><tbody>' + j.list.map((d) => `<tr><td>${d.id}</td><td>${esc(d.rodzaj)}</td><td>${new Date(d.od).toLocaleString("pl-PL", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</td><td><code>…${esc(d.koncowka)}</code></td></tr>`).join("") + "</tbody></table>" : "Brak zapisanych urządzeń.";
+      el.innerHTML = j.list.length ? '<table class="st"><thead><tr><th>#</th><th>Przeglądarka</th><th>Zapisane</th><th>Końcówka adresu</th><th></th></tr></thead><tbody>' + j.list.map((d) => `<tr><td>${d.id}</td><td>${esc(d.rodzaj)}</td><td>${new Date(d.od).toLocaleString("pl-PL", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</td><td><code>…${esc(d.koncowka)}</code></td><td><button class="btn sm" data-push-one="${d.id}">Wyślij test</button></td></tr>`).join("") + "</tbody></table>" : "Brak zapisanych urządzeń.";
+      el.querySelectorAll("[data-push-one]").forEach((b) => b.onclick = async () => {
+        b.disabled = true; b.textContent = "Wysyłam…";
+        try { const r = await (await fetch("panel/api/push-test", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: +b.dataset.pushOne }) })).json(); b.textContent = r.sent ? "Wysłano ✓" : "Nie dotarło do serwisu"; }
+        catch { b.textContent = "Błąd"; }
+        setTimeout(() => { b.disabled = false; b.textContent = "Wyślij test"; }, 4000);
+      });
     }).catch(() => {});
     const pt = $("push-test");
     if (pt) pt.onclick = async () => {
