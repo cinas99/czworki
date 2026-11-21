@@ -407,7 +407,7 @@
     const prev = new Date(Date.parse(today + "T00:00:00Z") - 864e5).toISOString().slice(0, 10);
     if (prev >= startDate) {
       $("btn-prev").href = "./?dzien=" + prev;
-      $("btn-prev").querySelector("span").textContent = isArchive ? `Poprzednia (#${puzzleNo - 1})` : "Wczorajsza zagadka";
+      $("btn-prev").querySelector("span").textContent = isArchive ? `Poprzednia #${puzzleNo - 1}` : "Wczorajsza";
     } else $("btn-prev").hidden = true;
     if (isArchive) document.querySelector(".next").innerHTML = '<a href="./">Zagraj w dzisiejszą zagadkę →</a>';
     else tick();
@@ -464,11 +464,11 @@
         if (on()) {
           store.set("cz-push", false); track("push_off"); show(); info.textContent = "Przypomnienia wyłączone.";
           const reg = await navigator.serviceWorker.ready, sub = await reg.pushManager.getSubscription();
-          if (sub) { fetch("api/push/zapis", { method: "DELETE", headers: { "content-type": "application/json" }, body: JSON.stringify({ endpoint: sub.endpoint }) }); sub.unsubscribe(); }
+          if (sub) fetch("api/push/zapis", { method: "DELETE", headers: { "content-type": "application/json" }, body: JSON.stringify({ endpoint: sub.endpoint }) });
           return;
         }
-        busy("włączam…");
-        if ((await Notification.requestPermission()) !== "granted") { btn.classList.remove("busy"); show(); info.textContent = "Bez zgody na powiadomienia przypomnienie nie zadziała. Możesz ją włączyć w ustawieniach przeglądarki."; return; }
+        info.textContent = ""; btn.classList.add("on"); busy("włączam…");
+        if (Notification.permission !== "granted" && (await Notification.requestPermission()) !== "granted") { btn.classList.remove("busy"); show(); info.textContent = "Bez zgody na powiadomienia przypomnienie nie zadziała. Możesz ją włączyć w ustawieniach przeglądarki."; return; }
         const [reg, key] = await Promise.all([navigator.serviceWorker.ready, getKey()]);
         const sub = (await reg.pushManager.getSubscription()) || (await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64(key) }));
         store.set("cz-push", true); btn.classList.remove("busy"); show();

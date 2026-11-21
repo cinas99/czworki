@@ -303,3 +303,9 @@ body.finished #solved .row:not(.open){min-height:64px;padding:10px 14px}
 .more-games .mg-btn,.more-games .mg-link{flex:1;padding:12px 14px;font-size:14px;border-radius:14px}
 .more-games .mg-link{font-weight:700}
 .end button.replay{display:block;margin:14px auto 0;border:none;border-radius:0;background:none;color:var(--muted);font:inherit;font-size:14px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px}
+
+/* Dwa przyciski w jednej linii i spokojny „Zagraj ponownie” */
+.more-games .mg-btn,.more-games .mg-link{white-space:nowrap;padding:13px 16px;font-size:15px}
+.end button.replay{margin:16px auto 0;padding:9px 18px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);font-size:14px;font-weight:600;text-decoration:none}
+.end button.replay:active{transform:scale(.97)}
+.more-games .mg-btn,.more-games .mg-link{min-width:0;flex:1 1 0}
