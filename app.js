@@ -236,7 +236,7 @@
     shownMistakes = state.mistakes;
   }
   function render() {
-    renderSolved(); renderGrid(); enterAnim = false; renderLives();
+    renderSolved(); renderGrid(); enterAnim = false; renderLives(); renderHint();
     if (!state.done) return;
     // Zaraz po wygranej: najpierw chwila na przeczytanie ostatniej kategorii (odsłonięcie 1,5 s + 1,5 s), potem ekran wyniku
     if (justFinished && !endTimer) { $("actions").hidden = true; $("lives").parentElement.hidden = true; endTimer = setTimeout(showEnd, 3000); }
@@ -308,6 +308,20 @@
     setTimeout(render, state.done ? 0 : 380);
     renderLives();
   }
+  // Podpowiedź po 2 pomyłkach: zdradza nazwę jednej nierozwiązanej grupy (raz na grę)
+  const easyFirst = (i) => (/___|…|\(/.test(groups[i].name) ? 1 : 0);
+  function renderHint() {
+    const used = Number.isInteger(state.hint);
+    $("btn-hint").hidden = state.done || used || state.mistakes < 2;
+    const line = $("hint-line");
+    line.hidden = state.done || !used || state.solved.includes(state.hint);
+    if (!line.hidden) line.innerHTML = `💡 Jedna z grup to: <b>${groups[state.hint].name}</b>`;
+  }
+  $("btn-hint").onclick = () => {
+    const left = [0, 1, 2, 3].filter((i) => !state.solved.includes(i)).sort((a, b) => easyFirst(a) - easyFirst(b));
+    if (!left.length) return;
+    state.hint = left[0]; save(); track("hint"); renderHint();
+  };
 
   // Ostatnia grupa jest oczywista: zaznaczamy ją sami z animacją
   let busy = false;

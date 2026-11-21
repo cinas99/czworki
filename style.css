@@ -309,3 +309,8 @@ body.finished #solved .row:not(.open){min-height:64px;padding:10px 14px}
 .end button.replay{margin:16px auto 0;padding:9px 18px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);font-size:14px;font-weight:600;text-decoration:none}
 .end button.replay:active{transform:scale(.97)}
 .more-games .mg-btn,.more-games .mg-link{min-width:0;flex:1 1 0}
+
+/* Podpowiedź */
+#btn-hint{background:var(--brand);color:var(--on-brand);border-color:transparent}
+.hint-line{margin:10px auto 0;max-width:440px;text-align:center;font-size:14px;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+@media (max-width:420px){.actions{flex-wrap:wrap;justify-content:center}}
