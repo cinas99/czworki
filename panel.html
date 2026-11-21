@@ -7,7 +7,7 @@
 <title>Panel – Czwórki</title>
 <script>try{if(localStorage.getItem("cz-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='9' fill='%23F6DF94'/><rect x='7' y='7' width='12' height='12' rx='3' fill='%23141413'/><rect x='21' y='7' width='12' height='12' rx='3' fill='%23141413'/><rect x='7' y='21' width='12' height='12' rx='3' fill='%23141413'/><rect x='21' y='21' width='12' height='12' rx='3' fill='%23fff'/></svg>">
-<link rel="stylesheet" href="style.css?v=57">
+<link rel="stylesheet" href="style.css?v=60">
 <style>
 .page{max-width:760px}
 .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 14px;font-size:14px}
@@ -307,7 +307,12 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     const list = Object.keys(days).sort().reverse();
     box.innerHTML = `<div style="overflow-x:auto;margin-top:8px"><table class="st"><thead><tr><th>Dzień</th><th>Gracze</th><th>Wracający</th><th>Zaczęli</th><th>Wygrali</th><th>Przegrali</th><th>Śr. czas</th><th>Poleceń</th><th>Z przypomn.</th><th>Archiwum</th></tr></thead><tbody>${list.map((day) => { const d = days[day]; return `<tr><td>${new Date(day + "T12:00:00Z").toLocaleDateString("pl-PL", { day: "numeric", month: "short" })}</td><td><b>${n(d, "visit")}</b></td><td>${pct(n(d, "visit_return"), n(d, "visit"))}</td><td>${n(d, "start")}</td><td>${n(d, "win")} <small>(${pct(n(d, "win"), n(d, "start"))})</small></td><td>${n(d, "loss")}</td><td>${mm(avg(d))}</td><td>${shares(d)}</td><td>${n(d, "push_open")}</td><td>${n(d, "archive_start")}</td></tr>`; }).join("")}</tbody></table></div>
       <p style="margin:10px 0 0;font-size:14px">🔔 Przypomnienia włączone: <b>${push}</b> ${push === 1 ? "urządzenie" : "urządzeń"} <button class="btn sm" id="push-test" style="margin-left:8px">Wyślij testowe przypomnienie</button> <span id="push-test-out" style="font-size:12px;color:var(--muted)"></span></p>
+      <details style="margin-top:6px;font-size:13px"><summary style="cursor:pointer;color:var(--muted)">Pokaż zapisane urządzenia</summary><div id="push-list" style="margin-top:6px">Wczytywanie…</div></details>
       <p style="font-size:12px;color:var(--muted);margin:8px 0 0">Gracze = urządzenia, na których gra była widoczna min. 2 s (od 19.11, bez botów). Wracający = byli też dzień wcześniej. Śr. czas liczy tylko wygrane.</p>`;
+    fetch("panel/api/push-lista", { cache: "no-store" }).then((r) => r.json()).then((j) => {
+      const el = $("push-list"); if (!el) return;
+      el.innerHTML = j.list.length ? '<table class="st"><thead><tr><th>#</th><th>Przeglądarka</th><th>Zapisane</th><th>Końcówka adresu</th></tr></thead><tbody>' + j.list.map((d) => `<tr><td>${d.id}</td><td>${esc(d.rodzaj)}</td><td>${new Date(d.od).toLocaleString("pl-PL", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</td><td><code>…${esc(d.koncowka)}</code></td></tr>`).join("") + "</tbody></table>" : "Brak zapisanych urządzeń.";
+    }).catch(() => {});
     const pt = $("push-test");
     if (pt) pt.onclick = async () => {
       if (!confirm("Wysłać testowe przypomnienie do wszystkich zapisanych urządzeń?")) return;

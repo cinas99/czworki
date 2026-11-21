@@ -285,3 +285,7 @@ body.finished #solved .row:not(.open){min-height:64px;padding:10px 14px}
 .remind p{margin:8px 0 0;font-size:13px;color:var(--muted);line-height:1.4}
 .remind p:empty{display:none}
 .remind button.busy{opacity:.7;cursor:progress}
+
+/* Seria dni z rzędu – dyskretnie */
+.streak-chip{display:inline-block;margin-left:4px;padding:1px 8px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:.9em;color:var(--fg);white-space:nowrap}
+.streak-note{margin:-2px 0 8px;text-align:center;font-size:13px;color:var(--muted)}

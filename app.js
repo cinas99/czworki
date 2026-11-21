@@ -393,6 +393,13 @@
     $("end-title").textContent = state.won ? titles[Math.min(state.mistakes, 3)] : "Tym razem się nie udało";
     $("e-mist").textContent = state.mistakes;
     $("e-streak").textContent = stats.streak;
+    // Seria dni z rzędu: delikatnie, tylko gdy trwa co najmniej 2 dni
+    $("e-streak").nextElementSibling.textContent = stats.streak >= 2 ? "dni z rzędu 🔥" : "seria";
+    const sn = $("streak-note");
+    if (sn) {
+      sn.hidden = isArchive || state.replay || !state.won || stats.streak < 1;
+      sn.textContent = stats.streak >= 2 ? `🔥 ${stats.streak} dni z rzędu. Wróć jutro, żeby nie przerwać serii.` : "Wróć jutro, a zaczniesz serię dni z rzędu 🔥";
+    }
     countUp($("e-time"), state.timeMs);
     if (state.replay) { $("with-score").checked = false; $("with-score").closest("label").hidden = true; }
     updateWa();
@@ -530,7 +537,11 @@
       location.reload();
     };
     document.body.classList.add("is-archive");
-  } else $("subtitle").textContent = `Zagadka #${puzzleNo} · ułóż 4 grupy po 4 słowa`;
+  } else {
+    const y = new Date(Date.parse(realToday + "T00:00:00Z") - 864e5).toISOString().slice(0, 10);
+    const live = stats.streak >= 2 && (stats.lastWin === y || stats.lastWin === realToday);
+    $("subtitle").innerHTML = `Zagadka #${puzzleNo} · ułóż 4 grupy po 4 słowa` + (live ? ` <span class="streak-chip" title="Tyle dni z rzędu rozwiązujesz Czwórki">🔥 ${stats.streak}</span>` : "");
+  }
   $("btn-check").onclick = check;
   $("btn-clear").onclick = () => { selected = []; $("msg").textContent = ""; renderGrid(); };
   $("btn-shuffle").onclick = () => {
