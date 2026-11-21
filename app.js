@@ -217,7 +217,17 @@
       b.onclick = () => toggle(w);
       grid.appendChild(b);
     });
+    fitWords();
   }
+  // Długie słowa (np. POMARAŃCZA) zmniejszamy tak, żeby mieściły się w jednej linii, zamiast łamać je w środku
+  function fitWords() {
+    document.querySelectorAll("#grid .tile").forEach((t) => {
+      t.style.fontSize = "";
+      let fs = parseFloat(getComputedStyle(t).fontSize);
+      while (t.scrollWidth > t.clientWidth && fs > 8) { fs -= 0.5; t.style.fontSize = fs + "px"; }
+    });
+  }
+  window.addEventListener("resize", () => requestAnimationFrame(fitWords));
   let shownMistakes = null;
   function renderLives() {
     const left = MAX_MISTAKES - state.mistakes, justLost = shownMistakes !== null && state.mistakes > shownMistakes;
