@@ -454,7 +454,7 @@
     // Klucz pobieramy zawczasu, a przycisk zmienia się od razu (zapis na serwerze idzie w tle)
     let keyP = null;
     const getKey = () => (keyP = keyP || fetch("api/push/klucz").then((r) => r.json()).then((j) => j.key));
-    if (can && !inApp) setTimeout(getKey, 3000);
+    if (can && !inApp) setTimeout(() => getKey().catch(() => { keyP = null; }), 3000);
     const busy = (t) => { btn.classList.add("busy"); btn.querySelector("b").textContent = t; };
     btn.onclick = async () => {
       if (btn.classList.contains("busy")) return;
