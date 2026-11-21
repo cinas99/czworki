@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /panel
+Disallow: /api/
+
+Sitemap: https://czworki.pl/sitemap.xml
