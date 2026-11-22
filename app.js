@@ -489,6 +489,15 @@
     let keyP = null;
     const getKey = () => (keyP = keyP || fetch("api/push/klucz").then((r) => r.json()).then((j) => j.key));
     if (can && !inApp) setTimeout(() => getKey().catch(() => { keyP = null; }), 3000);
+    // Samonaprawa: jeśli przypomnienia są włączone, przy każdej wizycie potwierdzamy zapis na serwerze
+    if (can && store.get("cz-push", false) && Notification.permission === "granted") setTimeout(async () => {
+      try {
+        const reg = await navigator.serviceWorker.ready;
+        let sub = await reg.pushManager.getSubscription();
+        if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64(await getKey()) });
+        fetch("api/push/zapis", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ endpoint: sub.endpoint }) });
+      } catch (e) { report("push-heal: " + (e && e.message)); }
+    }, 5000);
     const busy = (t) => { btn.classList.add("busy"); btn.querySelector("small").textContent = t; };
     btn.onclick = async () => {
       if (btn.classList.contains("busy")) return;

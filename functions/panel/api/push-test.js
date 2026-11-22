@@ -14,7 +14,7 @@ export async function onRequestPost({ request, env }) {
   await Promise.all(results.map(async (s) => {
     try {
       const r = await fetch(s.endpoint, { method: "POST", headers: { TTL: "600", Urgency: "high", Authorization: await vapidHeader(keys, s.endpoint), "Content-Length": "0" } });
-      if (r.status === 404 || r.status === 410) await env.DB.prepare("DELETE FROM push_subs WHERE id = ?1").bind(s.id).run();
+      if (r.status === 410) await env.DB.prepare("DELETE FROM push_subs WHERE id = ?1").bind(s.id).run();
       else if (r.ok) sent++;
     } catch {}
   }));

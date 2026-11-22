@@ -17,7 +17,7 @@ export async function onRequestPost({ env }) {
   await Promise.all(results.map(async (s) => {
     try {
       const r = await fetch(s.endpoint, { method: "POST", headers: { TTL: "43200", Urgency: "high", Topic: "nowa-zagadka", Authorization: await vapidHeader(keys, s.endpoint), "Content-Length": "0" } });
-      if (r.status === 404 || r.status === 410) { await env.DB.prepare("DELETE FROM push_subs WHERE id = ?1").bind(s.id).run(); removed++; }
+      if (r.status === 410) { await env.DB.prepare("DELETE FROM push_subs WHERE id = ?1").bind(s.id).run(); removed++; }
       else if (r.ok) sent++;
     } catch {}
   }));
