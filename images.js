@@ -44,12 +44,12 @@ window.czImage = (() => {
 
   // ---- Wyszukiwarka zdjęć (panel) ----
   // Pexels: profesjonalne zdjęcia, wymaga darmowego klucza API (pexels.com/api)
-  fn.pexels = async function (q, key, n = 15) {
+  fn.pexels = async function (q, key, n = 15, lang = "pl") {
     if (!key) return { items: [], error: "brak klucza Pexels" };
     try {
       const r = key === "server"
-        ? await fetch(`panel/api/pexels?n=${n}&q=` + encodeURIComponent(q), { cache: "no-store" })
-        : await fetch(`https://api.pexels.com/v1/search?locale=pl-PL&orientation=landscape&per_page=${n}&query=` + encodeURIComponent(q), { headers: { Authorization: key } });
+        ? await fetch(`panel/api/pexels?lang=${lang}&n=${n}&q=` + encodeURIComponent(q), { cache: "no-store" })
+        : await fetch(`https://api.pexels.com/v1/search?locale=${lang === "en" ? "en-US" : "pl-PL"}&orientation=landscape&per_page=${n}&query=` + encodeURIComponent(q), { headers: { Authorization: key } });
       if (r.status === 401 || r.status === 403) return { items: [], error: "nieprawidłowy klucz Pexels" };
       if (r.status === 429) return { items: [], error: "limit zapytań Pexels wyczerpany, spróbuj za godzinę" };
       const j = await r.json();
@@ -87,8 +87,8 @@ window.czImage = (() => {
     } catch {}
     return { items };
   };
-  fn.search = async function (q, key) {
-    const [a, b, c] = await Promise.all([fn.pexels(q, key), fn.openverse(q), fn.wikiSearch(q)]);
+  fn.search = async function (q, key, lang = "pl") {
+    const [a, b, c] = await Promise.all([fn.pexels(q, key, 15, lang), fn.openverse(q), fn.wikiSearch(q)]);
     return { items: [...a.items, ...b.items, ...c.items], errors: [a.error, b.error].filter(Boolean) };
   };
   return fn;

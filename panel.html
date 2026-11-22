@@ -110,7 +110,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
 
 <div class="toast" id="toast" hidden></div>
 
-<script src="images.js?v=34"></script>
+<script src="images.js?v=35"></script>
 <script>
 (async () => {
   const REPO = "cinas99/czworki", BRANCH = "main";
@@ -211,7 +211,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     let list = filter === "past" ? all.filter((d) => d < today).reverse() : filter === "warn" ? warnDays : future;
     app.innerHTML = `
       ${server ? `<div class="box"><span class="ok">● Zalogowano: ${esc(server.email || "")}</span> · zapis do repo ${server.github ? "włączony" : '<b class="warn">wyłączony (brak GITHUB_TOKEN)</b>'} · Pexels ${server.pexels ? "włączony" : '<b class="warn">wyłączony (brak PEXELS_KEY)</b>'}
-        ${server.pexels ? `<div style="margin-top:8px"><button class="btn dark sm" id="px-bulk">Dobierz zdjęcia z Pexels dla wszystkich dni od dziś</button><div id="px-prog" style="font-size:12px;color:var(--muted);margin-top:6px">Podmienia zdjęcia z Wikipedii na pierwsze trafienie z Pexels. Grup z wybranym już zdjęciem z Pexels albo własnym adresem nie rusza.</div></div>` : ""}</div>
+        ${server.pexels ? `<div style="margin-top:8px"><button class="btn dark sm" id="px-bulk">Dobierz zdjęcia z Pexels dla wszystkich dni od dziś</button> <button class="btn dark sm" id="px-en">Lepsze zdjęcia: szukaj po angielsku (od 25.11)</button><div id="px-prog" style="font-size:12px;color:var(--muted);margin-top:6px">Podmienia zdjęcia z Wikipedii na pierwsze trafienie z Pexels. Grup z wybranym już zdjęciem z Pexels albo własnym adresem nie rusza.</div></div>` : ""}</div>
       <div class="box" id="stats-box"><b>Statystyki graczy</b> <span style="color:var(--muted);font-size:12px">(anonimowe, ostatnie 14 dni)</span><div id="stats">${server.stats ? "Wczytywanie…" : '<span class="warn">Włącz bazę D1 (powiązanie DB) w Cloudflare, żeby zbierać statystyki.</span>'}</div></div>` : `<div class="box">${token
         ? `<span class="ok">● Połączono z GitHubem</span>: zmiany zapisują się od razu w repo i są na stronie po ok. minucie. <button class="btn sm" id="gh-out">Rozłącz</button>`
         : `<b>Połącz z GitHubem, żeby zapisywać zmiany.</b> Bez tego panel działa tylko do podglądu.
@@ -269,6 +269,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     };
     if ($("px-out")) $("px-out").onclick = () => { try { localStorage.removeItem("cz-pexels-key"); } catch {} pexKey = ""; render(); };
     if ($("px-bulk")) $("px-bulk").onclick = bulkPexels;
+    if ($("px-en")) $("px-en").onclick = bulkEnglish;
     if ($("gh-out")) $("gh-out").onclick = () => { try { localStorage.removeItem("cz-gh-token"); } catch {} token = ""; render(); };
     app.querySelectorAll(".gc").forEach((el) => {
       const row = Z.rows[+el.dataset.i];
@@ -355,7 +356,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     $("ed-title").textContent = `Edytuj grupę · ${fmt(row.data)}`;
     $("ed-kat").value = row.kategoria; words(row).forEach((w, i) => ($("ed-w" + (i + 1)).value = w));
     $("ed-ex").value = row.wyjasnienie || ""; $("ed-img").value = row.zdjecie || ""; $("ed-credit").value = row.zdjecie_podpis || ""; focus = row.zdjecie_kadr || "";
-    $("ed-q").value = row.kategoria.replace(/[_.…()/]/g, " ").replace(/\s+/g, " ").trim();
+    $("ed-q").value = (row.szukaj_en || "").trim() || row.kategoria.replace(/[_.…()/]/g, " ").replace(/\s+/g, " ").trim();
     $("ed-res").innerHTML = ""; $("ed-err").textContent = "";
     preview();
     $("dlg-edit").showModal();
@@ -364,7 +365,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
   async function doSearch() {
     const qv = $("ed-q").value.trim(); if (!qv) return;
     $("ed-res").innerHTML = "<small>Szukam…</small>";
-    const { items, errors } = await window.czImage.search(qv, pexKey);
+    const { items, errors } = await window.czImage.search(qv, pexKey, /[ąćęłńóśźż]/i.test(qv) || qv === (editing && editing.kategoria) ? "pl" : "en");
     $("ed-res").innerHTML = "";
     const note = [];
     if (!pexKey) note.push("Podłącz Pexels (u góry panelu), żeby widzieć profesjonalne zdjęcia.");
@@ -423,6 +424,29 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
       zSha = await save("zagadki.csv", toCSV(Z.head, Z.rows), zSha, `Panel: ${ok} zdjęć z Pexels`);
       render(); toast(`Podmieniono ${ok} zdjęć${miss.length ? ", bez wyniku: " + miss.length : ""}. Przejrzyj je poniżej.`, 5000);
     } catch (e) { backup.forEach((b) => { b.r.zdjecie = b.z; b.r.zdjecie_podpis = b.c; }); prog.textContent = e.message; }
+  }
+
+  // Zdjęcia po angielsku: dla grup z gotową angielską frazą (kolumna szukaj_en) od 25.11; podmienia też zdjęcia z Pexels
+  async function bulkEnglish() {
+    const from = today > "2026-11-25" ? today : "2026-11-25";
+    const todo = Z.rows.filter((r) => r.data >= from && (r.szukaj_en || "").trim());
+    if (!todo.length) return toast("Brak grup z angielską frazą");
+    if (!confirm(`Podmienić zdjęcia dla ${todo.length} grup (od ${from}) na wyniki wyszukiwania po angielsku? Grupy z dzisiaj i 2 kolejnych dni zostają bez zmian.`)) return;
+    const prog = $("px-prog"), backup = todo.map((r) => ({ r, z: r.zdjecie, c: r.zdjecie_podpis, k: r.zdjecie_kadr }));
+    let ok = 0, miss = [];
+    for (let i = 0; i < todo.length; i++) {
+      const r = todo[i], q = r.szukaj_en.trim();
+      prog.textContent = `Szukam ${i + 1}/${todo.length}: ${r.kategoria} („${q}”)…`;
+      const res = await window.czImage.pexels(q, pexKey, 1, "en");
+      if (res.error && /limit|klucz|429/.test(res.error)) { prog.textContent = "Przerwano (limit Pexels – spróbuj za godzinę): " + res.error; break; }
+      if (res.items[0]) { r.zdjecie = res.items[0].value; r.zdjecie_podpis = res.items[0].credit; r.zdjecie_kadr = ""; ok++; } else miss.push(r.kategoria);
+    }
+    if (!ok) { prog.textContent = "Nie znaleziono żadnych zdjęć."; return; }
+    prog.textContent = `Zapisuję ${ok} zdjęć…`;
+    try {
+      zSha = await save("zagadki.csv", toCSV(Z.head, Z.rows), zSha, `Panel: ${ok} zdjęć z Pexels (po angielsku)`);
+      render(); toast(`Podmieniono ${ok} zdjęć${miss.length ? ", bez wyniku: " + miss.length : ""}. Przejrzyj je poniżej.`, 5000);
+    } catch (e) { backup.forEach((b) => { b.r.zdjecie = b.z; b.r.zdjecie_podpis = b.c; b.r.zdjecie_kadr = b.k; }); prog.textContent = e.message; }
   }
 
   // ---- Wymiana z rezerwy ----
