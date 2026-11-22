@@ -422,6 +422,8 @@
     $("end").hidden = false;
     const titles = ["Perfekcyjnie!", "Świetnie!", "Dobra robota!", "Uff, udało się!"];
     $("end-title").textContent = state.won ? titles[Math.min(state.mistakes, 3)] : "Tym razem się nie udało";
+    $("ch-title").textContent = state.won ? "Rzuć wyzwanie znajomym" : "Sprawdź, czy znajomi dadzą radę";
+    $("ch-sub").textContent = state.won ? `Twój czas ${fmtTime(state.timeMs)} – ciekawe, czy go pobiją` : "wyślij im dzisiejszą zagadkę";
     $("e-mist").textContent = state.mistakes;
     $("e-streak").textContent = stats.streak;
     renderStreakChip();
@@ -456,7 +458,7 @@
     if (!state.won) return `Czwórki #${puzzleNo}${tag} – tym razem mnie pokonały 🙈 Spróbuj Ty!\n${gameUrl()}`;
     const m = state.mistakes || 0;
     const how = ["bez ani jednej pomyłki! 🏆", "prawie idealnie! 💪", "z dwiema pomyłkami 😅", "na ostatnim sercu! 😅"][Math.min(m, 3)];
-    return `Czwórki #${puzzleNo}${tag} – ${how} ${fmtTime(state.timeMs)}\n${gameUrl()}`;
+    return `Czwórki #${puzzleNo}${tag} – ${how} ${fmtTime(state.timeMs)}\nPobijesz mój czas? 😉\n${gameUrl()}`;
   }
   function updateWa() {
     const t = encodeURIComponent(shareText()), u = encodeURIComponent(gameUrl());
@@ -591,6 +593,7 @@
     setTimeout(() => { $("grid").classList.remove("shuffling"); state.order = shuffle(state.order); save(); enterAnim = true; renderGrid(); enterAnim = false; }, 180);
   };
   $("btn-share").onclick = share;
+  $("btn-challenge").onclick = () => { if (state.replay) $("with-score").checked = false; shareTrack("challenge"); share(); };
   $("with-score").onchange = updateWa;
   $("btn-reset").onclick = () => {
     track("replay");

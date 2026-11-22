@@ -2,7 +2,7 @@
 // Wymaga powiązania bazy D1 o nazwie DB; bez niej po prostu nic nie zapisuje.
 import { warsawToday, json } from "../_lib/util.js";
 
-const ALLOWED = /^(visit|visit_return|start|win|loss|replay|archive_start|archive_win|share_(link|wa|ms|fb|sms|x|copy|native)|share_time|push_on|push_off|push_open|hint)$/;
+const ALLOWED = /^(visit|visit_return|start|win|loss|replay|archive_start|archive_win|share_(link|wa|ms|fb|sms|x|copy|native|challenge)|share_time|push_on|push_off|push_open|hint)$/;
 const SCHEMA = "CREATE TABLE IF NOT EXISTS stats (day TEXT NOT NULL, event TEXT NOT NULL, count INTEGER NOT NULL DEFAULT 0, sum_ms INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (day, event))";
 
 export async function onRequestPost({ request, env }) {
