@@ -96,6 +96,7 @@
       const last = localStorage.getItem("cz-visit");
       track("visit");
       if (last && last >= yesterday) track("visit_return");
+      if (new URLSearchParams(location.search).has("z")) track("visit_ref");
       localStorage.setItem("cz-visit", realToday);
     } catch {}
   };
@@ -447,7 +448,7 @@
     else tick();
   }
 
-  const gameUrl = () => `https://${SITE}${location.pathname.replace(/index\.html$/, "")}${isArchive ? "?dzien=" + today : ""}`;
+  const gameUrl = () => `https://${SITE}${location.pathname.replace(/index\.html$/, "")}${isArchive ? "?dzien=" + today + "&z=1" : "?z=1"}`;
   function fmtTime(ms) {
     const t = Math.max(0, Math.round((ms || 0) / 1000)), m = Math.floor(t / 60), sec = t % 60;
     return m >= 60 ? `${Math.floor(m / 60)}:${String(m % 60).padStart(2, "0")}:${String(sec).padStart(2, "0")}` : `${m}:${String(sec).padStart(2, "0")}`;
