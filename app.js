@@ -422,7 +422,7 @@
     $("end").hidden = false;
     const titles = ["Perfekcyjnie!", "Świetnie!", "Dobra robota!", "Uff, udało się!"];
     $("end-title").textContent = state.won ? titles[Math.min(state.mistakes, 3)] : "Tym razem się nie udało";
-    $("ch-title").textContent = state.won ? "Rzuć wyzwanie znajomym" : "Sprawdź, czy znajomi dadzą radę";
+    $("ch-title").textContent = state.won ? "📲 Rzuć wyzwanie znajomym" : "📲 Sprawdź, czy znajomi dadzą radę";
     $("ch-sub").textContent = state.won ? `Twój czas ${fmtTime(state.timeMs)} – ciekawe, czy go pobiją` : "wyślij im dzisiejszą zagadkę";
     $("e-mist").textContent = state.mistakes;
     $("e-streak").textContent = stats.streak;
