@@ -96,7 +96,9 @@
       const last = localStorage.getItem("cz-visit");
       track("visit");
       if (last && last >= yesterday) track("visit_return");
-      if (new URLSearchParams(location.search).has("z")) track("visit_ref");
+      const z = new URLSearchParams(location.search).get("z");
+      if (z === "1") track("visit_ref");
+      else if (/^(fb|ig|tt|yt)$/.test(z || "")) track("visit_src_" + z);
       localStorage.setItem("cz-visit", realToday);
     } catch {}
   };
