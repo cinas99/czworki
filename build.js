@@ -32,8 +32,21 @@ fs.mkdirSync(path.join(__dirname, "functions/_generated"), { recursive: true });
 fs.writeFileSync(path.join(__dirname, "functions/_generated/puzzles.js"), "export default " + JSON.stringify(rows) + ";\n");
 // Bazy marketingowe (posty, rolki) – tylko dla panelu
 const mk = (f) => fs.existsSync(f) ? parseCSV(fs.readFileSync(f, "utf8")) : [];
+// Podgląd grafik postów i rolek w panelu: pliki pod nieodgadywalną nazwą (hash treści), mapa data → adres
+const crypto = require("crypto");
+const media = { posty: {}, rolki: {} };
+if (fs.existsSync("marketing/media")) {
+  fs.mkdirSync(path.join(out, "m"), { recursive: true });
+  for (const f of fs.readdirSync("marketing/media")) {
+    const buf = fs.readFileSync(path.join("marketing/media", f));
+    const h = crypto.createHash("sha256").update(buf).digest("hex").slice(0, 20);
+    const ext = path.extname(f); fs.writeFileSync(path.join(out, "m", h + ext), buf);
+    let m = f.match(/^czworki-post-(\d\d)-(\d\d)\.png$/); if (m) media.posty[`${+m[2] >= 11 ? 2026 : 2027}-${m[2]}-${m[1]}`] = `m/${h}${ext}`;
+    m = f.match(/^rolka-(\d\d)-(\d\d)-\d+\.mp4$/); if (m) media.rolki[`${+m[1] >= 11 ? 2026 : 2027}-${m[1]}-${m[2]}`] = `m/${h}${ext}`;
+  }
+}
 const kanaly = fs.existsSync("marketing/kanaly.json") ? JSON.parse(fs.readFileSync("marketing/kanaly.json", "utf8")) : { gry: [] };
-fs.writeFileSync(path.join(__dirname, "functions/_generated/marketing.js"), "export default " + JSON.stringify({ posty: mk("marketing/posty-baza.csv"), rolki: mk("marketing/rolki-baza.csv"), kanaly }) + ";\n");
+fs.writeFileSync(path.join(__dirname, "functions/_generated/marketing.js"), "export default " + JSON.stringify({ posty: mk("marketing/posty-baza.csv"), rolki: mk("marketing/rolki-baza.csv"), kanaly, media }) + ";\n");
 // Informacja o wdrożeniu (Cloudflare podaje commit w zmiennych środowiskowych)
 fs.writeFileSync(path.join(__dirname, "functions/_generated/build.js"), "export default " + JSON.stringify({ commit: (process.env.CF_PAGES_COMMIT_SHA || "lokalnie").slice(0, 7), at: new Date().toISOString() }) + ";\n");
 console.log(`Zbudowano: ${SITE.length} plików strony, ${rows.length / 4} dni zagadek`);

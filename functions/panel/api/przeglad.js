@@ -27,7 +27,7 @@ export async function onRequestGet({ request, env }) {
     for (const [nm, x] of [["post", post], ["rolka", rolka]]) { const hit = words(x).filter((w) => gw.has(w)); if (hit.length) warn.push(`${nm}: słowo ${hit.join(", ")} jest też w grze`); }
     const kinds = gra.map((g) => kind(g.kategoria));
     for (const k of ["luka", "jak"]) if (kinds.filter((x) => x === k).length > 1) warn.push(k === "luka" ? "gra: kilka grup „___ słowo”" : "gra: kilka porównań „jak…”");
-    out.push({ d, gra: gra.map((g) => ({ kolor: g.kolor, kategoria: g.kategoria, slowa: words(g), zdjecie: !!g.zdjecie })), post, prev: prev ? { odpowiedz: prev.odpowiedz, slowa: words(prev) } : null, rolka, warn, done: done[d] || null });
+    out.push({ d, media: { post: MK.media?.posty?.[d] || null, rolka: MK.media?.rolki?.[d] || null }, gra: gra.map((g) => ({ kolor: g.kolor, kategoria: g.kategoria, slowa: words(g), zdjecie: !!g.zdjecie })), post, prev: prev ? { odpowiedz: prev.odpowiedz, slowa: words(prev) } : null, rolka, warn, done: done[d] || null });
   }
   // Tabela zapasu: gra/kraj × kanał × 30 dni (1 = jest treść, 0 = brak); bazy na razie tylko dla Czwórek PL
   const dni = Array.from({ length: 30 }, (_, i) => add(today, i));
