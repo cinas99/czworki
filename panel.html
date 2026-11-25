@@ -242,7 +242,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
       </div>
       <div id="days">${list.map((d) => {
         const g = m.get(d).slice().sort((a, b) => (LV[a.kolor] ?? 0) - (LV[b.kolor] ?? 0)), pr = problems(g);
-        return `<section class="day${d === today ? " today" : ""}">
+        return `<section class="day${d === today ? " today" : ""}" id="d-${d}">
           <div class="day-h"><div><h2>#${all.indexOf(d) + 1} · ${fmt(d)}${d === today ? " · dziś" : ""}</h2>${pr.length ? `<small class="warn">⚠ ${esc(pr.join("; "))}</small>` : ""}</div>
           <a href="./?admin&dzien=${d}">Zagraj →</a></div>
           <div class="gs">${g.map((x) => { const i = Z.rows.indexOf(x); return `<div class="gc c${LV[x.kolor] ?? 0}" data-i="${i}">
@@ -253,6 +253,8 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
       }).join("") || "<p>Brak dni do pokazania.</p>"}</div>`;
 
     if (server && server.stats) loadStats();
+    const hd = (location.hash || "").slice(1);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(hd) && !render.jumped) { render.jumped = true; const el = document.getElementById("d-" + hd); if (el) { el.scrollIntoView({ behavior: "smooth", block: "start" }); el.style.outline = "3px solid #e0b100"; setTimeout(() => (el.style.outline = ""), 2500); } }
     app.querySelectorAll(".bar button").forEach((b) => (b.onclick = () => { filter = b.dataset.f; render(); }));
     if ($("gh-in")) $("gh-in").onclick = async () => {
       const t = $("gh-token").value.trim(); if (!t) return toast("Wklej token");
