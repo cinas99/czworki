@@ -32,7 +32,8 @@ fs.mkdirSync(path.join(__dirname, "functions/_generated"), { recursive: true });
 fs.writeFileSync(path.join(__dirname, "functions/_generated/puzzles.js"), "export default " + JSON.stringify(rows) + ";\n");
 // Bazy marketingowe (posty, rolki) – tylko dla panelu
 const mk = (f) => fs.existsSync(f) ? parseCSV(fs.readFileSync(f, "utf8")) : [];
-fs.writeFileSync(path.join(__dirname, "functions/_generated/marketing.js"), "export default " + JSON.stringify({ posty: mk("marketing/posty-baza.csv"), rolki: mk("marketing/rolki-baza.csv") }) + ";\n");
+const kanaly = fs.existsSync("marketing/kanaly.json") ? JSON.parse(fs.readFileSync("marketing/kanaly.json", "utf8")) : { gry: [] };
+fs.writeFileSync(path.join(__dirname, "functions/_generated/marketing.js"), "export default " + JSON.stringify({ posty: mk("marketing/posty-baza.csv"), rolki: mk("marketing/rolki-baza.csv"), kanaly }) + ";\n");
 // Informacja o wdrożeniu (Cloudflare podaje commit w zmiennych środowiskowych)
 fs.writeFileSync(path.join(__dirname, "functions/_generated/build.js"), "export default " + JSON.stringify({ commit: (process.env.CF_PAGES_COMMIT_SHA || "lokalnie").slice(0, 7), at: new Date().toISOString() }) + ";\n");
 console.log(`Zbudowano: ${SITE.length} plików strony, ${rows.length / 4} dni zagadek`);

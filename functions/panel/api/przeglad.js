@@ -29,10 +29,14 @@ export async function onRequestGet({ request, env }) {
     for (const k of ["luka", "jak"]) if (kinds.filter((x) => x === k).length > 1) warn.push(k === "luka" ? "gra: kilka grup „___ słowo”" : "gra: kilka porównań „jak…”");
     out.push({ d, gra: gra.map((g) => ({ kolor: g.kolor, kategoria: g.kategoria, slowa: words(g), zdjecie: !!g.zdjecie })), post, prev: prev ? { odpowiedz: prev.odpowiedz, slowa: words(prev) } : null, rolka, warn, done: done[d] || null });
   }
+  // Tabela zapasu: gra/kraj × kanał × 30 dni (1 = jest treść, 0 = brak); bazy na razie tylko dla Czwórek PL
+  const dni = Array.from({ length: 30 }, (_, i) => add(today, i));
+  const has = { gra: (d) => rowsFor(d).length === 4, posty: (d) => MK.posty.some((p) => p.data === d), rolki: (d) => d < ROLKI_START ? null : MK.rolki.some((r) => +r.nr === diff(ROLKI_START, d) + 1) };
+  const pokrycie = { dni, sprawdzone: dni.map((d) => !!done[d]), gry: (MK.kanaly?.gry || []).map((g) => ({ ...g, kanaly: (g.kanaly || []).map((k) => ({ ...k, dni: dni.map((d) => { const v = has[k.baza] ? has[k.baza](d) : false; return v === null ? null : v ? 1 : 0; }) })) })) };
   const last = (arr) => arr.length ? arr[arr.length - 1] : null;
   const lastPost = last(MK.posty.map((p) => p.data).sort());
   const lastRolka = MK.rolki.length ? add(ROLKI_START, Math.max(...MK.rolki.map((r) => +r.nr)) - 1) : null;
-  return json({ today, days: out, zapas: { gra: last(DATES), posty: lastPost, rolki: lastRolka } });
+  return json({ today, days: out, pokrycie, zapas: { gra: last(DATES), posty: lastPost, rolki: lastRolka } });
 }
 export async function onRequestPost({ request, env }) {
   const { d, ok } = await request.json().catch(() => ({}));

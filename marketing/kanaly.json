@@ -1,0 +1,17 @@
+{
+  "_opis": "Gry i kraje w tabeli zapasu. Każda gra/kraj: bazy treści i kanały, które z nich korzystają. status: aktywna | wkrótce",
+  "gry": [
+    { "id": "czworki-pl", "gra": "Czwórki", "kraj": "PL", "status": "aktywna",
+      "kanaly": [
+        { "id": "gra", "nazwa": "Gra (zagadka dnia)", "baza": "gra" },
+        { "id": "fb-post", "nazwa": "FB · post 7:30", "baza": "posty" },
+        { "id": "ig-post", "nazwa": "Insta · post 7:30", "baza": "posty" },
+        { "id": "fb-rolka", "nazwa": "FB · rolka 19:00", "baza": "rolki" },
+        { "id": "ig-rolka", "nazwa": "Insta · rolka 19:00", "baza": "rolki" },
+        { "id": "tt-rolka", "nazwa": "TikTok · rolka", "baza": "rolki" },
+        { "id": "yt-rolka", "nazwa": "YouTube · Shorts", "baza": "rolki" }
+      ] },
+    { "id": "pokolei-pl", "gra": "Po kolei", "kraj": "PL", "status": "wkrótce", "kanaly": [] },
+    { "id": "kontury-pl", "gra": "Kontury", "kraj": "PL", "status": "wkrótce", "kanaly": [] }
+  ]
+}

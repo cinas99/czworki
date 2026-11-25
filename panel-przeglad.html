@@ -38,6 +38,21 @@ summary{cursor:pointer;color:var(--muted)}
 .btn.dark{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media (max-width:520px){.two{grid-template-columns:1fr}}
+.zap{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;margin:0 0 16px}
+.zap h2{font-size:16px;margin:0 0 4px}.zap p{font-size:12px;color:var(--muted);margin:0 0 8px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}.chips button{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:4px 11px;font-size:12px;cursor:pointer}.chips button.on{background:var(--fg);color:var(--bg)}
+.mx{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mx table{border-collapse:separate;border-spacing:2px;font-size:11px}
+.mx th,.mx td{padding:0;text-align:center}
+.mx .nm{position:sticky;left:0;background:var(--card);text-align:left;padding:0 8px 0 0;white-space:nowrap;font-size:12px;z-index:1}
+.mx .gh td.nm{font-weight:800;font-size:13px;padding-top:8px}
+.mx th.d{width:22px;font-weight:600;color:var(--muted);line-height:1.1}
+.mx th.d.we{color:#b23b3b}
+.mx td.c{width:22px;height:22px;border-radius:5px}
+.c1{background:#5fb865}.c0{background:#e06666}.cn{background:var(--line)}
+.c1.rv{background:#2f7d32;color:#fff;font-weight:800}
+.cw{background:var(--line);opacity:.5}
+.lg{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:8px}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px}
 </style>
 </head>
 <body>
@@ -53,6 +68,24 @@ const fmt = (d) => new Date(d + "T12:00:00").toLocaleDateString("pl-PL", { weekd
 const short = (d) => d ? new Date(d + "T12:00:00").toLocaleDateString("pl-PL", { day: "numeric", month: "numeric" }) : "–";
 const dleft = (d, t) => d ? Math.round((Date.parse(d) - Date.parse(t)) / 864e5) : -1;
 let DATA;
+let KRAJ = null;
+function matrix() {
+  const P = DATA.pokrycie; if (!P) return "";
+  const kraje = [...new Set(P.gry.map((g) => g.kraj))]; if (!KRAJ || !kraje.includes(KRAJ)) KRAJ = kraje[0];
+  const head = P.dni.map((d) => { const dt = new Date(d + "T12:00:00"), we = [0, 6].includes(dt.getDay()); return `<th class="d${we ? " we" : ""}">${["nd","pn","wt","śr","cz","pt","sb"][dt.getDay()]}<br>${dt.getDate()}</th>`; }).join("");
+  const rows = P.gry.filter((g) => g.kraj === KRAJ).map((g) => {
+    const gh = `<tr class="gh"><td class="nm">${esc(g.gra)}${g.status !== "aktywna" ? ' <span style="font-weight:500;color:var(--muted)">· wkrótce</span>' : ""}</td>${P.dni.map(() => "<td></td>").join("")}</tr>`;
+    if (!g.kanaly.length) return gh + `<tr><td class="nm" style="color:var(--muted)">—</td>${P.dni.map(() => '<td class="c cw"></td>').join("")}</tr>`;
+    return gh + g.kanaly.map((k) => `<tr><td class="nm">${esc(k.nazwa)}</td>${k.dni.map((v, i) => `<td class="c ${v === null ? "cn" : v ? "c1" : "c0"}${v && P.sprawdzone[i] ? " rv" : ""}" title="${P.dni[i]}">${v && P.sprawdzone[i] ? "✓" : ""}</td>`).join("")}</tr>`).join("");
+  }).join("");
+  const miss = P.gry.filter((g) => g.kraj === KRAJ).flatMap((g) => g.kanaly.map((k) => { const i = k.dni.findIndex((v) => v === 0); return i >= 0 ? `${g.gra}: ${k.nazwa} – brak od ${short(P.dni[i])}` : null; })).filter(Boolean);
+  return `<div class="zap"><h2>Zapas treści – 30 dni</h2><p>${miss.length ? `<span style="color:#b23b3b;font-weight:700">⚠ ${esc(miss.slice(0, 3).join(" · "))}${miss.length > 3 ? " …" : ""}</span>` : "Wszystkie kanały mają treści na 30 dni ✓"}</p>
+    ${kraje.length > 1 ? `<div class="chips">${kraje.map((k) => `<button data-kraj="${k}" class="${k === KRAJ ? "on" : ""}">${k}</button>`).join("")}</div>` : ""}
+    <div class="mx"><table><tr><th class="nm">Kraj: ${esc(KRAJ)}</th>${head}</tr>${rows}</table></div>
+    <div class="lg"><span><i class="c1"></i>jest treść</span><span><i class="c1 rv" style="background:#2f7d32"></i>sprawdzone</span><span><i class="c0"></i>brak – dopisać</span><span><i class="cn"></i>nie dotyczy</span></div></div>`;
+}
+document.addEventListener("click", (e) => { const b = e.target.closest("button[data-kraj]"); if (b) { KRAJ = b.dataset.kraj; render(); } });
+
 async function load() {
   try {
     const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 8000);
@@ -66,7 +99,7 @@ function render() {
   const { today, days, zapas } = DATA;
   const z = (lab, d) => { const n = dleft(d, today); return `<span class="${n < 7 ? "bad" : ""}">${lab}: do ${short(d)}${n < 7 ? " – dopisz!" : ""}</span>`; };
   const todo = days.slice(1, 4).filter((x) => !x.done).length;
-  document.getElementById("app").innerHTML =
+  document.getElementById("app").innerHTML = matrix() +
     `<div class="top">${z("Gra", zapas.gra)}${z("Posty", zapas.posty)}${z("Rolki", zapas.rolki)}${todo ? `<span class="bad">Do sprawdzenia (3 dni): ${todo}</span>` : `<span>Najbliższe 3 dni sprawdzone ✓</span>`}</div>` +
     days.map((x, i) => {
       const lab = i === 0 ? "Dziś" : i === 1 ? "Jutro" : i === 2 ? "Pojutrze" : "";
