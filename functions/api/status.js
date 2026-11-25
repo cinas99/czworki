@@ -13,7 +13,7 @@ export async function onRequestGet({ env }) {
     statystyki: [], bledy: { dzis: 0, tydzien: 0, ostatnie: [] }, ok: true,
   };
   if (env.DB) {
-    const since = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10);
+    const since = new Date(Date.now() - 14 * 864e5).toISOString().slice(0, 10);
     try {
       const { results } = await env.DB.prepare("SELECT day, event, count, sum_ms FROM stats WHERE day >= ?1").bind(since).all();
       const days = {};
@@ -23,7 +23,9 @@ export async function onRequestGet({ env }) {
         const d = days[day];
         const shares = Object.keys(d).filter((k) => k.startsWith("share_") && k !== "share_time").reduce((a, k) => a + d[k].count, 0);
         return { dzien: day, gracze: n(d, "visit"), wracajacy: n(d, "visit_return"), zaczeli: n(d, "start"), wygrali: n(d, "win"), przegrali: n(d, "loss"),
-          sredniCzasS: d.win && d.win.count ? Math.round(d.win.sum_ms / d.win.count / 1000) : null, polecenia: shares, archiwum: n(d, "archive_start") };
+          sredniCzasS: d.win && d.win.count ? Math.round(d.win.sum_ms / d.win.count / 1000) : null, polecenia: shares, archiwum: n(d, "archive_start"),
+          podpowiedzi: n(d, "hint"), odZnajomych: n(d, "visit_ref"), zPrzypomnien: n(d, "push_open"),
+          zProfili: { fb: n(d, "visit_src_fb"), ig: n(d, "visit_src_ig"), tt: n(d, "visit_src_tt"), yt: n(d, "visit_src_yt") } };
       });
     } catch {}
     try {
