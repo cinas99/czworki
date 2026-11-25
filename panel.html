@@ -75,7 +75,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
 </head>
 <body>
 <main class="page">
-<p><a href="./">← Gra</a> · <a href="panel-przeglad.html"><b>Przegląd 3 dni →</b></a> · <a href="https://github.com/cinas99/czworki/blob/main/zagadki.csv" target="_blank" rel="noopener">Baza na GitHubie</a></p>
+<p><a href="./">← Gra</a> · <a href="panel-przeglad"><b>Przegląd 3 dni →</b></a> · <a href="https://github.com/cinas99/czworki/blob/main/zagadki.csv" target="_blank" rel="noopener">Baza na GitHubie</a></p>
 <h1>Panel zagadek</h1>
 <div id="app">Wczytywanie…</div>
 </main>
@@ -120,7 +120,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
   try { if (q.has("admin")) localStorage.setItem("cz-admin", "1"); } catch {}
   let server = null;
   try { const r = await fetch("panel/api/ping", { cache: "no-store" }); if (r.ok && (r.headers.get("content-type") || "").includes("json")) server = await r.json(); } catch {}
-  if (server && new URLSearchParams(location.search).get("go") === "przeglad") { location.replace("panel-przeglad.html"); return; }
+  if (server && new URLSearchParams(location.search).get("go") === "przeglad") { location.replace("panel-przeglad"); return; }
   let admin = !!server; try { admin = admin || localStorage.getItem("cz-admin") === "1"; } catch {}
   if (!admin) { app.innerHTML = '<p class="lock">Panel wymaga zalogowania. Otwórz <b>czworki.pl/panel.html</b> i zaloguj się swoim e-mailem.</p>'; return; }
 
