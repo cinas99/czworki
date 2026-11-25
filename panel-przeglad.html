@@ -54,8 +54,12 @@ const short = (d) => d ? new Date(d + "T12:00:00").toLocaleDateString("pl-PL", {
 const dleft = (d, t) => d ? Math.round((Date.parse(d) - Date.parse(t)) / 864e5) : -1;
 let DATA;
 async function load() {
-  try { DATA = await (await fetch("panel/api/przeglad?dni=7", { cache: "no-store" })).json(); }
-  catch { document.getElementById("app").innerHTML = '<p class="warn">Nie udało się wczytać. Zaloguj się przez <a href="panel.html">panel</a>.</p>'; return; }
+  try {
+    const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 8000);
+    const r = await fetch("panel/api/przeglad?dni=7", { cache: "no-store", signal: ctl.signal }); clearTimeout(t);
+    if (!r.ok || !(r.headers.get("content-type") || "").includes("json")) throw 0;
+    DATA = await r.json();
+  } catch { location.replace("panel.html?go=przeglad"); return; }
   render();
 }
 function render() {
