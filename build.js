@@ -41,7 +41,7 @@ if (fs.existsSync("marketing/media")) {
     const buf = fs.readFileSync(path.join("marketing/media", f));
     const h = crypto.createHash("sha256").update(buf).digest("hex").slice(0, 20);
     const ext = path.extname(f); fs.writeFileSync(path.join(out, "m", h + ext), buf);
-    let m = f.match(/^czworki-post-(\d\d)-(\d\d)\.png$/); if (m) media.posty[`${+m[2] >= 11 ? 2026 : 2027}-${m[2]}-${m[1]}`] = `m/${h}${ext}`;
+    let m = f.match(/^czworki-post-(\d\d)-(\d\d)\.jpg$/); if (m) media.posty[`${+m[2] >= 11 ? 2026 : 2027}-${m[2]}-${m[1]}`] = `m/${h}${ext}`;
     m = f.match(/^rolka-(\d\d)-(\d\d)-\d+\.mp4$/); if (m) media.rolki[`${+m[1] >= 11 ? 2026 : 2027}-${m[1]}-${m[2]}`] = `m/${h}${ext}`;
   }
 }
