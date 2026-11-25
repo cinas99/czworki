@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Przegląd – Czwórki</title>
+<script>try{if(localStorage.getItem("cz-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=70">
+<style>
+.page{max-width:720px}
+.top{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px;font-size:13px}
+.top span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 11px}
+.top span.bad{border-color:#b23b3b;color:#b23b3b;font-weight:700}
+.day{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 0 14px}
+.day.ok{border:2px solid #2f7d32}
+.dh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 0 8px}
+.dh h2{font-size:17px;margin:0}
+.badge{font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;background:#f3e3a3;color:#5a4a00;white-space:nowrap}
+.day.ok .badge{background:#d9f0da;color:#1f5e22}
+.warn{background:#fbe4e4;color:#8f2525;border-radius:10px;padding:8px 10px;font-size:13px;margin:0 0 10px}
+.warn div::before{content:"⚠ "}
+h3{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:12px 0 6px}
+.g{display:grid;gap:6px}
+.gr{border-radius:10px;padding:7px 10px;color:#1b1b1b;font-size:13px;line-height:1.35}
+.gr b{display:block;font-size:12px;text-transform:uppercase}
+.gr i{font-style:normal;font-size:11px;opacity:.7}
+.zielony{background:#a9d18e}.zolty{background:#f6df94}.pomaranczowy{background:#f4b183}.czerwony{background:#e89a9a}
+.pz{background:#FFD84A;color:#141413;border-radius:12px;padding:10px 12px;font-size:13px}
+.pz .y{background:#141413;color:#FFD84A;border-radius:8px;padding:5px 8px;font-weight:700;font-size:12px;margin:0 0 8px}
+.pz .y span{color:#fff;font-weight:500}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.tiles div{background:#141413;color:#fff;border-radius:7px;text-align:center;padding:7px 4px;font-weight:800;font-size:12px}
+details{margin-top:6px;font-size:13px}
+summary{cursor:pointer;color:var(--muted)}
+.acts{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:9px 16px;font-size:14px;cursor:pointer;font-weight:600;text-decoration:none}
+.btn.dark{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:520px){.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="page">
+<p><a href="panel.html">← Panel</a> · <a href="./">Gra</a></p>
+<h1>Przegląd treści</h1>
+<p style="color:var(--muted);font-size:14px;margin-top:-6px">Gra, post (7:30) i rolka (19:00) na najbliższe dni. Sprawdź i zaznacz „Sprawdzone”. Poprawki napisz Claude'owi albo zmień grę w panelu.</p>
+<div id="app">Wczytywanie…</div>
+</main>
+<script>
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const fmt = (d) => new Date(d + "T12:00:00").toLocaleDateString("pl-PL", { weekday: "long", day: "numeric", month: "long" });
+const short = (d) => d ? new Date(d + "T12:00:00").toLocaleDateString("pl-PL", { day: "numeric", month: "numeric" }) : "–";
+const dleft = (d, t) => d ? Math.round((Date.parse(d) - Date.parse(t)) / 864e5) : -1;
+let DATA;
+async function load() {
+  try { DATA = await (await fetch("panel/api/przeglad?dni=7", { cache: "no-store" })).json(); }
+  catch { document.getElementById("app").innerHTML = '<p class="warn">Nie udało się wczytać. Zaloguj się przez <a href="panel.html">panel</a>.</p>'; return; }
+  render();
+}
+function render() {
+  const { today, days, zapas } = DATA;
+  const z = (lab, d) => { const n = dleft(d, today); return `<span class="${n < 7 ? "bad" : ""}">${lab}: do ${short(d)}${n < 7 ? " – dopisz!" : ""}</span>`; };
+  const todo = days.slice(1, 3).filter((x) => !x.done).length;
+  document.getElementById("app").innerHTML =
+    `<div class="top">${z("Gra", zapas.gra)}${z("Posty", zapas.posty)}${z("Rolki", zapas.rolki)}${todo ? `<span class="bad">Do sprawdzenia (jutro/pojutrze): ${todo}</span>` : `<span>Jutro i pojutrze sprawdzone ✓</span>`}</div>` +
+    days.map((x, i) => {
+      const lab = i === 0 ? "Dziś" : i === 1 ? "Jutro" : i === 2 ? "Pojutrze" : "";
+      return `<section class="day${x.done ? " ok" : ""}">
+        <div class="dh"><h2>${lab ? lab + " · " : ""}${esc(fmt(x.d))}</h2><span class="badge">${x.done ? "✓ sprawdzone" : "do sprawdzenia"}</span></div>
+        ${x.warn.length ? `<div class="warn">${x.warn.map((w) => `<div>${esc(w)}</div>`).join("")}</div>` : ""}
+        <h3>Gra</h3><div class="g">${x.gra.map((g) => `<div class="gr ${esc(g.kolor)}"><b>${esc(g.kategoria)}${g.zdjecie ? "" : " <i>· bez zdjęcia</i>"}</b>${esc(g.slowa.join(", "))}</div>`).join("") || "<p>—</p>"}</div>
+        <div class="two">
+          <div><h3>Post · 7:30</h3>${x.post ? `<div class="pz">${x.prev ? `<div class="y">Wczoraj: ${esc(x.prev.odpowiedz)}<br><span>${esc(x.prev.slowa.join(", "))}</span></div>` : ""}<div class="tiles">${[x.post.slowo1, x.post.slowo2, x.post.slowo3, x.post.slowo4].map((w) => `<div>${esc(w)}</div>`).join("")}</div></div><details><summary>Odpowiedź</summary><b>${esc(x.post.odpowiedz)}</b> – ${esc(x.post.wyjasnienie)}</details>` : "<p>—</p>"}</div>
+          <div><h3>Rolka · 19:00</h3>${x.rolka ? `<div class="pz"><div class="tiles">${[x.rolka.slowo1, x.rolka.slowo2, x.rolka.slowo3, x.rolka.slowo4].map((w) => `<div>${esc(w)}</div>`).join("")}</div></div><details><summary>Odpowiedź</summary><b>${esc(x.rolka.odpowiedz)}</b> – ${esc(x.rolka.wyjasnienie)}</details>` : "<p>—</p>"}</div>
+        </div>
+        <div class="acts"><button class="btn ${x.done ? "" : "dark"}" data-d="${x.d}" data-ok="${x.done ? 0 : 1}">${x.done ? "Cofnij" : "✓ Sprawdzone"}</button><a class="btn" href="panel.html#${x.d}">Edytuj grę</a></div>
+      </section>`;
+    }).join("");
+}
+document.addEventListener("click", async (e) => {
+  const b = e.target.closest("button[data-d]"); if (!b) return;
+  b.disabled = true;
+  await fetch("panel/api/przeglad", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ d: b.dataset.d, ok: b.dataset.ok === "1" }) });
+  load();
+});
+load();
+</script>
+</body>
+</html>

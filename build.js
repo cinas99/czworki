@@ -4,7 +4,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const SITE = ["index.html", "app.js", "images.js", "style.css", "archiwum.html", "jak-grac.html", "polityka-prywatnosci.html", "o-grze.html", "panel.html", "ads.txt", "robots.txt", "sitemap.xml", "manifest.webmanifest", "sw.js"];
+const SITE = ["index.html", "app.js", "images.js", "style.css", "archiwum.html", "jak-grac.html", "polityka-prywatnosci.html", "o-grze.html", "panel.html", "panel-przeglad.html", "ads.txt", "robots.txt", "sitemap.xml", "manifest.webmanifest", "sw.js"];
 const out = path.join(__dirname, "public");
 fs.rmSync(out, { recursive: true, force: true });
 fs.mkdirSync(out, { recursive: true });
@@ -30,6 +30,9 @@ function parseCSV(text) {
 const rows = parseCSV(fs.readFileSync("zagadki.csv", "utf8"));
 fs.mkdirSync(path.join(__dirname, "functions/_generated"), { recursive: true });
 fs.writeFileSync(path.join(__dirname, "functions/_generated/puzzles.js"), "export default " + JSON.stringify(rows) + ";\n");
+// Bazy marketingowe (posty, rolki) – tylko dla panelu
+const mk = (f) => fs.existsSync(f) ? parseCSV(fs.readFileSync(f, "utf8")) : [];
+fs.writeFileSync(path.join(__dirname, "functions/_generated/marketing.js"), "export default " + JSON.stringify({ posty: mk("marketing/posty-baza.csv"), rolki: mk("marketing/rolki-baza.csv") }) + ";\n");
 // Informacja o wdrożeniu (Cloudflare podaje commit w zmiennych środowiskowych)
 fs.writeFileSync(path.join(__dirname, "functions/_generated/build.js"), "export default " + JSON.stringify({ commit: (process.env.CF_PAGES_COMMIT_SHA || "lokalnie").slice(0, 7), at: new Date().toISOString() }) + ";\n");
 console.log(`Zbudowano: ${SITE.length} plików strony, ${rows.length / 4} dni zagadek`);
