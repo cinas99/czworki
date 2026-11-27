@@ -205,6 +205,7 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
   const fmt = (d) => new Date(d + "T12:00:00Z").toLocaleDateString("pl-PL", { weekday: "short", day: "numeric", month: "long" });
 
   let filter = "future";
+  const picked = new Set();
   function render() {
     const m = byDay(), all = [...m.keys()].sort(), future = all.filter((d) => d >= today);
     const warnDays = future.filter((d) => problems(m.get(d)).length);
@@ -239,11 +240,12 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
         <button class="btn ${filter === "future" ? "on" : ""}" data-f="future">Od dziś</button>
         <button class="btn ${filter === "past" ? "on" : ""}" data-f="past">Archiwum</button>
         <button class="btn ${filter === "warn" ? "on" : ""}" data-f="warn">Z uwagami${warnDays.length ? " (" + warnDays.length + ")" : ""}</button>
+        <button class="btn dark" id="swap-days" ${picked.size ? "" : "disabled"}>⇄ Wymień zaznaczone dni${picked.size ? " (" + picked.size + ")" : ""}</button>
       </div>
       <div id="days">${list.map((d) => {
         const g = m.get(d).slice().sort((a, b) => (LV[a.kolor] ?? 0) - (LV[b.kolor] ?? 0)), pr = problems(g);
         return `<section class="day${d === today ? " today" : ""}" id="d-${d}">
-          <div class="day-h"><div><h2>#${all.indexOf(d) + 1} · ${fmt(d)}${d === today ? " · dziś" : ""}</h2>${pr.length ? `<small class="warn">⚠ ${esc(pr.join("; "))}</small>` : ""}</div>
+          <div class="day-h"><div><h2>${d > today ? `<label style="font-size:13px;font-weight:600;margin-right:6px;cursor:pointer"><input type="checkbox" class="pick" data-d="${d}" ${picked.has(d) ? "checked" : ""}> </label>` : ""}#${all.indexOf(d) + 1} · ${fmt(d)}${d === today ? " · dziś" : ""}</h2>${pr.length ? `<small class="warn">⚠ ${esc(pr.join("; "))}</small>` : ""}</div>
           <a href="./?admin&dzien=${d}">Zagraj →</a></div>
           <div class="gs">${g.map((x) => { const i = Z.rows.indexOf(x); return `<div class="gc c${LV[x.kolor] ?? 0}" data-i="${i}">
             <div class="ph"></div><div class="src"><span>szukam zdjęcia…</span></div>
@@ -274,6 +276,8 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     if ($("px-bulk")) $("px-bulk").onclick = bulkPexels;
     if ($("px-en")) $("px-en").onclick = bulkEnglish;
     if ($("px-miss")) $("px-miss").onclick = bulkMissing;
+    app.querySelectorAll("input.pick").forEach((c) => (c.onchange = () => { c.checked ? picked.add(c.dataset.d) : picked.delete(c.dataset.d); const b = $("swap-days"); b.disabled = !picked.size; b.textContent = "⇄ Wymień zaznaczone dni" + (picked.size ? " (" + picked.size + ")" : ""); }));
+    if ($("swap-days")) $("swap-days").onclick = swapDays;
     if ($("gh-out")) $("gh-out").onclick = () => { try { localStorage.removeItem("cz-gh-token"); } catch {} token = ""; render(); };
     app.querySelectorAll(".gc").forEach((el) => {
       const row = Z.rows[+el.dataset.i];
@@ -475,6 +479,43 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
     } catch (e) { backup.forEach((b) => { b.r.zdjecie = b.z; b.r.zdjecie_podpis = b.c; b.r.zdjecie_kadr = b.k; }); prog.textContent = e.message; }
   }
 
+  // ---- Wymiana całych dni: stare hasła usuwane z bazy na zawsze, nowe 4 grupy z rezerwy (po jednej z każdego koloru) ----
+  async function swapDays() {
+    if (!token) return toast("Połącz panel z GitHubem, żeby zapisać zmiany");
+    const days = [...picked].sort(); if (!days.length) return;
+    if (!confirm(`Wymienić wszystkie hasła w ${days.length} dniach (${days.join(", ")})?\n\nObecne grupy zostaną USUNIĘTE z bazy na zawsze. Nowe weźmiemy z rezerwy (${R.rows.length} grup).`)) return;
+    const zBackup = Z.rows.map((r) => ({ ...r })), rBackup = R.rows.slice();
+    const day = (d) => Z.rows.filter((r) => r.data === d);
+    const near = (d) => { const t = Date.parse(d); return new Set(Z.rows.filter((r) => r.data !== d && Math.abs(Date.parse(r.data) - t) <= 7 * 864e5).flatMap(words)); };
+    const done = [], fail = [];
+    for (const d of days) {
+      const ban = near(d), chosen = [], used = new Set();
+      for (const kol of ["zielony", "zolty", "pomaranczowy", "czerwony"]) {
+        const ok = (g) => !chosen.includes(g) && words(g).every((w) => w && !ban.has(w) && !used.has(w));
+        let pool = R.rows.filter((g) => (g.kolor || "") === kol && ok(g));
+        if (!pool.length) pool = R.rows.filter(ok);
+        if (!pool.length) break;
+        const g = pool[Math.floor(Math.random() * pool.length)];
+        chosen.push(Object.assign(g, { _kol: kol })); words(g).forEach((w) => used.add(w));
+      }
+      if (chosen.length < 4) { chosen.forEach((g) => delete g._kol); fail.push(d); continue; }
+      const old = day(d);
+      const at = Z.rows.indexOf(old[0]);
+      Z.rows = Z.rows.filter((r) => r.data !== d);
+      const fresh = chosen.map((g) => { const r = {}; Z.head.forEach((h) => (r[h] = "")); Object.assign(r, { data: d, kolor: g._kol, kategoria: g.kategoria, slowo1: g.slowo1, slowo2: g.slowo2, slowo3: g.slowo3, slowo4: g.slowo4, zdjecie: g.zdjecie || "", wyjasnienie: g.wyjasnienie || "", zdjecie_podpis: g.zdjecie_podpis || "", zdjecie_kadr: g.zdjecie_kadr || "" }); if ("szukaj_en" in r) r.szukaj_en = g.szukaj_en || ""; return r; });
+      Z.rows.splice(at < 0 ? Z.rows.length : at, 0, ...fresh);
+      R.rows = R.rows.filter((g) => !chosen.includes(g));
+      done.push(`${d}: ${old.map((r) => r.kategoria).join(", ")} → ${chosen.map((g) => g.kategoria).join(", ")}`);
+    }
+    if (!done.length) return toast("Za mało pasujących grup w rezerwie – poproś Claude'a o dopisanie.", 5000);
+    try {
+      zSha = await save("zagadki.csv", toCSV(Z.head, Z.rows), zSha, `Panel: wymiana haseł (${done.length} dni)\n\n${done.join("\n")}`);
+      rSha = await save("zapas.csv", toCSV(R.head, R.rows), rSha, `Panel: ${done.length * 4} grup z rezerwy użytych`);
+      picked.clear(); render();
+      toast(`Wymieniono ${done.length} dni${fail.length ? ", za mało rezerwy dla: " + fail.join(", ") : ""}. Dobierz brakujące zdjęcia przyciskiem u góry.`, 7000);
+    } catch (e) { Z.rows = zBackup; R.rows = rBackup; toast(e.message, 5000); }
+  }
+
   // ---- Wymiana z rezerwy ----
   function openSwap(row) {
     const others = byDay().get(row.data).filter((r) => r !== row).flatMap(words);
@@ -488,12 +529,12 @@ dialog.ed{max-width:560px;width:calc(100% - 24px);max-height:90vh;overflow:auto}
         if (!token) return toast("Połącz panel z GitHubem, żeby zapisać");
         const old = { kategoria: row.kategoria, slowo1: row.slowo1, slowo2: row.slowo2, slowo3: row.slowo3, slowo4: row.slowo4, zdjecie: row.zdjecie, wyjasnienie: row.wyjasnienie, zdjecie_podpis: row.zdjecie_podpis || "", zdjecie_kadr: row.zdjecie_kadr || "" };
         const zBackup = { ...row }, rBackup = R.rows.slice();
-        Object.assign(row, { kategoria: g.kategoria, slowo1: g.slowo1, slowo2: g.slowo2, slowo3: g.slowo3, slowo4: g.slowo4, zdjecie: g.zdjecie, wyjasnienie: g.wyjasnienie, zdjecie_podpis: g.zdjecie_podpis || "", zdjecie_kadr: g.zdjecie_kadr || "" });
-        R.rows.splice(R.rows.indexOf(g), 1); R.rows.push(old);
+        Object.assign(row, { kategoria: g.kategoria, slowo1: g.slowo1, slowo2: g.slowo2, slowo3: g.slowo3, slowo4: g.slowo4, zdjecie: g.zdjecie || "", wyjasnienie: g.wyjasnienie || "", zdjecie_podpis: g.zdjecie_podpis || "", zdjecie_kadr: g.zdjecie_kadr || "" }); if ("szukaj_en" in row) row.szukaj_en = g.szukaj_en || "";
+        R.rows.splice(R.rows.indexOf(g), 1);
         b.disabled = true;
         try {
           zSha = await save("zagadki.csv", toCSV(Z.head, Z.rows), zSha, `Panel: „${old.kategoria}” → „${g.kategoria}” (${row.data})`);
-          rSha = await save("zapas.csv", toCSV(R.head, R.rows), rSha, `Panel: „${old.kategoria}” wraca do rezerwy`);
+          rSha = await save("zapas.csv", toCSV(R.head, R.rows), rSha, `Panel: „${g.kategoria}” użyta z rezerwy, „${old.kategoria}” usunięta`);
           $("dlg-swap").close(); render(); toast("Wymieniono. Na stronie za ok. minutę.");
         } catch (e) { Object.assign(row, zBackup); R.rows = rBackup; toast(e.message, 4000); b.disabled = false; }
       };

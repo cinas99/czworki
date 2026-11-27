@@ -1,18 +1,50 @@
-kategoria,slowo1,slowo2,slowo3,slowo4,zdjecie,wyjasnienie,zdjecie_podpis,zdjecie_kadr
-W apteczce,PLASTER,BANDAŻ,JODYNA,TERMOMETR,Apteczka pierwszej pomocy|Apteczka,"Rzeczy, które zwykle są w domowej apteczce.",,
-Mają skrzydła,WIATRAK,ANIOŁ,NIETOPERZ,OKNO,Wiatrak|Nietoperze,"Skrzydła wiatraka, anioła, nietoperza i skrzydło okna.",,
-Mają grzbiet,KSIĄŻKA,NÓŻ,FALA,DŁOŃ,Książka|Fala,"Grzbiet książki, noża, fali i grzbiet dłoni.",,
-Mają szyjkę,BUTELKA,GITARA,KLEPSYDRA,ŁABĘDŹ,Klepsydra|Łabędź niemy,"Szyjka butelki, gitary, klepsydry i długa szyja łabędzia.",,
-Biec,ŚMIGAĆ,POMYKAĆ,GALOPOWAĆ,SPRINTOWAĆ,Bieg (sport)|Sprint (lekkoatletyka),Synonimy szybkiego biegu.,,
-Zdenerwowany,ROZDYGOTANY,ROZTRZĘSIONY,SPIĘTY,PODENERWOWANY,Stres|Nerwowość,Określenia osoby w nerwach.,,
-Chleb ___,RAZOWY,ŻYTNI,ORKISZOWY,PSZENNY,Chleb|Piekarnia,Rodzaje chleba.,,
-Ser ___,ŻÓŁTY,PLEŚNIOWY,TOPIONY,KOZI,Ser|Ser żółty,"Ser żółty, pleśniowy, topiony i kozi.",,
-Mleczn(y/a) ___,ZĄB,DROGA,BAR,CZEKOLADA,Droga Mleczna|Mleko,"Ząb mleczny, Droga Mleczna, bar mleczny i czekolada mleczna.",,
-Ciemn(a/y/e) ___,STRONA,KOŃ,MASA,OKULARY,Noc|Okulary przeciwsłoneczne,"Ciemna strona, ciemny koń (ktoś niedoceniany), ciemna masa i ciemne okulary.",,
-Ostr(y/a/e) ___,DYŻUR,ZAKRĘT,JAZDA,CIĘCIE,Zakręt|Droga,"Ostry dyżur, ostry zakręt, ostra jazda i ostre cięcie.",,
-Mają wtyczkę,LAMPA,CZAJNIK,SUSZARKA,ŻELAZKO,Wtyczka|Gniazdo elektryczne,"Urządzenia, które podłącza się do gniazdka.",,
-Mają pestkę,WIŚNIA,ŚLIWKA,BRZOSKWINIA,AWOKADO,Śliwka|Awokado,Owoce z pestką.,,
-Gadać,PAPLAĆ,TRAJKOTAĆ,GLĘDZIĆ,NAWIJAĆ,Rozmowa|Plotka,Potoczne określenia gadania bez końca.,,
-Narzekać,MARUDZIĆ,BIADOLIĆ,JĘCZEĆ,UTYSKIWAĆ,Narzekanie|Smutek,Synonimy narzekania.,,
-Mają dziurki,SER,GUZIK,SITO,SOLNICZKA,https://images.pexels.com/photos/14677515/pexels-photo-14677515.jpeg?auto=compress&cs=tinysrgb&w=1600,,fot. Jan van der Wolf / Pexels,
-Grub(a/e) ___,RYBA,KRESKA,SPRAWA,PIENIĄDZE,https://images.pexels.com/photos/8352779/pexels-photo-8352779.jpeg?auto=compress&cs=tinysrgb&w=1600,"Gruba ryba, gruba kreska, gruba sprawa i grube pieniądze.",fot. Kindel Media / Pexels,
+kolor,kategoria,slowo1,slowo2,slowo3,slowo4,zdjecie,wyjasnienie,zdjecie_podpis,zdjecie_kadr,szukaj_en
+zielony,W apteczce,PLASTER,BANDAŻ,JODYNA,WATA,Apteczka pierwszej pomocy|Apteczka,"Rzeczy, które zwykle są w domowej apteczce.",,,first aid kit
+pomaranczowy,Biec,ŚMIGAĆ,POMYKAĆ,GALOPOWAĆ,SPRINTOWAĆ,Bieg (sport)|Sprint (lekkoatletyka),Synonimy szybkiego biegu.,,,sprinter running
+pomaranczowy,Zdenerwowany,ROZDYGOTANY,ROZTRZĘSIONY,SPIĘTY,PODENERWOWANY,Stres|Nerwowość,Określenia osoby w nerwach.,,,nervous man
+zolty,Chleb ___,RAZOWY,ŻYTNI,ORKISZOWY,PSZENNY,Chleb|Piekarnia,Rodzaje chleba.,,,bread loaves bakery
+zolty,Ser ___,ŻÓŁTY,PLEŚNIOWY,TOPIONY,KOZI,Ser|Ser żółty,"Ser żółty, pleśniowy, topiony i kozi.",,,cheese board
+czerwony,Ciemn(a/y/e) ___,STRONA,KOŃ,MASA,OKULARY,Noc|Okulary przeciwsłoneczne,"Ciemna strona, ciemny koń (ktoś niedoceniany), ciemna masa i ciemne okulary.",,,dark sunglasses
+czerwony,Ostr(y/a/e) ___,DYŻUR,ZAKRĘT,JAZDA,CIĘCIE,Zakręt|Droga,"Ostry dyżur, ostry zakręt, ostra jazda i ostre cięcie.",,,sharp mountain road curve
+zolty,Mają wtyczkę,LAMPA,CZAJNIK,SUSZARKA,ŻELAZKO,Wtyczka|Gniazdo elektryczne,"Urządzenia, które podłącza się do gniazdka.",,,electric plug socket
+pomaranczowy,Gadać,PAPLAĆ,TRAJKOTAĆ,GLĘDZIĆ,NAWIJAĆ,Rozmowa|Plotka,Potoczne określenia gadania bez końca.,,,people chatting
+pomaranczowy,Narzekać,MARUDZIĆ,BIADOLIĆ,JĘCZEĆ,UTYSKIWAĆ,Narzekanie|Smutek,Synonimy narzekania.,,,grumpy old man
+zolty,Mają dziurki,SER,GUZIK,SITO,SOLNICZKA,https://images.pexels.com/photos/14677515/pexels-photo-14677515.jpeg?auto=compress&cs=tinysrgb&w=1600,,fot. Jan van der Wolf / Pexels,,swiss cheese holes
+czerwony,Grub(a/e) ___,RYBA,KRESKA,SPRAWA,PIENIĄDZE,https://images.pexels.com/photos/8352779/pexels-photo-8352779.jpeg?auto=compress&cs=tinysrgb&w=1600,"Gruba ryba, gruba kreska, gruba sprawa i grube pieniądze.",fot. Kindel Media / Pexels,,thick marker line
+zielony,Na plaży,PARASOL,LEŻAK,RĘCZNIK,MUSZELKA,,,,,beach umbrella deck chair
+zielony,W szkole,ŁAWKA,TABLICA,KREDA,DZIENNIK,,,,,school classroom blackboard
+zielony,Ptaki śpiewające,SŁOWIK,KOS,SKOWRONEK,SIKORKA,,,,,songbird on branch
+zielony,Warzywa korzeniowe,BURAK,PIETRUSZKA,SELER,RZODKIEWKA,,,,,root vegetables
+zielony,Przyprawy,PIEPRZ,KMINEK,MAJERANEK,BAZYLIA,,,,,spices herbs kitchen
+zielony,Zwierzęta w lesie,SARNA,DZIK,KUNA,ŻUBR,,,,,deer in forest
+zielony,Ciasta,SERNIK,MAKOWIEC,PIERNIK,BABKA,,,,,cheesecake slice
+zielony,Pory dnia,RANEK,POŁUDNIE,WIECZÓR,NOC,,,,,sunrise sky
+zielony,Miesiące,STYCZEŃ,MAJ,LIPIEC,LISTOPAD,,,,,calendar months
+zielony,Narzędzia ogrodowe,GRABIE,KONEWKA,SEKATOR,MOTYKA,,,,,garden tools
+zielony,Zawody,PIEKARZ,KRAWIEC,FRYZJER,MURARZ,,,,,baker bread
+zielony,Słodycze,LIZAK,KRÓWKA,TRUFLA,PRALINA,,,,,candy sweets
+zolty,Robi się z mleka,SER,JOGURT,KEFIR,ŚMIETANA,,,,,dairy products
+zolty,Robi się z drewna,SZAFA,ZAPAŁKA,PARKIET,CZÓŁNO,,,,,wooden matches
+zolty,Można zawiązać,KRAWAT,SZALIK,SZNURÓWKI,KOKARDA,,,,,tie knot
+zolty,Można zjechać,SANKI,ZJEŻDŻALNIA,WINDA,JABŁUSZKO,,,,,kids sledding snow
+zolty,Świecą w nocy,KSIĘŻYC,LATARNIA,ŚWIETLIK,NEON,,,,,street lamp at night
+zolty,Mają kolce,RÓŻA,OSET,JEŻYNA,AKACJA,,,,,rose thorns
+zolty,Rosną na drzewie,ORZECH,ŻOŁĄDŹ,KASZTAN,CZEREŚNIA,,,,,chestnuts autumn
+zolty,Są w portfelu,BANKNOT,KARTA,PARAGON,DOWÓD,,,,,wallet with cards
+zolty,Są na torcie,ŚWIECZKI,KREM,POSYPKA,LUKIER,,,,,birthday cake candles
+zolty,Mają smycz,PIES,KLUCZE,IDENTYFIKATOR,PENDRIVE,,,,,dog on leash
+pomaranczowy,Duży,OGROMNY,WIELKI,POTĘŻNY,OLBRZYMI,,,,,giant elephant
+pomaranczowy,Szybko,PRĘDKO,MIGIEM,ŻWAWO,BŁYSKAWICZNIE,,,,,fast motion blur
+pomaranczowy,Mały,MALUTKI,DROBNY,NIEWIELKI,MINIATUROWY,,,,,tiny miniature
+pomaranczowy,Zmęczony,WYCZERPANY,SKONANY,PADNIĘTY,ZMORDOWANY,,,,,tired person sofa
+pomaranczowy,Jeść,ZAJADAĆ,PAŁASZOWAĆ,WCINAĆ,SPOŻYWAĆ,,,,,eating dinner
+pomaranczowy,Spać,DRZEMAĆ,KIMAĆ,SPOCZYWAĆ,LULAĆ,,,,,sleeping cat
+pomaranczowy,Dom zwierzęcia,BUDA,NORA,GNIAZDO,DZIUPLA,,,,,bird nest
+pomaranczowy,Młode zwierząt,ŹREBAK,CIELĘ,KOŹLĘ,PROSIĘ,,,,,foal horse
+czerwony,Zimn(a/e/y) ___,WOJNA,NÓŻKI,OGNIE,FRONT,,,,,sparklers
+czerwony,Słodk(a/i/ie) ___,LENISTWO,WODA,ZIEMNIAK,BUŁKA,,,,,sweet potato
+czerwony,Psi(a/e) ___,KOŚĆ,POGODA,BUDA,ZAPRZĘG,,,,,dog sled
+czerwony,Czarn(a/y) ___,OWCA,RYNEK,SKRZYNKA,HUMOR,,,,,black sheep
+czerwony,Ukryte zwierzę,KOTWICA,OSADA,RAKIETA,LISTONOSZ,,,,,ship anchor
+czerwony,Długi(e) ___,WEEKEND,PALCE,SPODNIE,DYSTANS,,"długi weekend, długie palce (złodziej), długie spodnie, długi dystans",,,long weekend calendar
+zielony,Owoce jagodowe,MALINA,BORÓWKA,PORZECZKA,AGREST,,,,,berries bowl
