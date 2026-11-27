@@ -91,14 +91,18 @@
   const isBot = navigator.webdriver || /bot|crawl|spider|facebookexternalhit|meta-externalagent|headless|preview|lighthouse/i.test(navigator.userAgent);
   const countVisit = () => {
     try {
-      if (isBot || localStorage.getItem("cz-visit") === realToday) return;
+      if (isBot) return;
+      // Wejście z linku od znajomego/profilu liczymy raz dziennie, nawet gdy ta osoba już dziś grała
+      const z0 = new URLSearchParams(location.search).get("z");
+      if (z0 && localStorage.getItem("cz-ref") !== realToday + z0) {
+        if (z0 === "1") track("visit_ref"); else if (/^(fb|ig|tt|yt)$/.test(z0)) track("visit_src_" + z0);
+        localStorage.setItem("cz-ref", realToday + z0);
+      }
+      if (localStorage.getItem("cz-visit") === realToday) return;
       const yesterday = new Date(Date.parse(realToday + "T00:00:00Z") - 864e5).toISOString().slice(0, 10);
       const last = localStorage.getItem("cz-visit");
       track("visit");
       if (last && last >= yesterday) track("visit_return");
-      const z = new URLSearchParams(location.search).get("z");
-      if (z === "1") track("visit_ref");
-      else if (/^(fb|ig|tt|yt)$/.test(z || "")) track("visit_src_" + z);
       localStorage.setItem("cz-visit", realToday);
     } catch {}
   };
